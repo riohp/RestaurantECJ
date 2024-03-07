@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tables', function (Blueprint $table) {
+        Schema::create('cancelled_invoices', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-            $table->string('capaciodad');
-            $table->string('location');
-            $table->tinyInteger('status')->default(1);
+            $table->unsignedBigInteger('invoice_id');
+            $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
+            $table->string('description');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tables');
+        Schema::dropIfExists('cancelled_invoices');
     }
 };
