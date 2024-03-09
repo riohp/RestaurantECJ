@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PlateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,4 +28,15 @@ Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show')
 Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
 Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
 Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');    
-Route::post('/users/{user}', [UserController::class, 'activate'])->name('users.activate');                                                                  
+Route::post('/users/{user}', [UserController::class, 'activate'])->name('users.activate');    
+
+// modulo Plate
+Route::get('/table_product/index', [PlateController::class, 'index'])->name('table_product.index');
+Route::get('/table_product/create', [PlateController::class, 'create'])->name('table_product.create');
+Route::post('/table_product', [PlateController::class, 'store'])->name('table_product.store');
+Route::get('/table_product/{product}', [PlateController::class, 'show'])->name('table_product.show');
+Route::get('/table_product/{product}/edit', [PlateController::class, 'edit'])->name('table_product.edit');
+Route::put('/table_product/{product}', [PlateController::class, 'update'])->name('table_product.update');
+Route::delete('/table_product/{product}', [PlateController::class, 'destroy'])->name('table_product.destroy');
+Route::post('/table_product/{product}', [PlateController::class, 'activate'])->name('table_product.activate');
+
