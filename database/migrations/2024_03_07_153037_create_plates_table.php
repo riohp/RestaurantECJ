@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->string('name', 255);
             $table->unsignedBigInteger('category_id');
             $table->float('price',10,2);
             $table->float('cost',10,2);
