@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\UserModel; // Asegúrate de importar el modelo User correctamente
+ 
 
 class UserController extends Controller
 {
@@ -15,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = UserModel::all();
+        $users = User::all();
         return view('users.index', compact('users'));
     }
 
@@ -50,7 +50,7 @@ class UserController extends Controller
         $validatedData['password'] = bcrypt($request->password);
 
         // Crear un nuevo usuario
-        UserModel::create($validatedData);
+        User::create($validatedData);
 
         // Redirigir a la página adecuada
         return redirect()->route('users.index')->with('success', 'Usuario creado correctamente');
@@ -62,7 +62,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(userModel $usermodel)
+    public function show(User $user)
     {
         return view('users.show', compact('user'));
     }
@@ -73,9 +73,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        $user = UserModel::findOrFail($id);
+    public function edit(User $user)
+    {   
+        
         return view('users.edit', compact('user'));
     }
 
@@ -86,18 +86,18 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,UserModel $usermodel)
+    public function update(Request $request,User $user)
     {
         // Validar los datos del formulario
         $validatedData = $request->validate([
             'name' => 'required|max:255',
-            'email' => 'required|email|unique:users,email,' . $usermodel->id,
+            'email' => 'required|email|unique:users,email,' . $user->id,
             'role' => 'required|in:admin,cashier,waiter',
             'status' => 'required|integer|between:0,1',
         ]);
 
         // Actualizar el usuario
-        UserModel::whereId($usermodel)->update($validatedData);
+        $user->update($validatedData);
 
         // Redirigir a la página adecuada
         return redirect()->route('users.index')->with('success', 'Usuario actualizado correctamente');
@@ -109,10 +109,18 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(UserModel $usermodel)
+    public function destroy(User $user)
     {
-        
-        $usermodel->delete();
-        return redirect()->route('users.index')->with('success', 'Usuario eliminado correctamente');
+        $user->status = 0; // Desactivar el usuario
+        $user->save();
+        return redirect()->route('users.index')->with('success', 'Usuario desactivado correctamente');
     }
+
+    public function activate(User $user)
+    {
+        $user->status = 1; // Activar el usuario
+        $user->save();
+        return redirect()->route('users.index')->with('success', 'Usuario activado correctamente');
+    }
+    
 }

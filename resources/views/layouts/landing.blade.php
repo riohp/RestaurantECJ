@@ -14,7 +14,6 @@
 
     {{-- @include('layouts.partials.menu') --}}
     
-
     @yield('content')
     @yield('archivos-js')
 </body>
