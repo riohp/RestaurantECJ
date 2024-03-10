@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PlateController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TableController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,3 +52,15 @@ Route::get('/category/{category}/edit', [CategoryController::class, 'edit'])->na
 Route::put('/category/{category}', [CategoryController::class, 'update'])->name('category.update');
 Route::delete('/category/{category}', [CategoryController::class, 'destroy'])->name('category.destroy');
 Route::post('/category/{category}', [CategoryController::class, 'activate'])->name('category.activate');
+
+//modulo Table
+Route::get('/table/index', [TableController::class, 'index'])->name('table.index');
+Route::get('/table/create', [TableController::class, 'create'])->name('table.create');
+Route::post('/table', [TableController::class, 'store'])->name('table.store');
+Route::get('/table/{table}', [TableController::class, 'show'])->name('table.show');
+Route::get('/table/{table}/edit', [TableController::class, 'edit'])->name('table.edit');
+Route::put('/table/{table}', [TableController::class, 'update'])->name('table.update');
+Route::delete('/table/{table}', [TableController::class, 'destroy'])->name('table.destroy');
+Route::post('/table/{table}', [TableController::class, 'activate'])->name('table.activate');
+
+
