@@ -7,5 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class TableProduct extends Model
 {
-    use HasFactory;
+    protected $fillable = [
+        'table_id', 
+        'product_id'
+    ];
+
+    public function product()
+    {
+        return $this->belongsTo(Products::class, 'product_id');
+    }
 }

@@ -51,6 +51,11 @@
                             </a>
                         </td>
                         <td>
+                            <img src="data:image/jpeg;base64,{{$product->image}}" alt="imagen del producto" width="100">                       
+                        </td>
+                        <td>
+
+
                             @if($product->status == 1)
                                 <form method="POST" action="{{ route('table_product.destroy', $product->id) }}">
                                     @csrf

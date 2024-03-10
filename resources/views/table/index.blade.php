@@ -24,7 +24,12 @@
                                 <td>{{ $table->capaciodad }}</td>
                                 <td>{{ $table->status ? 'Activo' : 'Inactivo' }}</td>
                                 <td>
-                                    <a href="{{ route('table.show', $table->id) }}" class="btn btn-info btn-sm">Ver</a>
+                                    <form action="{{ route('table.show') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="table" value="{{ $table->id }}">
+                                        <input type="hidden" name="category_id" value="-1">
+                                        <button type="submit" class="btn btn-info btn-sm">Ver</button>
+                                    </form>
                                     <a href="{{ route('table.edit', $table->id) }}" class="btn btn-warning btn-sm">Editar</a>
                                     @if ($table->status)
                                     <form action="{{ route('table.destroy', $table->id) }}" method="POST" style="display: inline">

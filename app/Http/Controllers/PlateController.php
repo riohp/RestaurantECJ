@@ -46,18 +46,26 @@ class PlateController extends Controller
             'cost' => 'required|numeric',
             'category_id' => 'required|integer', // Corregido para validar 'category_id'
             'status' => 'required|integer|between:0,1',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Validación del campo de imagen
         ]);
-    
+
+        // Obtiene la ruta temporal del archivo cargado
+        $imagePath = $request->file('image')->getRealPath();
+
+        // Codifica el archivo a base64
+        $imageData = base64_encode(file_get_contents($imagePath));
+
         $product = Products::create([
             'name' => $validatedData['name'],
             'price' => $validatedData['price'],
             'cost' => $validatedData['cost'],
             'category_id' => $validatedData['category_id'], // Corregido para obtener 'category_id' de la solicitud
             'status' => $validatedData['status'],
+            'image' => $imageData, // Guarda el archivo codificado en el campo 'image'
         ]);
-    
+
         return redirect()->route('table_product.index')->with('success', 'Producto creado correctamente');
-    }
+}
     
     
 

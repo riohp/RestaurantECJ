@@ -5,6 +5,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PlateController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TableController;
+use App\Http\Controllers\TableProductController;
+use App\Http\Controllers\InvoiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,10 +59,16 @@ Route::post('/category/{category}', [CategoryController::class, 'activate'])->na
 Route::get('/table/index', [TableController::class, 'index'])->name('table.index');
 Route::get('/table/create', [TableController::class, 'create'])->name('table.create');
 Route::post('/table', [TableController::class, 'store'])->name('table.store');
-Route::get('/table/{table}', [TableController::class, 'show'])->name('table.show');
+Route::post('/table/show', [TableController::class, 'show'])->name('table.show');
 Route::get('/table/{table}/edit', [TableController::class, 'edit'])->name('table.edit');
 Route::put('/table/{table}', [TableController::class, 'update'])->name('table.update');
 Route::delete('/table/{table}', [TableController::class, 'destroy'])->name('table.destroy');
 Route::post('/table/{table}', [TableController::class, 'activate'])->name('table.activate');
 
+// module tablesProduct 
+Route::post('/tables/product/store', [TableProductController::class, 'store'])->name('tablesProduct.store');
+Route::delete('/table/product/destroy', [TableProductController::class, 'destroy'])->name('tablesProduct.destroy');
 
+
+// module Invoice 
+Route::post('/invoiceBill', [InvoiceController::class, 'invoiceBill'])->name('invoiceBill');

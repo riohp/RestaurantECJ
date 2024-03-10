@@ -21,6 +21,7 @@ return new class extends Migration
             $table->float('cost',10,2);
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->tinyInteger('status')->default(1);
+            $table->binary('image')->nullable();
             $table->timestamps();
         });
     }
