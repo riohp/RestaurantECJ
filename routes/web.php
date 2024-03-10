@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PlateController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,3 +41,13 @@ Route::put('/table_product/{product}', [PlateController::class, 'update'])->name
 Route::delete('/table_product/{product}', [PlateController::class, 'destroy'])->name('table_product.destroy');
 Route::post('/table_product/{product}', [PlateController::class, 'activate'])->name('table_product.activate');
 
+
+//modulo Category
+Route::get('/category/index', [CategoryController::class, 'index'])->name('category.index');
+Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create');
+Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
+Route::get('/category/{category}', [CategoryController::class, 'show'])->name('category.show');
+Route::get('/category/{category}/edit', [CategoryController::class, 'edit'])->name('category.edit');
+Route::put('/category/{category}', [CategoryController::class, 'update'])->name('category.update');
+Route::delete('/category/{category}', [CategoryController::class, 'destroy'])->name('category.destroy');
+Route::post('/category/{category}', [CategoryController::class, 'activate'])->name('category.activate');
