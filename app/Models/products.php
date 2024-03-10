@@ -18,6 +18,7 @@ class Products extends Model
         'cost',
         'category_id',
         'status',
+        'image',
     ];
 
     public function category()

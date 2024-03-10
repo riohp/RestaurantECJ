@@ -10,12 +10,9 @@
             <div class="card">
                 <div class="card-header">Crear Producto</div>
                 <div class="card-body">
-
-                    <form action="{{ route('table_product.store') }}" method="POST">
-
+                    <form action="{{ route('table_product.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-
-
+                    
                         <div class="form-group">
                             <label for="name">Nombre:</label>
                             <input type="text" name="name" id="name" class="form-control" required>
@@ -45,8 +42,13 @@
                                 <option value="0">Inactivo</option>
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="image">Imagen:</label>
+                            <input type="file" name="image" id="image" class="form-control" required>
+                        </div>
                         <button type="submit" class="btn btn-primary">Guardar Producto</button>
                     </form>
+                    
                 </div>
             </div>
         </div>

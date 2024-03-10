@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Table;
+use App\Models\Products;
+use App\Models\Category;
+use App\Utils\TableHelper;
+Use App\Models\TableProduct;
 
 class TableController extends Controller
 {
@@ -58,9 +62,13 @@ class TableController extends Controller
      * @param  \App\Models\Table  $table
      * @return \Illuminate\Http\Response
      */
-    public function show(Table $table)
-    {
-        return view('table.show', compact('table'));
+    public function show(Request $request)
+    {   
+        $tableId = $request->input('table');
+        $table = Table::find($tableId);
+        $id_category = $request->input('category_id');
+
+        return TableHelper::processTableData($tableId, $id_category);
     }
 
     /**
