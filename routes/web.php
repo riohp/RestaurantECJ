@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\TableProductController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\CookingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,3 +73,8 @@ Route::delete('/table/product/destroy', [TableProductController::class, 'destroy
 
 // module Invoice 
 Route::post('/invoiceBill', [InvoiceController::class, 'invoiceBill'])->name('invoiceBill');
+
+
+// module cooking
+Route::get('/cooking/create', [CookingController::class, 'create'])->name('cooking.create');
+Route::post('/cooking/store', [CookingController::class, 'store'])->name('cooking.store');
