@@ -1,20 +1,19 @@
 @extends('layouts.partials.header')
 
-@section('title-page', 'Lista de Usuarios')
 
+@section('title-page', 'Delivery')   
 @section('content-main')
-{{--    Table goes here--}}
 <div class="container grid p-6 mx-auto">
     <div class="flex items-center justify-between w-full mb-6">
-        <h4 class="text-xl font-medium dark:text-gray-200">Lista Empleados</h4>
+        <h4 class="text-xl font-medium dark:text-gray-200">Lista repartos</h4>
     </div>
     <div class="w-full overflow-hidden rounded-lg shadow-xs">
         <div class="px-6 py-4 border-b border-b-default-200 dark:border-gray-600 dark:bg-gray-800">
             <div class="flex flex-wrap justify-between items-center gap-6">
-                <h4 class="text-xl font-medium fon text-default-900 dark:text-gray-200">Empleados</h4>
-                <a href="{{ route('users.create') }}" class="px-6 py-3 inline-flex text-white text-sm rounded-md bg-purple-600">
+                <h4 class="text-xl font-medium fon text-default-900 dark:text-gray-200">repartos</h4>
+                <a href="{{ route('delivery.create') }}" class="px-6 py-3 inline-flex text-white text-sm rounded-md bg-purple-600">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="plus" class="lucide lucide-plus w-5 h-5 inline-flex align-middle me-2"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
-                    Agregar Empleado
+                    Agregar reparto
                 </a>
             </div>
         </div>
@@ -34,15 +33,16 @@
             <table class="w-full table-auto">
                 <thead>
                     <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                        <th class="px-4 py-3">Nombre</th>
-                        <th class="px-4 py-3">Email</th>
-                        <th class="px-4 py-3">Estado</th>
-                        <th class="px-4 py-3">Acciones</th>
+                        <th class="px-4 py-3">Nombre Completo</th>
+                        <th class="px-4 py-3">Numero de celular</th>
+                        <th class="px-4 py-3">dirrecion</th>
+                        <th class="px-4 py-3">Id factura</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                @if(count($users))
-                    @foreach ($users as $user)
+                @isset($deliverys)
+                    
+                    @foreach ($deliverys as $delivery)
                         <tr class="text-gray-700 dark:text-gray-400">
                             <td class="px-4 py-3">
                                 <div class="flex items-center text-sm">
@@ -58,18 +58,16 @@
                                              aria-hidden="true"></div>
                                     </div>
                                     <div>
-                                        <p class="font-semibold">{{$user->name}}</p>
-                                        <p class="text-xs text-gray-600 dark:text-gray-400">
-                                            {{$user->role}}
-                                        </p>
+                                        <p class="font-semibold">{{$delivery->full_name}}</p>
+                                        
                                     </div>
                                 </div>
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                {{$user->email}}
+                                {{$delivery->cellphone}}
                             </td>
                             <td class="px-4 py-3 text-xs">
-                                @if($user->status == 1)
+                                @if($delivery->status == 1)
                                     <span
                                         class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"
                                     >
@@ -87,14 +85,14 @@
                             <td class="px-4 py-3">
                                 <div class="flex items-center space-x-4 text-sm">
                                     <button
-                                        onclick="window.location='{{ route('users.show', $user->id) }}'"
+                                        onclick="window.location='{{ route('delivery.show', $delivery->id) }}'"
                                         class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                         aria-label="Delete"
                                     >
                                         <i class="fa-solid fa-eye"></i>
                                     </button>
                                     <button
-                                        onclick="window.location='{{ route('users.edit', $user->id) }}'"
+                                        onclick="window.location='{{ route('delivery.edit', $delivery->id) }}'"
                                         class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                         aria-label="Edit"
                                     >
@@ -109,12 +107,12 @@
                                             ></path>
                                         </svg>
                                     </button>
-                                    @if($user->status == 1)
-                                        <form method="POST" action="{{ route('users.destroy', $user->id) }}">
+                                    @if($delivery->status == 1)
+                                        <form method="POST" action="{{ route('delivery.destroy', $delivery->id) }}">
                                             @csrf
                                             @method('DELETE')
                                             <button
-                                                onclick="window.location='{{ route('users.destroy', $user->id) }}'"
+                                                onclick="window.location='{{ route('delivery.destroy', $delivery->id) }}'"
                                                 class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg dark:text-red-400 focus:outline-none focus:shadow-outline-gray"
                                                 aria-label="Delete"
                                             >
@@ -133,7 +131,7 @@
                                             </button>
                                         </form>
                                     @else
-                                        <form method="POST" action="{{ route('users.activate', $user->id) }}">
+                                        <form method="POST" action="{{ route('delivery.activate', $delivery->id) }}">
                                             @csrf
                                             @method('POST')
                                             <button type="submit" class="btn btn-link">activar</button>
@@ -147,7 +145,8 @@
 
                 @else
                     <td colspan="4" class="text-white text-center">NO HAY INFORMACION QUE MOSTRAR</td>
-                @endif
+                @endisset
+
                 </tbody>
                 </tbody>
             </table>
@@ -250,4 +249,5 @@
             </span>
         </div>
     </div>
+</div>
 @endsection
