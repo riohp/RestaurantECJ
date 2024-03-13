@@ -10,6 +10,7 @@ class TableProduct extends Model
     protected $fillable = [
         'table_id', 
         'product_id',
+        'description',
         'status',
     ];
 
