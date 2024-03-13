@@ -1,9 +1,7 @@
-@extends('layouts.landing')
-@section('title', 'Crear Cocina')
-@section('content')
-    @include('layouts.partials.menu')
+@extends('layouts.partials.header')
+@section('title', 'Crear domicilio')
+@section('content-main')
     <div class="flex flex-col flex-1 w-full">
-        @include('layouts.partials.header')
         <main class="h-full overflow-y-auto p-4">
             <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4 ">
 

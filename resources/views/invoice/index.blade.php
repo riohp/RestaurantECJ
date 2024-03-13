@@ -17,10 +17,10 @@
                         </div>
                         <div>
                             <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                                {{ $invoice->total }}
+                               ID: {{ $invoice->id }}
                             </p>
                             <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                                {{ $invoice->responsible_id }}
+                                Facturo {{ $invoice->responsible->name }} ID: {{ $invoice->responsible->id }}
                             </p>
                             <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
                                 {{ $invoice->tipo }}
@@ -29,27 +29,25 @@
                                 {{ $invoice->status ? 'Activo' : 'Inactivo' }}
                             </p>
                             <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                                {{ $invoice->total }}
+                            </p>
+                            <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
                             <form action="{{ route('invoice.show') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="invoice" value="{{ $invoice->id }}">
                                 <input type="hidden" name="category_id" value="-1">
                                 <button type="submit" class="btn btn-info btn-sm">Ver</button>
                             </form>
-                            @if ($invoice->status)
-                                <form action="{{ route('invoice.destroy', $invoice->id) }}" method="POST"
-                                    style="display: inline">
-                                    @csrf
-                                    @method('DELETE')
+                            <form action="{{ route('invoice.destroy', $invoice->id) }}" method="POST"
+                                style="display: inline">
+                                @csrf
+                                @method('DELETE')
+                                @if ($invoice->status)
                                     <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                                </form>
-                            @else
-                                <form action="{{ route('invoice.activate', $invoice->id) }}" method="POST"
-                                    style="display: inline">
-                                    @csrf
-                                    @method('POST')
-                                    <button type="submit" class="btn btn-success btn-sm">Activar</button>
-                                </form>
-                            @endif
+                                @else
+                                    <button type="submit" class="btn btn-danger btn-sm">Activar</button>
+                                @endif
+                            </form>
                             </p>
 
 
@@ -57,9 +55,9 @@
                     </div>
                 @empty
                     <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                        >No hay facturas registradas.
+                        >No hay mesas registradas.
                     </p>
                 @endforelse
-        </main>
-    </div>
-@endsection
+            </main>
+        </div>
+    @endsection

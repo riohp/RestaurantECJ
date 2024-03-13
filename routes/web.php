@@ -9,6 +9,7 @@ use App\Http\Controllers\TableProductController;
 use App\Http\Controllers\CookingController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\DeliveryProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -84,7 +85,7 @@ Route::post('/invoiceBill', [InvoiceController::class, 'invoiceBill'])->name('in
 Route::get('/delivery/create', [DeliveryController::class, 'create'])->name('delivery.create');
 Route::post('/delivery/store', [DeliveryController::class, 'store'])->name('delivery.store');
 Route::get('/delivery/index', [DeliveryController::class, 'index'])->name('delivery.index');
-Route::get('/delivery/{delivery}', [DeliveryController::class, 'show'])->name('delivery.show');
+Route::post('/delivery/show', [DeliveryController::class, 'show'])->name('delivery.show');
 Route::get('/delivery/{delivery}/edit', [DeliveryController::class, 'edit'])->name('delivery.edit');
 Route::put('/delivery/{delivery}', [DeliveryController::class, 'update'])->name('delivery.update');
 Route::delete('/delivery/{delivery}', [DeliveryController::class, 'destroy'])->name('delivery.destroy');
@@ -103,5 +104,13 @@ Route::post('/cooking/{cooking}', [CookingController::class, 'activate'])->name(
 // module invoice
 Route::get('/invoice/index', [InvoiceController::class, 'index'])->name('invoice.index');
 Route::delete('/invoice/{table}', [InvoiceController::class, 'destroy'])->name('invoice.destroy');
-Route::post('/invoice/{table}', [InvoiceController::class, 'activate'])->name('invoice.activate');
 Route::post('/invoice/show', [InvoiceController::class, 'show'])->name('invoice.show');
+
+
+
+
+// module invoiceProduct 
+Route::post('/invoice/product/store', [DeliveryProductController::class, 'store'])->name('deliverysProduct.store');
+Route::delete('/invoice/product/destroy', [DeliveryProductController::class, 'destroy'])->name('deliverysProduct.destroy');
+Route::post('/invoice/product/updateStatus', [DeliveryProductController::class, 'updateStatus'])->name('deliverysProduct.updateStatus');
+Route::post('/invoice/product/updateStatusItems', [DeliveryProductController::class, 'updateStatusItems'])->name('deliverysProduct.updateStatusItems');

@@ -54,24 +54,16 @@ class InvoiceController extends Controller
     public function show(Request $request)
     {   
         $invoiceId = $request->input('invoice');
-        $invoice = Invoice::find($invoiceId);
-        dd($invoice);
+        $invoice = Invoice::with('items.product')->find($invoiceId);
         return view('invoice.show', compact('invoice'));
     }
 
 
-    public function destroy(Invoice $invoice)
+    public function destroy($id)
     {
-        $invoice->status = 0;
-        $invoice->save();
-        return redirect()->route('invoice.index')->with('success', 'Mesa eliminada correctamente');
+        $invoice = Invoice::findOrFail($id);
+        $invoice->changeStatus();
+        return redirect()->route('invoice.index')->with('success', 'Factura actualizada correctamente');
     }
-
-    public function activate(Invoice $invoice)
-    {
-        $invoice->status = 1;
-        $invoice->save();
-        return redirect()->route('invoice.index')->with('success', 'Mesa activada correctamente');
-    }
-
+    
 }
