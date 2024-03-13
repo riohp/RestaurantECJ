@@ -14,22 +14,13 @@ use Illuminate\Support\Facades\Schema;
 class PlateController extends Controller
 {
     
-    /**
-     * Display a listing of the users.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $products = Products::all();
         return view('table_product.index', compact('products'));
     }
 
-    /**
-     * Show the form for creating a new user.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $categories = Category::all();
@@ -44,24 +35,22 @@ class PlateController extends Controller
             'name' => 'required|max:255',
             'price' => 'required|numeric',
             'cost' => 'required|numeric',
-            'category_id' => 'required|integer', // Corregido para validar 'category_id'
+            'category_id' => 'required|integer',
             'status' => 'required|integer|between:0,1',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Validación del campo de imagen
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif', 
         ]);
 
-        // Obtiene la ruta temporal del archivo cargado
         $imagePath = $request->file('image')->getRealPath();
 
-        // Codifica el archivo a base64
         $imageData = base64_encode(file_get_contents($imagePath));
 
         $product = Products::create([
             'name' => $validatedData['name'],
             'price' => $validatedData['price'],
             'cost' => $validatedData['cost'],
-            'category_id' => $validatedData['category_id'], // Corregido para obtener 'category_id' de la solicitud
+            'category_id' => $validatedData['category_id'], 
             'status' => $validatedData['status'],
-            'image' => $imageData, // Guarda el archivo codificado en el campo 'image'
+            'image' => $imageData, 
         ]);
 
         return redirect()->route('table_product.index')->with('success', 'Producto creado correctamente');
@@ -69,23 +58,12 @@ class PlateController extends Controller
     
     
 
-    /**
-     * Display the specified user.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Products $product)
     {
         return view('table_product.show', compact('product'));
     }
 
-    /**
-     * Show the form for editing the specified user.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Products $product)
     {   
         $categories = Category::all();
@@ -93,13 +71,7 @@ class PlateController extends Controller
     }
 
 
-    /**
-     * Update the specified user in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, Products $product)
     {
         // Validar los datos del formulario
@@ -111,29 +83,21 @@ class PlateController extends Controller
             'status' => 'required|integer|between:0,1',
         ]);
 
-        // Actualizar el usuario
         $product->update($validatedData);
 
-        // Redirigir a la página adecuada
         return redirect()->route('table_product.index')->with('success', 'Producto actualizado correctamente');
     }
 
-    /**
-     * Remove the specified user from storage.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Products $product)
     {
-        $product->status = 0; // desactivar usuario
+        $product->status = 0;
         $product->save();
         return redirect()->route('table_product.index')->with('success', 'plato desactivado correctamente');
     }
 
     public function activate(Products $product)
     {
-        $product->status = 1; // activar usuario
+        $product->status = 1; 
         $product->save();
         return redirect()->route('table_product.index')->with('success', 'plato activado correctamente');
     }

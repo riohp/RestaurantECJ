@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('products', function (Blueprint $table) {
@@ -21,15 +16,12 @@ return new class extends Migration
             $table->float('cost',10,2);
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->tinyInteger('status')->default(1);
-            $table->binary('image')->nullable();
             $table->timestamps();
         });
+        
+        DB::statement("ALTER TABLE products ADD image LONGBLOB");
     }
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+
     public function down()
     {
         Schema::dropIfExists('products');
