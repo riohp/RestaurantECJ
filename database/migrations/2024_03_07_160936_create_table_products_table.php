@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreign('table_id')->references('id')->on('tables')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->enum('status', ['process', 'cooking', 'table']);
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }

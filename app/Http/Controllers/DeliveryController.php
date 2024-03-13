@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Delivery;
+use App\Utils\TableHelper;
 
 class DeliveryController extends Controller
 {
@@ -32,18 +33,17 @@ class DeliveryController extends Controller
     public function store(Request $request)
     {
         
-        $validatedData = $request->validate([
-            'full_name' => 'required|max:255',
-            'cellphone' => 'required|integer',
-            'address' => 'required|max:255',
-            'invoice_id' => 'required|integer',
-        ]);
+        // $validatedData = $request->validate([
+        //     'cellphone' => 'required|integer',
+        //     'address' => 'required|max:255',
+        // ]);
+        $validatedData['cellphone'] = "123456789";
+        $validatedData['address'] = "direcion de usuario logueado";
+        $validatedData['client_id'] = 1;
+        $newDelivery = Delivery::create($validatedData);
+        $newDeliveryId = $newDelivery->id;
 
-       
-        Delivery::create($validatedData);
-
-        
-        return redirect()->route('delivery.index')->with('success', 'Delivery created successfully');
+        return TableHelper::processTableDataDelivery($newDeliveryId, null);
     }
 
     /**
@@ -52,13 +52,18 @@ class DeliveryController extends Controller
      * @param  \App\Models\Table  $table
      * @return \Illuminate\Http\Response
      */
-    public function show(Delivery $delivery)
-    {
-        return view('delivery.show', compact('delivery'));
+    public function show(Request $request)
+    {   
+        $deliveryId = $request->input('delivery');
+        $id_category = $request->input('category_id');
+
+
+        return TableHelper::processTableDataDelivery($deliveryId, $id_category);    
     }
 
+
     /**
-     * Update the specified table in storage.
+     * Update the specified delivery in storage.
      * 
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Table  $table
@@ -99,4 +104,7 @@ class DeliveryController extends Controller
         return redirect()->route('delivery.index')->with('success', 'Delivery activated successfully');
     }
 
+
+
+    
 }
