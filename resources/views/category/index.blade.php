@@ -1,7 +1,7 @@
-@extends('layouts.landing')
+@extends('layouts.partials.header')
 @section('title', 'Categorías')
 
-@section('content')
+@section('content-main')
 <div class="container">
     <div class="row">
         <div class="col-md-8 offset-md-2">
@@ -21,8 +21,8 @@
                         <tbody>
                             @forelse ($categories as $category)
                             <tr>
-                                <td>{{ $category->name }}</td>
-                                <td>{{ $category->description }}</td>
+                                <td>{{ $category->name}}</td>
+                                <td>{{ $category->description}}</td>
                                 <td>{{ $category->status ? 'Activo' : 'Inactivo' }}</td>
                                 <td>
                                     <a href="{{ route('category.show', $category->id) }}" class="btn btn-info btn-sm">Ver</a>
