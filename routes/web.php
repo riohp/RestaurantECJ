@@ -69,12 +69,19 @@ Route::post('/table/{table}', [TableController::class, 'activate'])->name('table
 // module tablesProduct 
 Route::post('/tables/product/store', [TableProductController::class, 'store'])->name('tablesProduct.store');
 Route::delete('/table/product/destroy', [TableProductController::class, 'destroy'])->name('tablesProduct.destroy');
-
+Route::post('/table/product/updateStatus', [TableProductController::class, 'updateStatus'])->name('tablesProduct.updateStatus');
+Route::post('/table/product/updateStatusItems', [TableProductController::class, 'updateStatusItems'])->name('tablesProduct.updateStatusItems');
 
 // module Invoice 
 Route::post('/invoiceBill', [InvoiceController::class, 'invoiceBill'])->name('invoiceBill');
 
 
 // module cooking
+Route::get('/cooking/index', [CookingController::class, 'index'])->name('cooking.index');
 Route::get('/cooking/create', [CookingController::class, 'create'])->name('cooking.create');
 Route::post('/cooking/store', [CookingController::class, 'store'])->name('cooking.store');
+Route::post('/cooking/show', [CookingController::class, 'show'])->name('cooking.show');
+Route::get('/cooking/{cooking}/edit', [CookingController::class, 'edit'])->name('cooking.edit');
+Route::put('/cooking/{cooking}', [CookingController::class, 'update'])->name('cooking.update');
+Route::delete('/cooking/{cooking}', [CookingController::class, 'destroy'])->name('cooking.destroy');
+Route::post('/cooking/{cooking}', [CookingController::class, 'activate'])->name('cooking.activate');

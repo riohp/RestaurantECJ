@@ -16,22 +16,18 @@ class InvoiceController extends Controller
         $type_invoice = $request->input('type_invoice');
         $total = 0;
 
-        // Decodificar el JSON para obtener un arreglo asociativo de ítems
         $itemsArray = json_decode($items[0], true);
 
-        // Procesar los datos de los ítems como desees
         foreach ($itemsArray as $item) {
             $total += $item['subtotal'];
         }
 
-        // Crear la factura
         $invoice = Invoice::create([
             'total' => $total,
             'type_invoice' => $type_invoice,
             'responsible_id' => $responsible,
         ]);
 
-        // Crear los registros de ítems de factura
         foreach ($itemsArray as $item) {
             ItemInvoice::create([
                 'cant' => $item['quantity'],
