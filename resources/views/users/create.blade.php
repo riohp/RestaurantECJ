@@ -1,12 +1,12 @@
 <!-- resources/views/users/create.blade.php -->
 
-@extends('layouts.landing')
+@extends('layouts.partials.header')
 
 @section('title', 'Create User')
 
 
-@section('content')
-    <div class="container">
+@section('content-main')
+    <div class="container text-white">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
