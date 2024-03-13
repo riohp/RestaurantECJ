@@ -8,6 +8,7 @@ use App\Http\Controllers\TableController;
 use App\Http\Controllers\TableProductController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\CookingController;
+use App\Http\Controllers\DeliveryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,6 +77,19 @@ Route::post('/table/product/updateStatusItems', [TableProductController::class, 
 Route::post('/invoiceBill', [InvoiceController::class, 'invoiceBill'])->name('invoiceBill');
 
 
+
+
+
+// module delivery
+Route::get('/delivery/create', [DeliveryController::class, 'create'])->name('delivery.create');
+Route::post('/delivery/store', [DeliveryController::class, 'store'])->name('delivery.store');
+Route::get('/delivery/index', [DeliveryController::class, 'index'])->name('delivery.index');
+Route::get('/delivery/{delivery}', [DeliveryController::class, 'show'])->name('delivery.show');
+Route::get('/delivery/{delivery}/edit', [DeliveryController::class, 'edit'])->name('delivery.edit');
+Route::put('/delivery/{delivery}', [DeliveryController::class, 'update'])->name('delivery.update');
+Route::delete('/delivery/{delivery}', [DeliveryController::class, 'destroy'])->name('delivery.destroy');
+Route::post('/delivery/{delivery}', [DeliveryController::class, 'activate'])->name('delivery.activate');
+
 // module cooking
 Route::get('/cooking/index', [CookingController::class, 'index'])->name('cooking.index');
 Route::get('/cooking/create', [CookingController::class, 'create'])->name('cooking.create');
@@ -85,3 +99,4 @@ Route::get('/cooking/{cooking}/edit', [CookingController::class, 'edit'])->name(
 Route::put('/cooking/{cooking}', [CookingController::class, 'update'])->name('cooking.update');
 Route::delete('/cooking/{cooking}', [CookingController::class, 'destroy'])->name('cooking.destroy');
 Route::post('/cooking/{cooking}', [CookingController::class, 'activate'])->name('cooking.activate');
+
