@@ -1,6 +1,6 @@
-@extends('layouts.landing')
+@extends('layouts.partials.header')
 @section('title', 'Mesa')
-@section('content')
+@section('content-main')
     <div class="container">
         <div class="row">
             <a href="{{ route('table.index') }}" class="btn btn-primary">Volver</a>

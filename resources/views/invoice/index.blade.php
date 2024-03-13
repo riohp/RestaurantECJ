@@ -5,7 +5,7 @@
         <main class="h-full overflow-y-auto p-4">
             <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4 ">
                 <!-- Card -->
-                @forelse ($tables as $table)
+                @forelse ($invoices as $invoice)
                     <div class="flex items-center p-3 bg-white rounded-lg shadow-xs dark:bg-gray-800">
                         <div
                             class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500">
@@ -17,33 +17,36 @@
                         </div>
                         <div>
                             <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                                {{ $table->nombre }}
+                                {{ $invoice->total }}
                             </p>
                             <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                                {{ $table->capaciodad }}
+                                {{ $invoice->responsible_id }}
                             </p>
                             <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                                {{ $table->status ? 'Activo' : 'Inactivo' }}
+                                {{ $invoice->tipo }}
                             </p>
                             <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                            <form action="{{ route('table.show') }}" method="POST">
+                                {{ $invoice->status ? 'Activo' : 'Inactivo' }}
+                            </p>
+                            <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                            <form action="{{ route('invoice.show') }}" method="POST">
                                 @csrf
-                                <input type="hidden" name="table" value="{{ $table->id }}">
+                                <input type="hidden" name="invoice" value="{{ $invoice->id }}">
                                 <input type="hidden" name="category_id" value="-1">
                                 <button type="submit" class="btn btn-info btn-sm">Ver</button>
                             </form>
-                            <a href="{{ route('table.edit', $table->id) }}" class="btn btn-warning btn-sm">Editar</a>
-                            @if ($table->status)
-                                <form action="{{ route('table.destroy', $table->id) }}" method="POST"
+                            @if ($invoice->status)
+                                <form action="{{ route('invoice.destroy', $invoice->id) }}" method="POST"
                                     style="display: inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                                 </form>
                             @else
-                                <form action="{{ route('table.activate', $table->id) }}" method="POST"
+                                <form action="{{ route('invoice.activate', $invoice->id) }}" method="POST"
                                     style="display: inline">
                                     @csrf
+                                    @method('POST')
                                     <button type="submit" class="btn btn-success btn-sm">Activar</button>
                                 </form>
                             @endif
@@ -54,7 +57,7 @@
                     </div>
                 @empty
                     <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                        >No hay mesas registradas.
+                        >No hay facturas registradas.
                     </p>
                 @endforelse
         </main>

@@ -14,4 +14,5 @@ class Invoice extends Model
         'status'
     ];
 
+    
 }

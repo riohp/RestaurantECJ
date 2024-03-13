@@ -6,9 +6,9 @@ use App\Http\Controllers\PlateController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\TableProductController;
-use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\CookingController;
 use App\Http\Controllers\DeliveryController;
+use App\Http\Controllers\InvoiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -100,3 +100,8 @@ Route::put('/cooking/{cooking}', [CookingController::class, 'update'])->name('co
 Route::delete('/cooking/{cooking}', [CookingController::class, 'destroy'])->name('cooking.destroy');
 Route::post('/cooking/{cooking}', [CookingController::class, 'activate'])->name('cooking.activate');
 
+// module invoice
+Route::get('/invoice/index', [InvoiceController::class, 'index'])->name('invoice.index');
+Route::delete('/invoice/{table}', [InvoiceController::class, 'destroy'])->name('invoice.destroy');
+Route::post('/invoice/{table}', [InvoiceController::class, 'activate'])->name('invoice.activate');
+Route::post('/invoice/show', [InvoiceController::class, 'show'])->name('invoice.show');
