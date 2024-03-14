@@ -8,9 +8,6 @@
         <form method="POST" action="{{ route('users.update', $user->id) }}">
             @csrf
             @method('PUT')
-
-
-
             <div class="form-group row">
                 <label for="name" class="col-md-4 col-form-label text-md-right">Nombre</label>
                 <div class="col-md-6">

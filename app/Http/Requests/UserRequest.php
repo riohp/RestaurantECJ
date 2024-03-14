@@ -2,39 +2,47 @@
 
 namespace App\Http\Requests;
 
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UserRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
+    
     public function authorize(): bool
     {
-        return true;
+        return true; 
     }
 
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, 
      */
-
     public function rules(): array
     {
-        return [
+        $rules = [
             'name' => 'required|max:255|min:3',
-            'email' => 'required|email|unique:users,email,', 
-            'cellphone' => 'required|digits:10',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users', 'email')->ignore($this->route('user')), 
+            ],
+            'cellphone' => [
+                'required',
+                'digits:10',
+                Rule::unique('users', 'cellphone')->ignore($this->route('user')), 
+            ],
             'address' => 'required|max:255|min:3',
             'password' => 'nullable|min:8',
             'role' => 'required|in:admin,cashier,waiter,client',
             'status' => 'required|in:0,1',
         ];
 
-        if  ($this->method() === 'PUT') {
-            $rules['email'] = 'required|email|unique:users,email,' . $this->route('user')->id;
+        // Si es una solicitud de actualización, agregar la regla de validación para el campo 'id'
+        if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
+            $rules['id'] = 'required|exists:users,id';
         }
+
+        return $rules;
     }
 }
