@@ -71,4 +71,9 @@ class User extends Authenticatable
     {
         return $this->role === $role;
     }
+    
+    public function scopeAllowedRoles($query)
+    {
+        return ['admin', 'cashier', 'waiter'];
+    }
 }
