@@ -27,6 +27,8 @@ class UserController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users',
+            'cellphone' => 'required|max:10',
+            'address' => 'required|max:255',
             'password' => 'required|min:8',
             'role' => 'required|in:admin,cashier,waiter,client',
             'status' => 'required|integer|between:0,1',
@@ -54,6 +56,8 @@ class UserController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
+            'cellphone' => 'required|max:10',
+            'address' => 'required|max:255',
             'role' => 'required|in:admin,cashier,waiter,client',
             'status' => 'required|integer|between:0,1',
         ]);
