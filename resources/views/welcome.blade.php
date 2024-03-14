@@ -27,141 +27,33 @@
             <span>View more &RightArrow;</span>
         </a>
         <!-- Cards -->
-        <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
-            <!-- Card -->
-            <div
-                class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
-            >
-                <div
-                    class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500"
-                >
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                        <path
-                            d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"
-                        ></path>
-                    </svg>
-                </div>
-                <div>
-                    <p
-                        class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
-                    >
-                        Total clients
-                    </p>
-                    <p
-                        class="text-lg font-semibold text-gray-700 dark:text-gray-200"
-                    >
-                        6389
-                    </p>
-                </div>
-            </div>
-            <!-- Card -->
-            <div
-                class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
-            >
-                <div
-                    class="p-3 mr-4 text-green-500 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-500"
-                >
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                        <path
-                            fill-rule="evenodd"
-                            d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"
-                            clip-rule="evenodd"
-                        ></path>
-                    </svg>
-                </div>
-                <div>
-                    <p
-                        class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
-                    >
-                        Account balance
-                    </p>
-                    <p
-                        class="text-lg font-semibold text-gray-700 dark:text-gray-200"
-                    >
-                        $ 46,760.89
-                    </p>
-                </div>
-            </div>
-            <!-- Card -->
-            <div
-                class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
-            >
-                <div
-                    class="p-3 mr-4 text-blue-500 bg-blue-100 rounded-full dark:text-blue-100 dark:bg-blue-500"
-                >
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                        <path
-                            d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
-                        ></path>
-                    </svg>
-                </div>
-                <div>
-                    <p
-                        class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
-                    >
-                        New sales
-                    </p>
-                    <p
-                        class="text-lg font-semibold text-gray-700 dark:text-gray-200"
-                    >
-                        376
-                    </p>
-                </div>
-            </div>
-            <!-- Card -->
-            <div
-                class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
-            >
-                <div
-                    class="p-3 mr-4 text-teal-500 bg-teal-100 rounded-full dark:text-teal-100 dark:bg-teal-500"
-                >
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                        <path
-                            fill-rule="evenodd"
-                            d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z"
-                            clip-rule="evenodd"
-                        ></path>
-                    </svg>
-                </div>
-                <div>
-                    <p
-                        class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
-                    >
-                        Pending contacts
-                    </p>
-                    <p
-                        class="text-lg font-semibold text-gray-700 dark:text-gray-200"
-                    >
-                        35
-                    </p>
-                </div>
-            </div>
-        </div>
+
 
 {{--        card version2--}}
         <div class="grid lg:grid-cols-3 grid-cols-2 gap-6">
-            <div class="border border-gray-200 rounded-lg p-4 overflow-hidden text-center hover:border-purple-600 transition-all duration-300">
+            <div class="border border-gray-200 rounded-lg p-4 overflow-hidden text-center hover:border-purple-600 transition-all duration-300 bg-white dark:bg-gray-800 dark:border-gray-700">
                 <h4 class="text-2xl text-purple-600 font-semibold mb-2">1,2M</h4>
-                <h6 class="text-lg font-medium text-black mb-4">Ingresos Totales</h6>
+                <h6 class="text-lg font-medium text-black mb-4 dark:text-white">Ingresos Totales</h6>
                 <p class="text-sm text-gray-600">Aumento un 10%</p>
             </div>
-            <div class="border border-gray-200 rounded-lg p-4 overflow-hidden text-center hover:border-purple-600 transition-all duration-300">
+            <div class="border border-gray-200 rounded-lg p-4 overflow-hidden text-center hover:border-purple-600 transition-all duration-300 bg-white dark:bg-gray-800 dark:border-gray-700">
                 <h4 class="text-2xl text-purple-600 font-semibold mb-2">100</h4>
-                <h6 class="text-lg font-medium text-black mb-4">Nuevos Pedidos</h6>
+                <h6 class="text-lg font-medium text-black mb-4 dark:text-white">Nuevos Pedidos</h6>
                 <p class="text-sm text-gray-600">Aumento un 0,5%</p>
             </div>
-            <div class="border border-gray-200 rounded-lg p-4 overflow-hidden text-center hover:border-purple-600 transition-all duration-300">
+            <div class="border border-gray-200 rounded-lg p-4 overflow-hidden text-center hover:border-purple-600 transition-all duration-300 bg-white dark:bg-gray-800 dark:border-gray-700">
                 <h4 class="text-2xl text-purple-600 font-semibold mb-2">100</h4>
-                <h6 class="text-lg font-medium text-black mb-4">Nuevos Pedidos</h6>
+                <h6 class="text-lg font-medium text-black mb-4 dark:text-white">Nuevos Pedidos</h6>
                 <p class="text-sm text-gray-600">Aumento un 0,5%</p>
             </div>
         </div>
+{{--   end card version2 --}}
 
         <div class="grid lg:grid-cols-2 grid-cols-2 gap-4 mt-4">
-            <div class="relative flex flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md mr-6">
+            <div class="relative flex flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md mr-6 dark:bg-gray-800">
                 <div class="flex flex-wrap justify-between items-center gap-4 p-6">
                     <div class="">
-                        <h1 class="text-lg font-semibold text-black">Ventas Diarias</h1>
+                        <h1 class="text-lg font-semibold dark:text-white">Ventas Diarias</h1>
                         <p class="text-3xl font-bold text-purple-600 mt-1">2.538</p>
                     </div>
                     <div>
@@ -170,7 +62,7 @@
                 </div>
                 <div class="min-w-0 p-4">
                     <div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                        <canvas id="line" width="700" height="300" style="display: block; width: 700px; height: 350px;" class="chartjs-render-monitor"></canvas>
+                        <canvas id="line" width="700" height="250" style="display: block; width: 700px; height: 350px;" class="chartjs-render-monitor"></canvas>
                     <div class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400">
                         <!-- Chart legend -->
                         <div class="flex items-center">
@@ -184,11 +76,11 @@
                     </div>
                 </div>
             </div>
-            <div class="grid grid-cols-2 gap-4">
-                <div class="relative flex flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+            <div class="grid grid-cols-2 gap-9">
+                <div class="row-span-2 relative flex flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md dark:bg-gray-800">
                     <div class="flex flex-wrap justify-between items-center gap-4 p-6">
-                        <div class="">
-                            <h1 class="text-xl font-semibold text-black">Total Ventas</h1>
+                        <div>
+                            <h1 class="text-xl font-semibold dark:text-white">Total Ventas</h1>
                         </div>
                         <div class="min-w-0 dark:bg-gray-800">
                             <div class="chartjs-size-monitor">
@@ -218,7 +110,37 @@
                         </div>
                     </div>
                 </div>
-                
+                <div class="relative flex flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+                    <div class="flex flex-wrap justify-between items-center gap-4 p-6">
+                        <div>
+                            <h1 class="text-lg font-bold">Ordenes Totales</h1>
+                            <p class="font-semibold text-amber-500">-2,3%</p>
+                        </div>
+                        <div class="p-1 px-2 rounded-md focus:outline-none focus:shadow-outline-amber  bg-amber-600 text-white ">
+                            <i class="fa-solid fa-ticket"></i>
+                        </div>
+                    </div>
+                    <div class="px-6">
+                        <h1 class="text-5xl font-extrabold">7.250</h1>
+                        <hr class="w-100 h-1 mx-full my-4 bg-amber-500 border-0 rounded md:my-2 dark:bg-gray-700">
+                    </div>
+                </div>
+
+                <div class="col-start-2 relative flex flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+                    <div class="flex flex-wrap justify-between items-center gap-4 p-6">
+                        <div>
+                            <h1 class="text-lg font-bold">Nuevos Pedidos</h1>
+                            <p class="font-semibold text-green-500">+22,3%</p>
+                        </div>
+                        <div class="p-1 px-2 rounded-md focus:outline-none focus:shadow-outline-green  bg-green-600 text-white ">
+                            <i class="fa-solid fa-user-ninja"></i>
+                        </div>
+                    </div>
+                    <div class="px-6">
+                        <h1 class="text-5xl font-extrabold">150</h1>
+                        <hr class="w-100 h-1 mx-full my-4 bg-green-500 border-0 rounded md:my-2 dark:bg-gray-700">
+                    </div>
+                </div>
             </div>
         </div>
         <!-- New Table -->
