@@ -35,19 +35,37 @@ class ReservationController extends Controller
         $validatedData = $request->validate([
             'full_name' => 'required|max:255',
             'cellphone' => 'required|max:255',
-            'id_table' => 'required|max:255',
-            'start_time' => 'required|date_format:H:i', // Validar el formato de hora
-            'end_time' => 'required|date_format:H:i', // Validar el formato de hora
+            'id_table' => 'required|exists:tables,id',
+            'start_time' => 'required|date_format:Y-m-d\TH:i',
+            'end_time' => 'required|date_format:H:i',
         ]);
-
-        
-        $validatedData['start_time'] = date('Y-m-d') . ' ' . $validatedData['start_time'] . ':00';
-        $validatedData['end_time'] = date('Y-m-d') . ' ' . $validatedData['end_time'] . ':00';
-
-        Reservation::create($validatedData);
-
+    
+        $table = Table::findOrFail($validatedData['id_table']);
+    
+        // Formatear la fecha y hora de inicio
+        $startTime = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i', $validatedData['start_time'])->format('Y-m-d H:i:s');
+    
+        // Obtener la hora de fin y ajustarla a la misma fecha que la hora de inicio
+        $endTime = \Carbon\Carbon::createFromFormat('H:i', $validatedData['end_time'])->format('Y-m-d H:i:s');
+    
+        // Verificar la disponibilidad de la mesa
+        if (!$table->isAvailableForReservation($startTime, $endTime)) {
+            return redirect()->back()->withErrors(['error' => 'La mesa no está disponible para la reserva en este rango de tiempo.']);
+        }
+    
+    
+        Reservation::create([
+            'full_name' => $validatedData['full_name'],
+            'cellphone' => $validatedData['cellphone'],
+            'id_table' => $validatedData['id_table'],
+            'start_time' => $startTime,
+            'end_time' => $endTime,
+        ]);
+    
         return redirect()->route('reservation.index')->with('success', 'Reservación creada correctamente');
     }
+    
+
 
 
 

@@ -23,17 +23,18 @@ class Table extends Model
     {
         return $this->hasMany(Reservation::class, 'id_table');
     }
-
-
+    //valido que la mesa este disponible
     public function isAvailableForReservation($startTime, $endTime)
-{
-    // Verificar si hay reservas que se superponen con la hora de inicio y fin de la nueva reserva
-    $overlappingReservations = $this->reservations->filter(function ($reservation) use ($startTime, $endTime) {
-        return $reservation->status == 1 && !($startTime >= $reservation->end_time || $endTime <= $reservation->start_time);
+    {
 
-    })->count();
+        $startDateTime = \Carbon\Carbon::parse($startTime);
+        $endDateTime = \Carbon\Carbon::parse($endTime);
 
-    return $this->status == 1 && $overlappingReservations == 0;
-}
-
+        return $this->reservations()
+            ->where(function ($query) use ($startDateTime, $endDateTime) {
+                $query->where('start_time', '>=', $endDateTime)
+                    ->orWhere('end_time', '<=', $startDateTime);
+            })
+            ->doesntExist();
+    }
 }

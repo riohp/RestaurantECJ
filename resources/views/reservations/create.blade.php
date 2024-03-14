@@ -23,19 +23,20 @@
                         <label class="text-gray-700 dark:text-gray-200" for="cellphone">Teléfono</label>
                         <input type="text" name="cellphone" id="cellphone" class="w-full mt-2 form-input dark:bg-gray-700 dark:text-gray-200" placeholder="Teléfono" required>
                     </div>
-                        <div>
-                            <label class="text-gray-700 dark:text-gray-200" for="id_table">ID Mesa</label>
-                            <select name="id_table" id="id_table" class="w-full mt-2 form-select dark:bg-gray-700 dark:text-gray-200" required>
-                                <option value="">Selecciona una mesa</option>
-                                @foreach($tables as $table)
-                                    @if($table->status == 1)
-                                        <option value="{{ $table->id }}">{{ $table->nombre }} - capacidad: {{$table->capaciodad}}</option>
-                                    @endif
-                                @endforeach
-                        </div>
                     <div>
-                        <label class="text-gray-700 dark:text-gray-200" for="start_time">Hora de inicio</label>
-                        <input type="time" name="start_time" id="start_time" class="w-full mt-2 form-input dark:bg-gray-700 dark:text-gray-200" placeholder="Hora de inicio" required>
+                        <label class="text-gray-700 dark:text-gray-200" for="id_table">ID Mesa</label>
+                        <select name="id_table" id="id_table" class="w-full mt-2 form-select dark:bg-gray-700 dark:text-gray-200" required>
+                            <option value="">Selecciona una mesa</option>
+                            @foreach($tables as $table)
+                                @if($table->status == 1)
+                                    <option value="{{ $table->id }}">{{ $table->nombre }} - capacidad: {{$table->capaciodad}}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-gray-700 dark:text-gray-200" for="start_time">Fecha y hora de inicio</label>
+                        <input type="datetime-local" name="start_time" id="start_time" class="w-full mt-2 form-input dark:bg-gray-700 dark:text-gray-200" placeholder="Fecha y hora de inicio" required>
                     </div>
                     <div>
                         <label class="text-gray-700 dark:text-gray-200" for="end_time">Hora de fin</label>
@@ -46,6 +47,15 @@
                     <button type="submit" class="px-6 py-3 text-white bg-purple-600 rounded-md hover:bg-purple-500">Guardar</button>
                 </div>
             </form>
+            @if ($errors->any())
+            <div class="mt-4 alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         </div>
     </div>
 </div>
