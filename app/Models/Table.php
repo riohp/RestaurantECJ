@@ -19,4 +19,21 @@ class Table extends Model
     ];
 
 
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class, 'id_table');
+    }
+
+
+    public function isAvailableForReservation($startTime, $endTime)
+{
+    // Verificar si hay reservas que se superponen con la hora de inicio y fin de la nueva reserva
+    $overlappingReservations = $this->reservations->filter(function ($reservation) use ($startTime, $endTime) {
+        return $reservation->status == 1 && !($startTime >= $reservation->end_time || $endTime <= $reservation->start_time);
+
+    })->count();
+
+    return $this->status == 1 && $overlappingReservations == 0;
+}
+
 }

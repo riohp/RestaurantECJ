@@ -66,11 +66,11 @@ class TableHelper
 
         if (!empty($delivery)) {
             if (!is_null($id_category) && is_numeric($id_category) && $id_category != -1) {
-                $products = Product::where('category_id', $id_category)->get();
+                $products = Product::where('status', 1)->where('category_id', $id_category)->get();
             } else {
-                $products = Product::all();
+                $products = Product::where('status', 1)->get();
             }
-            $categories = Category::all();
+            $categories = Category::where('status', 1)->get();
 
             $tableitems = DeliveryProduct::where('deliveries_id', $deliveryId)->with('product')->get();
             $items = [];

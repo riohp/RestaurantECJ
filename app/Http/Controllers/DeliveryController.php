@@ -103,8 +103,4 @@ class DeliveryController extends Controller
         $delivery->save();
         return redirect()->route('delivery.index')->with('success', 'Delivery activated successfully');
     }
-
-
-
-    
 }

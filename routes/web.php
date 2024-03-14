@@ -10,6 +10,7 @@ use App\Http\Controllers\CookingController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\DeliveryProductController;
+use App\Http\Controllers\ReservationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -114,3 +115,14 @@ Route::post('/invoice/product/store', [DeliveryProductController::class, 'store'
 Route::delete('/invoice/product/destroy', [DeliveryProductController::class, 'destroy'])->name('deliverysProduct.destroy');
 Route::post('/invoice/product/updateStatus', [DeliveryProductController::class, 'updateStatus'])->name('deliverysProduct.updateStatus');
 Route::post('/invoice/product/updateStatusItems', [DeliveryProductController::class, 'updateStatusItems'])->name('deliverysProduct.updateStatusItems');
+
+//module reservation
+Route::get('/reservation/index', [ReservationController::class, 'index'])->name('reservation.index');
+Route::get('/reservation/create', [ReservationController::class, 'create'])->name('reservation.create');
+Route::post('/reservation', [ReservationController::class, 'store'])->name('reservation.store');
+Route::get('/reservation/{reservation}', [ReservationController::class, 'show'])->name('reservation.show');
+Route::get('/reservation/{reservation}/edit', [ReservationController::class, 'edit'])->name('reservation.edit');
+Route::put('/reservation/{reservation}', [ReservationController::class, 'update'])->name('reservation.update');
+Route::delete('/reservation/{reservation}', [ReservationController::class, 'destroy'])->name('reservation.destroy');
+
+

@@ -35,7 +35,7 @@
                     <option value="-1">Todas</option>
                     @isset($categories)
                         @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
                     @endisset
                 </select>

@@ -59,7 +59,7 @@
                         <tr>
                             <th>Nombre del Producto</th>
                             <th>Imagen del Producto</th>
-                            <th>id del delivery</th>
+                            <th>id del pedido</th>
                             <th>boton</th>
                         </tr>
                     </thead>
@@ -72,7 +72,7 @@
                                 </td>
                                 <td>{{ $product_delivery->delivery->id }}</td>
                                 <td>
-                                    <form action="{{ route('tablesProduct.updateStatus') }}" method="POST">
+                                    <form action="{{ route('deliverysProduct.updateStatus') }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="deliveries_id" value="{{ $product_delivery->delivery->id }}">
                                         <input type="hidden" name="product_id" value="{{ $product_delivery->product->id }}">
