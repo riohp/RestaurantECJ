@@ -1,6 +1,6 @@
 @extends('layouts.partials.header')
 @section('content-main')
-    <div class="container px-6 mx-auto grid">
+    <div class="container px-6 mx-auto grid" xmlns="http://www.w3.org/1999/html">
         <h2
             class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
         >
@@ -138,6 +138,89 @@
             </div>
         </div>
 
+{{--        card version2--}}
+        <div class="grid lg:grid-cols-3 grid-cols-2 gap-6">
+            <div class="border border-gray-200 rounded-lg p-4 overflow-hidden text-center hover:border-purple-600 transition-all duration-300">
+                <h4 class="text-2xl text-purple-600 font-semibold mb-2">1,2M</h4>
+                <h6 class="text-lg font-medium text-black mb-4">Ingresos Totales</h6>
+                <p class="text-sm text-gray-600">Aumento un 10%</p>
+            </div>
+            <div class="border border-gray-200 rounded-lg p-4 overflow-hidden text-center hover:border-purple-600 transition-all duration-300">
+                <h4 class="text-2xl text-purple-600 font-semibold mb-2">100</h4>
+                <h6 class="text-lg font-medium text-black mb-4">Nuevos Pedidos</h6>
+                <p class="text-sm text-gray-600">Aumento un 0,5%</p>
+            </div>
+            <div class="border border-gray-200 rounded-lg p-4 overflow-hidden text-center hover:border-purple-600 transition-all duration-300">
+                <h4 class="text-2xl text-purple-600 font-semibold mb-2">100</h4>
+                <h6 class="text-lg font-medium text-black mb-4">Nuevos Pedidos</h6>
+                <p class="text-sm text-gray-600">Aumento un 0,5%</p>
+            </div>
+        </div>
+
+        <div class="grid lg:grid-cols-2 grid-cols-2 gap-4 mt-4">
+            <div class="relative flex flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md mr-6">
+                <div class="flex flex-wrap justify-between items-center gap-4 p-6">
+                    <div class="">
+                        <h1 class="text-lg font-semibold text-black">Ventas Diarias</h1>
+                        <p class="text-3xl font-bold text-purple-600 mt-1">2.538</p>
+                    </div>
+                    <div>
+                        <button class="bg-purple-600 text-white px-4 py-2 rounded-md">View More</button>
+                    </div>
+                </div>
+                <div class="min-w-0 p-4">
+                    <div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                        <canvas id="line" width="700" height="300" style="display: block; width: 700px; height: 350px;" class="chartjs-render-monitor"></canvas>
+                    <div class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400">
+                        <!-- Chart legend -->
+                        <div class="flex items-center">
+                            <span class="inline-block w-3 h-3 mr-1 bg-teal-600 rounded-full"></span>
+                            <span>Organic</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="inline-block w-3 h-3 mr-1 bg-purple-600 rounded-full"></span>
+                            <span>Paid</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="relative flex flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+                    <div class="flex flex-wrap justify-between items-center gap-4 p-6">
+                        <div class="">
+                            <h1 class="text-xl font-semibold text-black">Total Ventas</h1>
+                        </div>
+                        <div class="min-w-0 dark:bg-gray-800">
+                            <div class="chartjs-size-monitor">
+                                <div class="chartjs-size-monitor-expand">
+                                    <div class=""></div>
+                                </div>
+                                <div class="chartjs-size-monitor-shrink">
+                                    <div class=""></div>
+                                </div>
+                            </div>
+                            <canvas id="pie" width="50" height="50" style="display: block; width: 700px; height: 350px;" class="chartjs-render-monitor p-4"></canvas>
+                            <div class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400">
+                                <!-- Chart legend -->
+                                <div class="flex items-center">
+                                    <span class="inline-block w-3 h-3 mr-1 bg-blue-500 rounded-full"></span>
+                                    <span>Shirts</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <span class="inline-block w-3 h-3 mr-1 bg-teal-600 rounded-full"></span>
+                                    <span>Shoes</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <span class="inline-block w-3 h-3 mr-1 bg-purple-600 rounded-full"></span>
+                                    <span>Bags</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
         <!-- New Table -->
         <div class="w-full overflow-hidden rounded-lg shadow-xs">
             <div class="w-full overflow-x-auto">
