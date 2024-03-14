@@ -9,6 +9,7 @@ use App\Models\Products;
 use App\Models\Category;
 use App\Utils\TableHelper;
 Use App\Models\TableProduct;
+use App\Http\Requests\TableRequest;
 
 class TableController extends Controller
 {
@@ -24,16 +25,9 @@ class TableController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(TableRequest $request)
     {
-        $validatedData = $request->validate([
-            'nombre' => 'required|max:255',
-            'capaciodad' => 'required|integer',
-            'location' => 'required|max:255',
-            'status' => 'required|integer|between:0,1',
-        ]);
-
-        Table::create($validatedData);
+        Table::create($request);
 
         return redirect()->route('table.index')->with('success', 'Mesa creada correctamente');
     }
@@ -52,16 +46,8 @@ class TableController extends Controller
         return view('table.edit', compact('table'));
     }
 
-    public function update(Request $request, Table $table)
+    public function update(TableRequest $request, Table $table)
     {
-
-        $validatedData = $request->validate([
-            'nombre' => 'required|max:255',
-            'capaciodad' => 'required|integer',
-            'location' => 'required|max:255',
-            'status' => 'required|integer|between:0,1',
-        ]);
-
         $table->update($validatedData);
 
         return redirect()->route('table.index')->with('success', 'Mesa actualizada correctamente');
