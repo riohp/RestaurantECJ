@@ -1,12 +1,9 @@
-@extends('layouts.landing')
+@extends('layouts.partials.header')
 @section('title', 'Crear Mesa')
-@section('content')
-    @include('layouts.partials.menu')
+@section('content-main')
     <div class="flex flex-col flex-1 w-full">
-        @include('layouts.partials.header')
         <main class="h-full overflow-y-auto p-4">
             <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4 ">
-
                 <!-- Card -->
                 @forelse ($tables as $table)
                     <div class="flex items-center p-3 bg-white rounded-lg shadow-xs dark:bg-gray-800">

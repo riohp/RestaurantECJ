@@ -1,6 +1,6 @@
-@extends('layouts.landing')
+@extends('layouts.partials.header')
 @section('title', 'Editar Mesa')
-@section('content')
+@section('content-main')
 <div class="container">
     <div class="row">
         <div class="col-md-8 offset-md-2">
@@ -21,6 +21,12 @@
                                 text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+
+                        @if($message = Session::get('success'))
+                            <div>
+                                <p class="text-blue-600">$message</p>
+                            </div>
+                        @endif
                         <div class="form-group
                             @error('capacity')
                             has-error

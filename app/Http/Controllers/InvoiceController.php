@@ -8,7 +8,15 @@ use App\Models\ItemInvoice;
 use App\Models\TableProduct;
 
 class InvoiceController extends Controller
-{
+{   
+    public function index()
+    {
+        $invoices = Invoice::all();
+        return view('invoice.index', compact('invoices'));
+    }
+
+
+
     public function invoiceBill(Request $request)
     {   
         $responsible = 1;
@@ -16,22 +24,18 @@ class InvoiceController extends Controller
         $type_invoice = $request->input('type_invoice');
         $total = 0;
 
-        // Decodificar el JSON para obtener un arreglo asociativo de ítems
         $itemsArray = json_decode($items[0], true);
 
-        // Procesar los datos de los ítems como desees
         foreach ($itemsArray as $item) {
             $total += $item['subtotal'];
         }
 
-        // Crear la factura
         $invoice = Invoice::create([
             'total' => $total,
             'type_invoice' => $type_invoice,
             'responsible_id' => $responsible,
         ]);
 
-        // Crear los registros de ítems de factura
         foreach ($itemsArray as $item) {
             ItemInvoice::create([
                 'cant' => $item['quantity'],
@@ -44,7 +48,22 @@ class InvoiceController extends Controller
         TableProduct::where('table_id', $request->table_id)->delete();
 
 
-        return redirect()->route('table.index');
+        return redirect()->route('invoice.index');
     }
 
+    public function show(Request $request)
+    {   
+        $invoiceId = $request->input('invoice');
+        $invoice = Invoice::with('items.product')->find($invoiceId);
+        return view('invoice.show', compact('invoice'));
+    }
+
+
+    public function destroy($id)
+    {
+        $invoice = Invoice::findOrFail($id);
+        $invoice->changeStatus();
+        return redirect()->route('invoice.index')->with('success', 'Factura actualizada correctamente');
+    }
+    
 }

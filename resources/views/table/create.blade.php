@@ -1,9 +1,7 @@
-@extends('layouts.landing')
+@extends('layouts.partials.header')
 @section('title', 'Crear Mesa')
-@section('content')
-    @include('layouts.partials.menu')
+@section('content-main')
     <div class="flex flex-col flex-1 w-full">
-        @include('layouts.partials.header')
         <main class="h-full overflow-y-auto">
             <div class="flex items-center  p-6 bg-gray-50 dark:bg-gray-900">
                 <div class="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl dark:bg-gray-800">
@@ -19,11 +17,16 @@
                                 <h1 class="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200">
                                     Crear mesa
                                 </h1>
+                                @if ($message = Session::get('success'))
+                                    <div>
+                                        <p class="text-blue-600">$message</p>
+                                    </div>
+                                @endif
                                 <form action="{{ route('table.store') }}" method="POST">
                                     @csrf
                                     <label class="block text-sm">
                                         <span class="text-gray-700 dark:text-gray-400">Nombre</span>
-                                        <input type="text" name="nombre" id="name" value="{{ old('nombre') }}"
+                                        <input type="text" name="nombre" id="name" value="{{ old('name') }}"
                                             class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                             placeholder="Ingrese el nombre de la mesa" />
                                         @error('name')
@@ -34,7 +37,9 @@
                                     </label>
                                     <label class="block mt-4 text-sm">
                                         @error('capacity')
-                                            has-error
+                                           <span
+                                                class="help-block
+                        text-danger">{{ $message }}</span>
                                         @enderror
                                         <span class="text-gray-700 dark:text-gray-400">Capacidad</span>
                                         <input type="number" name="capaciodad" id="capacity"
@@ -48,7 +53,9 @@
                                         @enderror
                                     </label>
                                     @error('location')
-                                        has-error
+                                       <span
+                                                class="help-block
+                        text-danger">{{ $message }}</span>
                                     @enderror
                                     <label class="block mt-4 text-sm">
                                         <span class="text-gray-700 dark:text-gray-400">
@@ -64,9 +71,6 @@
                                         @enderror
                                     </label>
                                     <label class="block mt-4 text-sm">
-                                        @error('status')
-                                            has-error
-                                        @enderror
                                         <span class="text-gray-700 dark:text-gray-400">
                                             estado
                                         </span>

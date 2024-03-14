@@ -20,6 +20,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'cellphone',
+        'address',
         'password',
         'role',
         'status',
@@ -68,5 +70,10 @@ class User extends Authenticatable
     public function hasRole($role)
     {
         return $this->role === $role;
+    }
+    
+    public function scopeAllowedRoles($query)
+    {
+        return ['admin', 'cashier', 'waiter'];
     }
 }

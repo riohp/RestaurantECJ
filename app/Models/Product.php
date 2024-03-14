@@ -8,7 +8,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class Products extends Model
+class Product extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -21,9 +21,9 @@ class Products extends Model
         'image',
     ];
 
-    public function category()
+    public function categories()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
     /**
@@ -35,7 +35,6 @@ class Products extends Model
     {
         return $this->status == 1;
     }
-
 
 
 

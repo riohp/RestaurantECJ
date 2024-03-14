@@ -57,4 +57,32 @@ class tableProductController extends Controller
 
         return TableHelper::processTableData($request->table_id, -1);
     }
+
+
+    public function updateStatus(Request $request)
+    {
+        $tableProduct = TableProduct::where('table_id', $request->table_id)
+            ->where('product_id', $request->product_id)
+            ->where('status', 'process')
+            ->first();
+
+        if ($tableProduct) {
+            $tableProduct->status = $request->status;
+            $tableProduct->save();
+        }
+
+        return TableHelper::processTableData($request->table_id, $request->status);
+    }
+
+    public function updateStatusItems(Request $request)
+    {
+
+        $tableProducts = TableProduct::where('table_id', $request->table_id)->get();
+
+        foreach ($tableProducts as $tableProduct) {
+            $tableProduct->status = $request->status;
+            $tableProduct->save();
+        }
+        return TableHelper::processTableData($request->table_id, -1);
+    }
 }
