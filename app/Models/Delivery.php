@@ -11,11 +11,10 @@ class Delivery extends Model
 
     protected $fillable =[
         'client_id',
-        'full_name',
         'cellphone',
         'address',
         'invoice_id',
-        'status',
+        'status'
     ];
 
     public function invoice()
@@ -23,5 +22,8 @@ class Delivery extends Model
         return $this->belongsTo(Invoice::class);
     }
 
-    
+    public function client()
+    {
+        return $this->belongsTo(User::class);
+    }    
 }

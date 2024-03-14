@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Delivery;
 use App\Utils\TableHelper;
 use App\Models\DeliveryProduct;
+use Illuminate\Database\QueryException;
 class DeliveryProductController extends Controller
 {
 
@@ -15,7 +16,7 @@ class DeliveryProductController extends Controller
         try {
             DeliveryProduct::create($request->all());
             return TableHelper::processTableDataDelivery($request->deliveries_id, -1);
-        } catch (QueryException $e) {
+            } catch (QueryException $e) {
             return TableHelper::processTableDataDelivery($request->deliveries_id, -1);
         }
     }
