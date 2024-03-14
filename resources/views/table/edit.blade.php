@@ -15,33 +15,22 @@
                             has-error
                             @enderror">
                             <label for="name">Nombre</label>
-                            <input type="text" name="nombre" id="name" class="form-control" value="{{ old('nombre', $table->nombre) }}">
-                            @error('name')
+                            <input type="text" name="nombre" id="nombre" class="form-control" value="{{ old('nombre', $table->nombre) }}">
+                            @error('nombre')
                             <span class="help-block
                                 text-danger">{{ $message }}</span>
                             @enderror
                         </div>
 
-                        @if($message = Session::get('success'))
-                            <div>
-                                <p class="text-blue-600">$message</p>
-                            </div>
-                        @endif
                         <div class="form-group
-                            @error('capacity')
-                            has-error
-                            @enderror">
                             <label for="capacity">Capacidad</label>
-                            <input type="number" name="capaciodad" id="capacity" class="form-control" value="{{ old('capaciodad', $table->capaciodad) }}">
-                            @error('capacity')
+                            <input type="number" name="capaciodad" id="capaciodad" class="form-control" value="{{ old('capaciodad', $table->capaciodad) }}">
+                            @error('capaciodad')
                             <span class="help-block
                                 text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="form-group
-                            @error('location')
-                            has-error
-                            @enderror">
                             <label for="location">Ubicación</label>
                             <input type="text" name="location" id="location" class="form-control" value="{{ old('location', $table->location) }}">
                             @error('location')
@@ -50,9 +39,6 @@
                             @enderror
                         </div>
                         <div class="form-group
-                            @error('status')
-                            has-error
-                            @enderror">
                             <label for="status">Estado</label>
                             <select name="status" id="status" class="form-control">
                                 <option value="1" {{ $table->status ? 'selected' : '' }}>Activo</option>

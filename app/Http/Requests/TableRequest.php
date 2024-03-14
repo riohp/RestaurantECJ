@@ -24,10 +24,10 @@ class TableRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|max:255|min:3',
+            'nombre' => 'required|max:255|min:3',
             'capaciodad' => 'required|integer|min:1',
             'location' => 'required|max:255|min:3',
-            'status' => 'required|integer|between:0,1|min:3',
+            'status' => 'required|integer|between:0,1',
         ];
     }
 }
