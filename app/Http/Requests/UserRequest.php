@@ -26,8 +26,9 @@ class UserRequest extends FormRequest
             'email' => 'required|email|unique:users,email',
             'cellphone' => 'required|numeric|max:10',
             'address' => 'required|max:255|min:3',
-            'role' => 'required|in:admin,cashier,waiter,client',
             'password' => 'required|min:8',
+            'role' => 'required|in:admin,cashier,waiter,client',
+            'status' => 'required|in:0,1',
 
         ];
     }

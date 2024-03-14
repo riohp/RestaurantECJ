@@ -131,9 +131,9 @@
                                 </div>
                             </div>
                         </form>
-                        @if($message = Session::get('success'))
-                            <div class="alert alert-success">
-                                <p>{{ $message }}</p>
+                        @if($error = Session::get('error'))
+                            <div class="alert alert-error">
+                                <p>{{ $error }}</p>
                             </div>
                         @endif
                     </div>
