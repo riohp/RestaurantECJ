@@ -12,5 +12,17 @@ class DeliveryProduct extends Model
         'product_id', 
         'deliveries_id',
         'description',
+        'status',
     ];
+
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
+
+    public function delivery()
+    {
+        return $this->belongsTo(Delivery::class, 'deliveries_id');
+    }
 }

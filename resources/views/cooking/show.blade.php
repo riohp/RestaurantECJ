@@ -1,6 +1,6 @@
-@extends('layouts.landing')
-@section('title', 'Cocina')
-@section('content')
+@extends('layouts.partials.header')
+@section('title', 'Crear domicilio')
+@section('content-main')
     <div class="container">
         <div class="row">
             <a href="{{ route('cooking.index') }}" class="btn btn-primary">Volver</a>
@@ -40,6 +40,43 @@
                                         <input type="hidden" name="table_id" value="{{ $product->table->id }}">
                                         <input type="hidden" name="product_id" value="{{ $product->product->id }}">
                                         <input type="hidden" name="status" value="table">
+                                        <button type="submit" class="btn btn-primary">Cambiar Estado</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @else
+                <p>No hay productos registrados.</p>
+            @endif
+
+        </div>
+        <div class="row">
+            @if ($products_delivery->isNotEmpty())
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre del Producto</th>
+                            <th>Imagen del Producto</th>
+                            <th>id del delivery</th>
+                            <th>boton</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($products_delivery as $product_delivery)
+                            <tr>
+                                <td>{{ $product_delivery->product->name }}</td>
+                                <td>
+                                    <img src="data:image/jpeg;base64,{{$product_delivery->product->image}}" alt="imagen del producto" width="100">               
+                                </td>
+                                <td>{{ $product_delivery->delivery->id }}</td>
+                                <td>
+                                    <form action="{{ route('tablesProduct.updateStatus') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="deliveries_id" value="{{ $product_delivery->delivery->id }}">
+                                        <input type="hidden" name="product_id" value="{{ $product_delivery->product->id }}">
+                                        <input type="hidden" name="status" value="prepared">
                                         <button type="submit" class="btn btn-primary">Cambiar Estado</button>
                                     </form>
                                 </td>

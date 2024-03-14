@@ -14,7 +14,8 @@ class Delivery extends Model
         'full_name',
         'cellphone',
         'address',
-        'invoice_id'
+        'invoice_id',
+        'status',
     ];
 
     public function invoice()

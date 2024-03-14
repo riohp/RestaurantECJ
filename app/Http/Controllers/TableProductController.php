@@ -63,6 +63,7 @@ class tableProductController extends Controller
     {
         $tableProduct = TableProduct::where('table_id', $request->table_id)
             ->where('product_id', $request->product_id)
+            ->where('status', 'process')
             ->first();
 
         if ($tableProduct) {

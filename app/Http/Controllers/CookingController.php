@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Cooking;
 use App\Models\CookingCategory;
 use App\Models\TableProduct;
+use App\Models\DeliveryProduct;
 class CookingController extends Controller
 {
     public function index()
@@ -45,7 +46,15 @@ class CookingController extends Controller
             ->with('table')
             ->with('product') 
             ->get();
-        return view('cooking.show', compact('cooking', 'products'));
+
+        $products_delivery = DeliveryProduct::where('status', 'cooking')
+            ->whereHas('product.categories', function ($query) use ($cookingCategories) {
+                $query->whereIn('id', $cookingCategories);
+            })
+            ->with('delivery')
+            ->with('product') 
+            ->get();
+        return view('cooking.show', compact('cooking', 'products', 'products_delivery'));
     }
 
 
