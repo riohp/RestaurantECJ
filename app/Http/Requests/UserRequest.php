@@ -16,7 +16,7 @@ class UserRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, 
+     * @return array<string, string|array>
      */
     public function rules(): array
     {
@@ -30,10 +30,9 @@ class UserRequest extends FormRequest
             'cellphone' => [
                 'required',
                 'digits:10',
-                Rule::unique('users', 'cellphone')->ignore($this->route('user')), 
             ],
             'address' => 'required|max:255|min:3',
-            'password' => 'nullable|min:8',
+            'password' => 'required|min:8',
             'role' => 'required|in:admin,cashier,waiter,client',
             'status' => 'required|in:0,1',
         ];
