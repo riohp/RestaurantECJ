@@ -21,6 +21,12 @@
                                 text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+
+                        @if($message = Session::get('success'))
+                            <div>
+                                <p class="text-blue-600">$message</p>
+                            </div>
+                        @endif
                         <div class="form-group
                             @error('capacity')
                             has-error

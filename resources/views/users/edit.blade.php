@@ -1,15 +1,15 @@
-@extends('layouts.landing')
+@extends('layouts.partials.header')
 
 @section('title', 'Editar Usuario')
 
-@section('content')
+@section('content-main')
     <div class="container">
         <h1>Editar Usuario</h1>
         <form method="POST" action="{{ route('users.update', $user->id) }}">
             @csrf
             @method('PUT')
-    
-        
+
+
 
             <div class="form-group row">
                 <label for="name" class="col-md-4 col-form-label text-md-right">Nombre</label>
