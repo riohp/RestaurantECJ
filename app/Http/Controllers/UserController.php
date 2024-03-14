@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
  
@@ -22,21 +23,11 @@ class UserController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'email' => 'required|email|unique:users',
-            'cellphone' => 'required|max:10',
-            'address' => 'required|max:255',
-            'password' => 'required|min:8',
-            'role' => 'required|in:admin,cashier,waiter,client',
-            'status' => 'required|integer|between:0,1',
-        ]);
-
-        $validatedData['password'] = bcrypt($request->password);
-        User::create($validatedData);
+        User::create($request);
         return redirect()->route('users.index')->with('success', 'Usuario creado correctamente');
+        
     }
 
     public function show(User $user)
@@ -50,22 +41,10 @@ class UserController extends Controller
         return view('users.edit', compact('user'));
     }
 
-    public function update(Request $request,User $user)
+    public function update(UserRequest $request, User $user)
     {
-        
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'cellphone' => 'required|max:10',
-            'address' => 'required|max:255',
-            'role' => 'required|in:admin,cashier,waiter,client',
-            'status' => 'required|integer|between:0,1',
-        ]);
-
-        
-        $user->update($validatedData);
-
      
+        User::where('id', $user->id)->update($request->validated());
         return redirect()->route('users.index')->with('success', 'Usuario actualizado correctamente');
     }
 
