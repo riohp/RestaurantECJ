@@ -30,26 +30,26 @@
 
 
 {{--        card version2--}}
-        <div class="grid lg:grid-cols-3 grid-cols-2 gap-6">
-            <div class="border border-gray-200 rounded-lg p-4 overflow-hidden text-center hover:border-purple-600 transition-all duration-300 bg-white dark:bg-gray-800 dark:border-gray-700">
-                <h4 class="text-2xl text-purple-600 font-semibold mb-2">1,2M</h4>
-                <h6 class="text-lg font-medium text-black mb-4 dark:text-white">Ingresos Totales</h6>
-                <p class="text-sm text-gray-600">Aumento un 10%</p>
-            </div>
-            <div class="border border-gray-200 rounded-lg p-4 overflow-hidden text-center hover:border-purple-600 transition-all duration-300 bg-white dark:bg-gray-800 dark:border-gray-700">
-                <h4 class="text-2xl text-purple-600 font-semibold mb-2">100</h4>
-                <h6 class="text-lg font-medium text-black mb-4 dark:text-white">Nuevos Pedidos</h6>
-                <p class="text-sm text-gray-600">Aumento un 0,5%</p>
-            </div>
-            <div class="border border-gray-200 rounded-lg p-4 overflow-hidden text-center hover:border-purple-600 transition-all duration-300 bg-white dark:bg-gray-800 dark:border-gray-700">
-                <h4 class="text-2xl text-purple-600 font-semibold mb-2">100</h4>
-                <h6 class="text-lg font-medium text-black mb-4 dark:text-white">Nuevos Pedidos</h6>
-                <p class="text-sm text-gray-600">Aumento un 0,5%</p>
-            </div>
-        </div>
+{{--        <div class="grid lg:grid-cols-3 grid-cols-2 gap-6">--}}
+{{--            <div class="border border-gray-200 rounded-lg p-4 overflow-hidden text-center hover:border-purple-600 transition-all duration-300 bg-white dark:bg-gray-800 dark:border-gray-700">--}}
+{{--                <h4 class="text-2xl text-purple-600 font-semibold mb-2">1,2M</h4>--}}
+{{--                <h6 class="text-lg font-medium text-black mb-4 dark:text-white">Ingresos Totales</h6>--}}
+{{--                <p class="text-sm text-gray-600">Aumento un 10%</p>--}}
+{{--            </div>--}}
+{{--            <div class="border border-gray-200 rounded-lg p-4 overflow-hidden text-center hover:border-purple-600 transition-all duration-300 bg-white dark:bg-gray-800 dark:border-gray-700">--}}
+{{--                <h4 class="text-2xl text-purple-600 font-semibold mb-2">100</h4>--}}
+{{--                <h6 class="text-lg font-medium text-black mb-4 dark:text-white">Nuevos Pedidos</h6>--}}
+{{--                <p class="text-sm text-gray-600">Aumento un 0,5%</p>--}}
+{{--            </div>--}}
+{{--            <div class="border border-gray-200 rounded-lg p-4 overflow-hidden text-center hover:border-purple-600 transition-all duration-300 bg-white dark:bg-gray-800 dark:border-gray-700">--}}
+{{--                <h4 class="text-2xl text-purple-600 font-semibold mb-2">100</h4>--}}
+{{--                <h6 class="text-lg font-medium text-black mb-4 dark:text-white">Nuevos Pedidos</h6>--}}
+{{--                <p class="text-sm text-gray-600">Aumento un 0,5%</p>--}}
+{{--            </div>--}}
+{{--        </div>--}}
 {{--   end card version2 --}}
 
-        <div class="grid lg:grid-cols-2 grid-cols-2 gap-4 mt-4">
+        <div class="grid lg:grid-cols-2 grid-cols-2 gap-4">
             <div class="relative flex flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md mr-6 dark:bg-gray-800">
                 <div class="flex flex-wrap justify-between items-center gap-4 p-6">
                     <div class="">
