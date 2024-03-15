@@ -41,7 +41,7 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                    @isset($users)    
+                    @isset($users)
                     @foreach ($users as $user)
                         @php
                             $allowedRoles = $user->allowedRoles();
@@ -150,7 +150,7 @@
                 @else
                     <td colspan="4" class="text-white text-center">NO HAY INFORMACION QUE MOSTRAR</td>
                 @endisset
-                
+
                 </tbody>
                 </tbody>
             </table>
@@ -177,7 +177,7 @@
                             </svg>
                         </button>
                     </li>
-                
+
                     @for ($i = 1; $i <= $users->lastPage(); $i++)
                     <li>
                         <button onclick="window.location='{{ $users->url($i) }}'"
@@ -187,7 +187,7 @@
                         </button>
                     </li>
                     @endfor
-                
+
                     <li>
                         <button onclick="window.location='{{ $users->nextPageUrl() }}'"
                             class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple"
@@ -200,10 +200,9 @@
                         </button>
                     </li>
                 </ul>
-                
-                
               </nav>
             </span>
         </div>
     </div>
+</div>
 @endsection
