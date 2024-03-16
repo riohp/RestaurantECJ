@@ -37,11 +37,11 @@ class UserRequest extends FormRequest
             'status' => 'required|in:0,1',
         ];
 
-        // Si es una solicitud de actualización, agregar la regla de validación para el campo 'id'
-        if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
-            $rules['id'] = 'required|exists:users,id';
-        }
-
         return $rules;
+
+        
     }
+
+   
+
 }

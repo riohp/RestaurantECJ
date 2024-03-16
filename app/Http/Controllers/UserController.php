@@ -39,16 +39,12 @@ class UserController extends Controller
         return view('users.edit', compact('user'));
     }
 
-    public function update(UserRequest $request, User $user)
+    public function update(Request $request, User $user)
     {
-        try {
-            $user->update($request->validated());
+         
+            $user->update($request->all());
+            
             return redirect()->route('users.index')->with('success', 'Usuario actualizado correctamente');
-        } catch (\Exception $e) {
-            // Log de cualquier error
-            Log::error($e->getMessage());
-            return redirect()->route('users.index')->with('error', 'Error al actualizar el usuario');
-        }
     }
 
 
