@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
- 
+
 
 class UserController extends Controller
 {
 
     public function index()
     {
-        $users = User::paginate(25); 
+        $users = User::paginate(25);
         return view('users.index', compact('users'));
     }
 
@@ -25,9 +25,9 @@ class UserController extends Controller
 
     public function store(UserRequest $request)
     {
-        User::create($request);
+        $userData = $request->all();
+        $user = User::create($userData);
         return redirect()->route('users.index')->with('success', 'Usuario creado correctamente');
-        
     }
 
     public function show(User $user)
@@ -36,22 +36,22 @@ class UserController extends Controller
     }
 
     public function edit(User $user)
-    {   
-        
+    {
+
         return view('users.edit', compact('user'));
     }
 
     public function update(UserRequest $request, User $user)
     {
-     
+
         User::where('id', $user->id)->update($request->validated());
         return redirect()->route('users.index')->with('success', 'Usuario actualizado correctamente');
     }
 
-    
+
     public function destroy(User $user)
     {
-        $user->status = 0; 
+        $user->status = 0;
         $user->save();
         return redirect()->route('users.index')->with('success', 'Usuario desactivado correctamente');
     }
@@ -62,5 +62,5 @@ class UserController extends Controller
         $user->save();
         return redirect()->route('users.index')->with('success', 'Usuario activado correctamente');
     }
-    
+
 }

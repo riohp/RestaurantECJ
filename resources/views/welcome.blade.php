@@ -152,7 +152,7 @@
                     </div>
                     <div>
                         <div>
-                            <button id="dropdownActionButton" data-dropdown-toggle="dropdownAction" class="inline-flex items-center text-purple-700 bg-purple-200 transition-all duration-300 border border-gray-200 focus:outline-none hover:bg-purple-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" type="button">
+                            <button id="dropdownActionButton1" data-dropdown-toggle="dropdownAction1" class="inline-flex items-center text-purple-700 bg-purple-200 transition-all duration-300 border border-gray-200 focus:outline-none  focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" type="button">
                                 <span class="sr-only">Action button</span>
                                 Hoy
                                 <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -160,13 +160,13 @@
                                 </svg>
                             </button>
                             <!-- Dropdown menu -->
-                            <div id="dropdownAction" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
-                                <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownActionButton">
+                            <div id="dropdownAction1" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+                                <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownActionButton1">
                                     <li>
-                                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">15 Dias</a>
+                                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-100">15 Dias</a>
                                     </li>
                                     <li>
-                                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">7 DIas</a>
+                                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-100 dark:hover:text-white">7 DIas</a>
                                     </li>
                                     <li>
                                         <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">30 Dias</a>
@@ -194,48 +194,48 @@
                                     <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
                                         <img class="w-10 h-10 rounded-full" src="/docs/images/people/profile-picture-1.jpg" alt="Jese image">
                                         <div class="ps-3">
-                                            <a class="px-3 py-0.5 text-xs font-semibold leading-tight text-white bg-amber-400 rounded-full dark:bg-green-700 dark:text-green-100">Platos Fuertes</a>
+                                            <a class="px-3 py-0.5 text-xs font-semibold leading-tight text-white bg-amber-400 rounded-full">Platos Fuertes</a>
                                             <div class="font-bold text-lg mt-1">Hamburguesa de la casa</div>
                                         </div>
                                     </th>
                                     <td class="px-6 py-4 text-right">
-                                        <h1 class="font-semibold text-black text-xl">543</h1>
+                                        <h1 class="font-semibold text-black text-xl dark:text-white">543</h1>
                                     </td>
                                 </tr>
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
                                     <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
                                         <img class="w-10 h-10 rounded-full" src="/docs/images/people/profile-picture-1.jpg" alt="Jese image">
                                         <div class="ps-3">
-                                            <a class="px-3 py-0.5 text-xs font-semibold leading-tight text-white bg-blue-400 rounded-full dark:bg-green-700 dark:text-blue-100">Bebidas</a>
+                                            <a class="px-3 py-0.5 text-xs font-semibold leading-tight text-white bg-blue-400 rounded-full">Bebidas</a>
                                             <div class="font-bold text-lg mt-1">Coca-Cola 300ml</div>
                                         </div>
                                     </th>
                                     <td class="px-6 py-4 text-right">
-                                        <h1 class="font-semibold text-black text-xl">487</h1>
+                                        <h1 class="font-semibold text-black text-xl dark:text-white">487</h1>
                                     </td>
                                 </tr>
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
                                     <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
                                         <img class="w-10 h-10 rounded-full" src="/docs/images/people/profile-picture-1.jpg" alt="Jese image">
                                         <div class="ps-3">
-                                            <a class="px-3 py-0.5 text-xs font-semibold leading-tight text-white bg-amber-400 rounded-full dark:bg-green-700 dark:text-green-100">Platos Fuertes</a>
+                                            <a class="px-3 py-0.5 text-xs font-semibold leading-tight text-white bg-amber-400 rounded-full">Platos Fuertes</a>
                                             <div class="font-bold text-lg mt-1">Crepe de pollo</div>
                                         </div>
                                     </th>
                                     <td class="px-6 py-4 text-right">
-                                        <h1 class="font-semibold text-black text-xl">443</h1>
+                                        <h1 class="font-semibold text-black text-xl dark:text-white">443</h1>
                                     </td>
                                 </tr>
                                 <tr class="bg-white dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
                                     <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
                                         <img class="w-10 h-10 rounded-full" src="/docs/images/people/profile-picture-1.jpg" alt="Jese image">
                                         <div class="ps-3">
-                                            <a class="px-3 py-0.5 text-xs font-semibold leading-tight text-white bg-orange-400 rounded-full dark:bg-green-700 dark:text-green-100">Entradas</a>
+                                            <a class="px-3 py-0.5 text-xs font-semibold leading-tight text-white bg-orange-400 rounded-full">Entradas</a>
                                             <div class="font-bold text-lg mt-1">Papas de la casa</div>
                                         </div>
                                     </th>
                                     <td class="px-6 py-4 text-right">
-                                        <h1 class="font-semibold text-black text-xl">243</h1>
+                                        <h1 class="font-semibold text-black text-xl dark:text-white">243</h1>
                                     </td>
                                 </tr>
                             </tbody>
@@ -299,7 +299,7 @@
                                     </div>
                                 </th>
                                 <td class="px-6 py-4 text-right">
-                                    <h1 class="font-semibold text-black text-xl">$ 27,087</h1>
+                                    <h1 class="font-semibold text-black text-xl dark:text-white">$ 27,087</h1>
                                 </td>
                             </tr>
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
@@ -313,7 +313,7 @@
                                     </div>
                                 </th>
                                 <td class="px-6 py-4 text-right">
-                                    <h1 class="font-semibold text-black text-xl">$ 25,078</h1>
+                                    <h1 class="font-semibold text-black text-xl dark:text-white">$ 25,078</h1>
                                 </td>
                             </tr>
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
@@ -327,7 +327,7 @@
                                     </div>
                                 </th>
                                 <td class="px-6 py-4 text-right">
-                                    <h1 class="font-semibold text-black text-xl">$ 23,998</h1>
+                                    <h1 class="font-semibold text-black text-xl dark:text-white">$ 23,998</h1>
                                 </td>
                             </tr>
                             <tr class="bg-white dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
@@ -341,7 +341,7 @@
                                     </div>
                                 </th>
                                 <td class="px-6 py-4 text-right">
-                                    <h1 class="font-semibold text-black text-xl">$ 21,032</h1>
+                                    <h1 class="font-semibold text-black text-xl dark:text-white">$ 21,032</h1>
                                 </td>
                             </tr>
                             </tbody>
