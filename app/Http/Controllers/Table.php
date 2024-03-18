@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 Use app\Models\Category;
 
+
 class Table extends Controller
 {
     public function index(){

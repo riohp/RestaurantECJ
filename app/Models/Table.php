@@ -24,17 +24,22 @@ class Table extends Model
         return $this->hasMany(Reservation::class, 'id_table');
     }
     //valido que la mesa este disponible
-    public function isAvailableForReservation($startTime, $endTime)
-    {
+ 
+   public function isAvailableForReservation($startTime, $endTime)
+{
+    $startTime = \Carbon\Carbon::parse($startTime)->format('Y-m-d H:i:s');
+    // Formatea $startTime antes de usarlo en la consulta
 
-        $startDateTime = \Carbon\Carbon::parse($startTime);
-        $endDateTime = \Carbon\Carbon::parse($endTime);
+    return !Reservation::where('id_table', $this->id)
+        ->where(function ($query) use ($startTime, $endTime) {
+            $query->whereBetween('start_time', [$startTime, $endTime])
+                ->orWhereBetween('end_time', [$startTime, $endTime])
+                ->orWhere(function ($query) use ($startTime, $endTime) {
+                    $query->where('start_time', '<', $startTime)
+                        ->where('end_time', '>', $endTime);
+                });
+        })
+        ->exists();
+}
 
-        return $this->reservations()
-            ->where(function ($query) use ($startDateTime, $endDateTime) {
-                $query->where('start_time', '>=', $endDateTime)
-                    ->orWhere('end_time', '<=', $startDateTime);
-            })
-            ->doesntExist();
-    }
 }
