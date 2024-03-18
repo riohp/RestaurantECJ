@@ -27,9 +27,9 @@ class tableProductController extends Controller
     {
         try {
             TableProduct::create($request->all());
-            return TableHelper::processTableData($request->table_id, -1);
+            return TableHelper::processTableData($request->table_id, $request->category_id, true);
         } catch (QueryException $e) {
-            return TableHelper::processTableData($request->table_id, -1);
+            return TableHelper::processTableData($request->table_id, $request->category_id, true);
         }
     }
 
@@ -55,7 +55,7 @@ class tableProductController extends Controller
         $table->delete();
         }
 
-        return TableHelper::processTableData($request->table_id, -1);
+        return TableHelper::processTableData($request->table_id, $request->category_id, true);
     }
 
 

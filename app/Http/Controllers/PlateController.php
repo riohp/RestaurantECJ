@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Products;
+use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Support\Facades\Schema;
 
@@ -17,7 +17,7 @@ class PlateController extends Controller
 
     public function index()
     {
-        $products = Products::all();
+        $products = Product::all();
         return view('table_product.index', compact('products'));
     }
 
@@ -44,7 +44,7 @@ class PlateController extends Controller
 
         $imageData = base64_encode(file_get_contents($imagePath));
 
-        $product = Products::create([
+        $product = Product::create([
             'name' => $validatedData['name'],
             'price' => $validatedData['price'],
             'cost' => $validatedData['cost'],
@@ -59,12 +59,12 @@ class PlateController extends Controller
     
 
 
-    public function show(Products $product)
+    public function show(Product $product)
     {
         return view('table_product.show', compact('product'));
     }
 
-    public function edit(Products $product)
+    public function edit(Product $product)
     {   
         $categories = Category::all();
         return view('table_product.edit', compact('product', 'categories'));
@@ -72,7 +72,7 @@ class PlateController extends Controller
 
 
 
-    public function update(Request $request, Products $product)
+    public function update(Request $request, Product $product)
     {
         // Validar los datos del formulario
         $validatedData = $request->validate([
@@ -88,14 +88,14 @@ class PlateController extends Controller
         return redirect()->route('table_product.index')->with('success', 'Producto actualizado correctamente');
     }
 
-    public function destroy(Products $product)
+    public function destroy(Product $product)
     {
         $product->status = 0;
         $product->save();
         return redirect()->route('table_product.index')->with('success', 'plato desactivado correctamente');
     }
 
-    public function activate(Products $product)
+    public function activate(Product $product)
     {
         $product->status = 1; 
         $product->save();
@@ -105,7 +105,7 @@ class PlateController extends Controller
     public function search(Request $request)
 {
     $search = $request->get('search');
-    $products = Products::where('name', 'like', '%' . $search . '%')->get();
+    $products = Product::where('name', 'like', '%' . $search . '%')->get();
     return view('table_product.index', compact('product'));
 }
 

@@ -29,7 +29,7 @@
 </head>
   <body>
     @yield('content-landing')
-    @yield('archivos-js')
+    
     <footer class="p-6 border-t dark:border-gray-600 w-full absolute dark:bg-gray-800">
         <div class="grid lg:grid-cols-2 items-center gap-6 dark:text-white">
             <p class="text-default-600 lg:text-start text-center">
@@ -49,5 +49,6 @@
             </div>
         </div>
     </footer>
+    @yield('archivos-js')
   </body>
 </html>
