@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryRequest;
 use Illuminate\Http\Request;
 use App\Models\Category;
 
@@ -19,17 +20,9 @@ class CategoryController extends Controller
     {
         return view('category.create');
     }
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        // Validar los datos del formulario
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'description' => 'required|max:255',
-            'status' => 'required|integer|between:0,1',
-        ]);
-
-        Category::create($validatedData);
-
+        Category::create($request->validated());
         return redirect()->route('category.index')->with('success', 'Categoria creada correctamente');
     }
 
@@ -45,17 +38,10 @@ class CategoryController extends Controller
     }
 
 
-    public function update(Request $request, Category $category)
+    public function update(CategoryRequest $request, Category $category)
     {
      
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'description' => 'required|max:255',
-            'status' => 'required|integer|between:0,1',
-        ]);
-
-        $category->update($validatedData);
-
+        $category->update($request->validated());
         return redirect()->route('category.index')->with('success', 'Categoria actualizada correctamente');
     }
 
