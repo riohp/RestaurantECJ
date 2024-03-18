@@ -165,9 +165,9 @@
                                 <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Teléfono') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="cellphone" value="{{ old('phone') }}" required autocomplete="phone">
+                                    <input id="cellphone" type="text" class="form-control" name="cellphone" value="{{ old('cellphone') }}" required autocomplete="cellphone">
 
-                                    @error('phone')
+                                    @error('cellphone')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -179,7 +179,7 @@
                                 <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('Dirección') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="address" type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ old('address') }}" required autocomplete="address">
+                                    <input id="address" type="text" class="form-control" name="address" value="{{ old('address') }}" required autocomplete="address">
 
                                     @error('address')
                                         <span class="invalid-feedback" role="alert">
@@ -193,7 +193,7 @@
                                 <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                    <input id="password" type="password" class="form-control" name="password" required autocomplete="new-password">
 
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
@@ -207,7 +207,7 @@
                                 <label for="role" class="col-md-4 col-form-label text-md-right">{{ __('Rol') }}</label>
 
                                 <div class="col-md-6">
-                                    <select id="role" class="form-control @error('role') is-invalid @enderror" name="role" required>
+                                    <select id="role" class="form-control" name="role" required>
                                         <option value="">Seleccionar Rol</option>
                                         <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Administrador</option>
                                         <option value="cashier" {{ old('role') == 'cashier' ? 'selected' : '' }}>Cajero</option>
@@ -249,9 +249,9 @@
                                 </div>
                             </div>
                         </form>
-                        @if($message = Session::get('success'))
-                            <div class="alert alert-success">
-                                <p>{{ $message }}</p>
+                        @if($error = Session::get('error'))
+                            <div class="alert alert-error">
+                                <p>{{ $error }}</p>
                             </div>
                         @endif
                     </div>

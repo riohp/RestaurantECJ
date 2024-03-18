@@ -4,6 +4,11 @@
     <div class="flex flex-col flex-1 w-full">
         <main class="h-full overflow-y-auto p-4">
             <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4 ">
+                @if ($message = Session::get('success'))
+                    <div>
+                        <p class="text-blue-600">{{ $message }}</p>
+                    </div>
+                @endif
                 <!-- Card -->
                 @forelse ($tables as $table)
                     <div class="flex items-center p-3 bg-white rounded-lg shadow-xs dark:bg-gray-800">

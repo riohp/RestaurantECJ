@@ -30,6 +30,11 @@
                 </div>
             </div>
         </div>
+        @if($message = Session::get('success'))
+        <div class="alert alert-success">
+            <p>{{ $message }}</p>
+        </div>
+        @endif
         <div class="overflow-x-auto ">
             <table class="w-full table-auto">
                 <thead>

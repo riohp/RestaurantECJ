@@ -3,6 +3,9 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use App\Exceptions\DatabaseConnectionException;
+use App\Http\Controllers\ErrorController;
+use Exception;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -46,5 +49,14 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceof DatabaseConnectionException) {
+            return app(ErrorController::class)->databaseConnectionError($exception);
+        }
+
+        return parent::render($request, $exception);
     }
 }
