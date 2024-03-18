@@ -26,7 +26,7 @@
                             <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
                         </svg>
                     </div>
-                    <input type="search" class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input" placeholder="Search..." aria-label="Search">
+                    <input type="search" class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-dark focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input" placeholder="Search..." aria-label="Search">
                 </div>
             </div>
         </div>
@@ -46,7 +46,7 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                    @isset($users)    
+                    @isset($users)
                     @foreach ($users as $user)
                         @php
                             $allowedRoles = $user->allowedRoles();
@@ -155,7 +155,7 @@
                 @else
                     <td colspan="4" class="text-white text-center">NO HAY INFORMACION QUE MOSTRAR</td>
                 @endisset
-                
+
                 </tbody>
                 </tbody>
             </table>
@@ -182,7 +182,7 @@
                             </svg>
                         </button>
                     </li>
-                
+
                     @for ($i = 1; $i <= $users->lastPage(); $i++)
                     <li>
                         <button onclick="window.location='{{ $users->url($i) }}'"
@@ -192,7 +192,7 @@
                         </button>
                     </li>
                     @endfor
-                
+
                     <li>
                         <button onclick="window.location='{{ $users->nextPageUrl() }}'"
                             class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple"
@@ -205,10 +205,9 @@
                         </button>
                     </li>
                 </ul>
-                
-                
               </nav>
             </span>
         </div>
     </div>
+</div>
 @endsection
