@@ -24,18 +24,8 @@ class Reservation extends Model
 
     
 
-    public function isTableAvailable($startTime, $endTime, $tableId)
-    {
-        return !Reservation::where('id_table', $tableId)
-            ->where(function ($query) use ($startTime, $endTime) {
-                $query->whereBetween('start_time', [$startTime, $endTime])
-                    ->orWhereBetween('end_time', [$startTime, $endTime])
-                    ->orWhere(function ($query) use ($startTime, $endTime) {
-                        $query->where('start_time', '<', $startTime)
-                            ->where('end_time', '>', $endTime);
-                    });
-            })
-            ->exists();
-    }
+   
+
+
 
 }
