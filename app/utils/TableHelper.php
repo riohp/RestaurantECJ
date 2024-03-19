@@ -10,17 +10,18 @@ use App\Models\Delivery;
 
 class TableHelper
 {
-    public static function processTableData($tableId, $id_category)
+    public static function processTableData($tableId, $id_category, $reload = null)
     {
         $table = Table::find($tableId);
-
+        $categories = null;
+        $products = null;
         if (!empty($table)) {
             if (!is_null($id_category) && is_numeric($id_category) && $id_category != -1) {
                 $products = Product::where('category_id', $id_category)->get();
-            } else {
-                $products = Product::all();
+            }else{
+                $categories = Category::all();
             }
-            $categories = Category::all();
+           
 
             $tableitems = TableProduct::where('table_id', $tableId)->with('product')->get();
             $items = [];
@@ -40,6 +41,8 @@ class TableHelper
                     } else {
                         $items[$productId] = [
                             'id' => $productId,
+                            'status' => $tableProduct->status,
+                            'category_id' => $product->category_id,
                             'name' => $product->name,
                             'price' => $price,
                             'quantity' => $quantity,
@@ -53,7 +56,7 @@ class TableHelper
                 $total += $item['subtotal'];
             }
 
-            return view('table.show', compact('table', 'products', 'categories', 'items', 'total'));
+            return view('table.show', compact('table', 'id_category', 'products', 'categories', 'items', 'total', 'reload'));
         } else {
             return response()->json(['error' => 'ID de la mesa inválido'], 400);
         }
