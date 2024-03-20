@@ -20,6 +20,7 @@ class CategoryController extends Controller
     {
         return view('category.create');
     }
+    
     public function store(CategoryRequest $request)
     {
         Category::create($request->validated());
