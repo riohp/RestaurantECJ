@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Schema;
 
 class PlateController extends Controller
 {
-    
+
 
     public function index()
     {
@@ -27,7 +27,7 @@ class PlateController extends Controller
         return view('table_product.create', compact('categories'));
     }
 
-   
+
 
     public function store(Request $request)
     {
@@ -37,7 +37,7 @@ class PlateController extends Controller
             'cost' => 'required|numeric',
             'category_id' => 'required|integer',
             'status' => 'required|integer|between:0,1',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif', 
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif',
         ]);
 
         $imagePath = $request->file('image')->getRealPath();
@@ -48,15 +48,15 @@ class PlateController extends Controller
             'name' => $validatedData['name'],
             'price' => $validatedData['price'],
             'cost' => $validatedData['cost'],
-            'category_id' => $validatedData['category_id'], 
+            'category_id' => $validatedData['category_id'],
             'status' => $validatedData['status'],
-            'image' => $imageData, 
+            'image' => $imageData,
         ]);
 
         return redirect()->route('table_product.index')->with('success', 'Producto creado correctamente');
 }
-    
-    
+
+
 
 
     public function show(Product $product)
@@ -65,7 +65,7 @@ class PlateController extends Controller
     }
 
     public function edit(Product $product)
-    {   
+    {
         $categories = Category::all();
         return view('table_product.edit', compact('product', 'categories'));
     }
@@ -97,7 +97,7 @@ class PlateController extends Controller
 
     public function activate(Product $product)
     {
-        $product->status = 1; 
+        $product->status = 1;
         $product->save();
         return redirect()->route('table_product.index')->with('success', 'plato activado correctamente');
     }
