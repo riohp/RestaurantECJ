@@ -1,6 +1,6 @@
-@extends('layouts.landing')
-@section('title', 'Crear categoría')
-@section('content')
+@extends('layouts.partials.header')
+@section('title', 'Crear Mesa')
+@section('content-main')
 <div class="container">
     <div class="row">
         <div class="col-md-8 offset-md-2">

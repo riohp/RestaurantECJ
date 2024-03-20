@@ -27,7 +27,7 @@ class TableController extends Controller
 
     public function store(TableRequest $request)
     {
-        Table::create($request);
+        Table::create($request->validated());
 
         return redirect()->route('table.index')->with('success', 'Mesa creada correctamente');
     }
@@ -48,7 +48,7 @@ class TableController extends Controller
 
     public function update(TableRequest $request, Table $table)
     {
-        $table->update($validatedData);
+        $table->update($request->validated());
 
         return redirect()->route('table.index')->with('success', 'Mesa actualizada correctamente');
     }

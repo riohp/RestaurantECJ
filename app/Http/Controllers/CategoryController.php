@@ -20,6 +20,7 @@ class CategoryController extends Controller
     {
         return view('category.create');
     }
+    
     public function store(CategoryRequest $request)
     {
         Category::create($request->validated());
@@ -40,7 +41,7 @@ class CategoryController extends Controller
 
     public function update(CategoryRequest $request, Category $category)
     {
-     
+
         $category->update($request->validated());
         return redirect()->route('category.index')->with('success', 'Categoria actualizada correctamente');
     }
@@ -49,7 +50,7 @@ class CategoryController extends Controller
     {
 
         $category->status = 0;
-        $category->save(); 
+        $category->save();
 
         return redirect()->route('category.index')->with('success', 'Categoria eliminada correctamente');
     }
@@ -57,8 +58,8 @@ class CategoryController extends Controller
     public function activate(Category $category)
     {
 
-        $category->status = 1; 
-        $category->save(); 
+        $category->status = 1;
+        $category->save();
         return redirect()->route('category.index')->with('success', 'Categoria activada correctamente');
     }
 }

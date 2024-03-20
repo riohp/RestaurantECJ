@@ -37,7 +37,7 @@ const pieConfig = {
             ctx.restore();
             var fontSize = (height / 100).toFixed(2);
             ctx.font = fontSize + "em Poppins";
-            ctx.fillStyle = "#6b6b6b"
+            ctx.fillStyle = "#adadad"
             ctx.textBaseline = "middle";
 
             var text = "$20,201",
