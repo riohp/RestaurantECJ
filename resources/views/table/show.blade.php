@@ -12,6 +12,7 @@
         };
     </script>
 @endif
+
 @extends('layouts.partials.header')
 @section('title', 'Mesa')
 @section('content-main')
@@ -25,62 +26,77 @@
                     </h3>
 
                     <div class="p-4 mb-4">
-                        
-                        <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                            @forelse ($items as $item)
-                            
-                                <li
-                                    class="sm:col-span-4 md:col-span-4 lg:col-span-4 xl:col-span-4  divide-y divide-gray-200 rounded-lg bg-white shadow dark:bg-gray-700">
-                                    
-                                    <div class="flex w-full items-center justify-between space-x-6 p-6">
-                                        <div class="flex-1 truncate">
-                                            <div class="flex items-center space-x-3">
-                                                <h3
-                                                    class="truncate text-sm font-medium text-gray-900 text-4xl dark:text-gray-300">
-                                                    {{ $item['name'] }}</h3>
-                                              
+                     
+                        @foreach ($items as $status => $statusItems)
+                            <h3 class="text-2xl font-semibold mt-4">{{ ucfirst($status) }}</h3>
+                            <ul>
+                                @foreach ($statusItems as $item)
+                                    <li
+                                        class="sm:col-span-4 md:col-span-4 lg:col-span-4 xl:col-span-4  divide-y divide-gray-200 rounded-lg bg-white shadow dark:bg-gray-700">
+                                        <div class="flex w-full items-center justify-between space-x-6 p-6">
+                                            <div class="flex-1 truncate">
+                                                <div class="flex items-center space-x-3">
+                                                    <h3
+                                                        class="truncate text-sm font-medium text-gray-900 text-4xl dark:text-gray-300">
+                                                        {{ $item['name'] }}</h3>
+                                                </div>
+                                                <p class="mt-1 truncate text-sm text-gray-500 text-xl dark:text-gray-300">
+                                                    <strong>SubTotal:</strong> {{ $item['subtotal'] }}
+                                                </p>
+                                                <span
+                                                    class="inline-flex flex-shrink-0 text-xl items-center rounded-full bg-green-50 px-1.5 py-0.5   font-medium text-green-600 ring-1 ring-inset ring-green-500">
+                                                    {{ $item['quantity'] }}
+                                                </span>
                                             </div>
-                                            <p class="mt-1 truncate text-sm text-gray-500 text-xl dark:text-gray-300">
-                                                <Strong>SubTotal:
-                                                </Strong> {{ $item['subtotal'] }}
-                                            </p>
+                                            @php
+                                                $statusClass = '';
+
+                                                switch ($item['status']) {
+                                                    case 'cooking':
+                                                        $statusClass = 'bg-orange-500';
+                                                        break;
+                                                    case 'process':
+                                                        $statusClass = 'bg-blue-500';
+                                                        break;
+                                                    case 'table':
+                                                        $statusClass = 'bg-green-500';
+                                                        break;
+                                                    
+                                                }
+                                            @endphp
+
                                             <span
-                                        class="inline-flex flex-shrink-0 text-xl items-center rounded-full bg-green-50 px-1.5 py-0.5   font-medium text-green-600 ring-1 ring-inset ring-green-500">
-                                        {{ $item['quantity'] }}</span>
+                                                class="inline-flex items-center gap-1 py-0.5 px-2.5 rounded-full text-xs font-medium {{ $statusClass }} text-white">{{ $item['status'] }}</span>
+                                            <img src="data:image/jpeg;base64,{{ $item['image'] }}" alt="Imagen del producto"
+                                                class="mx-auto h-28 w-28 object-cover">
                                         </div>
-
-
-                                        <img src="data:image/jpeg;base64,{{ $item['image'] }}" alt="Imagen del producto"
-                                        class="mx-auto h-28 w-28 object-cover">
-                                    </div>
-                                    <div>
-                                        <div class="-mt-px flex divide-x divide-gray-200">
-                                            <div class="flex w-0 flex-1">
-                                                <a
-                                                    class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900">
-
-                                                    <form method="POST" action="{{ route('tablesProduct.destroy') }}">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <input type="hidden" value="{{ $item['id'] }}" name="product_id">
-                                                        <input type="hidden" value="{{ $table->id }}" name="table_id">
-                                                        <input type="hidden" name="category_id"
-                                                            value="{{ $item['category_id'] }}">
-                                                        <button class="dark:text-gray-300 " type="submit"><img
-                                                                src="{{ asset('assets/img/ic_basura.png') }} "
-                                                                width="50px" alt=""></button>
-
-                                                    </form>
-                                                </a>
+                                        <div>
+                                            <div class="-mt-px flex divide-x divide-gray-200">
+                                                <div class="flex w-0 flex-1">
+                                                    <a
+                                                        class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900">
+                                                        <form method="POST" action="{{ route('tablesProduct.destroy') }}">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <input type="hidden" value="{{ $item['id'] }}"
+                                                                name="product_id">
+                                                            <input type="hidden" value="{{ $table->id }}"
+                                                                name="table_id">
+                                                            <input type="hidden" name="category_id"
+                                                                value="{{ $item['category_id'] }}">
+                                                            <button class="dark:text-gray-300" type="submit">
+                                                                <img src="{{ asset('assets/img/ic_basura.png') }}"
+                                                                    width="50px" alt="">
+                                                            </button>
+                                                        </form>
+                                                    </a>
+                                                </div>
                                             </div>
-
                                         </div>
-                                    </div>
-                                </li>
-                            @empty
-                                <li>no hay items resgistrados</li>
-                            @endforelse
-                        </ul>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endforeach
                     </div>
                 </div>
 
@@ -142,7 +158,8 @@
                             @foreach ($products as $product)
                                 <div class="w-full  sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-full px-4 ">
                                     <div class="relative">
-                                        <form class="absolute top-0" action="{{ route('tablesProduct.store') }}" method="post">
+                                        <form class="absolute top-0" action="{{ route('tablesProduct.store') }}"
+                                            method="post">
                                             @csrf
                                             <input value="{{ $table->id }}" type="hidden" name="table_id">
                                             <input value="{{ $product->id }}" type="hidden" name="product_id">
@@ -162,9 +179,9 @@
                                             <p class="text-base text-body-color leading-relaxed mb-2 dark:text-gray-300">
                                             <p class="dark:text-gray-300"><strong>Precio:</strong> {{ $product->price }}</p>
                                             </p>
-                                            
+
                                         </div>
-                                     
+
                                     </div>
                                 </div>
                             @endforeach

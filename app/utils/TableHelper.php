@@ -29,19 +29,26 @@ class TableHelper
 
             foreach ($tableitems as $tableProduct) {
                 $product = $tableProduct->product;
-
+            
                 if (!is_null($product)) {
                     $productId = $product->id;
                     $price = $product->price;
                     $quantity = 1;
-
-                    if (isset($items[$productId])) {
-                        $items[$productId]['quantity'] += 1;
-                        $items[$productId]['subtotal'] += $price * $quantity;
+            
+                    // Agrupar los ítems por estado
+                    $status = $tableProduct->status;
+            
+                    if (!isset($items[$status])) {
+                        $items[$status] = [];
+                    }
+            
+                    if (isset($items[$status][$productId])) {
+                        $items[$status][$productId]['quantity'] += 1;
+                        $items[$status][$productId]['subtotal'] += $price * $quantity;
                     } else {
-                        $items[$productId] = [
+                        $items[$status][$productId] = [
                             'id' => $productId,
-                            'status' => $tableProduct->status,
+                            'status' => $status,
                             'category_id' => $product->category_id,
                             'name' => $product->name,
                             'price' => $price,
@@ -49,13 +56,11 @@ class TableHelper
                             'subtotal' => $price * $quantity,
                             'image' => $product->image,
                         ];
-                    }  
+                    }
                 }
             }
-            foreach($items as $item){
-                $total += $item['subtotal'];
-            }
-
+            
+            
             return view('table.show', compact('table', 'id_category', 'products', 'categories', 'items', 'total', 'reload'));
         } else {
             return response()->json(['error' => 'ID de la mesa inválido'], 400);
