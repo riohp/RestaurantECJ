@@ -13,7 +13,7 @@
                     <p><strong>Nombre:</strong> {{ $product->name }}</p>
                     <p><strong>Precio:</strong> {{ $product->price }}</p>
                     <p><strong>Costo:</strong> {{ $product->cost }}</p>
-                    <p><strong>Categoría:</strong> {{ $product->category->name }}</p>
+                    <p><strong>Categoría:</strong> {{ $product->categories->name }}</p>
                     <p><strong>Estado:</strong> {{ $product->status ? 'Activo' : 'Inactivo' }}</p>
                     <a href="{{ route('table_product.index') }}" class="btn btn-primary">Volver al listado</a>
                 </div>
