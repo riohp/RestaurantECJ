@@ -6,7 +6,7 @@
 
 @section('content-landing')
     <div
-        class="flex bg-gray-50 dark:bg-gray-900"
+        class="flex h-screen bg-gray-50 dark:bg-gray-900"
         :class="{ 'overflow-hidden': isSideMenuOpen }"
     >
         <!-- Desktop sidebar -->
