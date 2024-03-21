@@ -60,12 +60,25 @@
                                         </td>
                                         <td class="px-6 py-4">
                                             <div class="flex gap-3">
-                                                <a href="{{ route('table_product.show', $product->id) }}" class="transition-all hover:text-purple-600 dark:text-gray-400">
+                                                <a href="{{ route('table_product.edit', $product->id) }}" class="transition-all hover:text-purple-600 dark:text-gray-400">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="pencil" class="lucide lucide-pencil w-5 h-5"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path><path d="m15 5 4 4"></path></svg>
                                                 </a>
-                                                <a href="{{ route('table_product.show', $product->id) }}" class="transition-all hover:text-purple-600 dark:text-gray-400">
+                                               {{--  <a href="{{ route('table_product.show') }}" class="transition-all hover:text-purple-600 dark:text-gray-400">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="eye" class="lucide lucide-eye w-5 h-5"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                                </a>
+                                                </a> --}}
+
+                                               
+
+                                                @if($product)
+
+                                                <form method="post" id="editForm" action="{{ route('table_product.show') }}">
+                                                    @csrf
+                                                    <input type="hidden" name="product_id" value="{{$product->id}}">
+                                                    <button type="submit" class="transition-all hover:text-purple-600 dark:text-gray-400">
+                                                        <i class="fa-solid fa-eye"></i>
+                                                    </button>
+                                                </form>
+                                                @endif
                                                 @if($product->status == 1)
                                                     <form method="POST" action="{{ route('table_product.destroy', $product->id) }}">
                                                         @csrf

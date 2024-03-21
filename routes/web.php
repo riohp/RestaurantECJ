@@ -44,7 +44,7 @@ Route::post('/users/{user}', [UserController::class, 'activate'])->name('users.a
 Route::get('/table_product/index', [PlateController::class, 'index'])->name('table_product.index');
 Route::get('/table_product/create', [PlateController::class, 'create'])->name('table_product.create');
 Route::post('/table_product', [PlateController::class, 'store'])->name('table_product.store');
-Route::get('/table_product/{product}', [PlateController::class, 'show'])->name('table_product.show');
+Route::post('/table_product/show', [PlateController::class, 'show'])->name('table_product.show');
 Route::get('/table_product/{product}/edit', [PlateController::class, 'edit'])->name('table_product.edit');
 Route::put('/table_product/{product}', [PlateController::class, 'update'])->name('table_product.update');
 Route::delete('/table_product/{product}', [PlateController::class, 'destroy'])->name('table_product.destroy');
