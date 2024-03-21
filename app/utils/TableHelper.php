@@ -10,7 +10,7 @@ use App\Models\Delivery;
 
 class TableHelper
 {
-    public static function processTableData($tableId, $id_category, $reload = null)
+    public static function processTableData($tableId, $id_category, $reload = null, $message = null)
     {
         $table = Table::find($tableId);
         $categories = null;
@@ -35,7 +35,6 @@ class TableHelper
                     $price = $product->price;
                     $quantity = 1;
             
-                    // Agrupar los ítems por estado
                     $status = $tableProduct->status;
             
                     if (!isset($items[$status])) {
@@ -59,9 +58,12 @@ class TableHelper
                     }
                 }
             }
-            
-            
-            return view('table.show', compact('table', 'id_category', 'products', 'categories', 'items', 'total', 'reload'));
+            foreach ($items as $status => $statusItems) {
+                foreach ($statusItems as $item) {
+                    $total += $item['subtotal'];
+                }
+            }   
+            return view('table.show', compact('table', 'id_category', 'products', 'categories', 'items', 'total', 'reload', 'message'));
         } else {
             return response()->json(['error' => 'ID de la mesa inválido'], 400);
         }

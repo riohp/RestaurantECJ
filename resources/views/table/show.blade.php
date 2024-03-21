@@ -26,7 +26,10 @@
                     </h3>
 
                     <div class="p-4 mb-4">
-                     
+                        {{-- @php
+                             dd($items);
+                        @endphp --}}
+
                         @foreach ($items as $status => $statusItems)
                             <h3 class="text-2xl font-semibold mt-4">{{ ucfirst($status) }}</h3>
                             <ul>
@@ -61,7 +64,6 @@
                                                     case 'table':
                                                         $statusClass = 'bg-green-500';
                                                         break;
-                                                    
                                                 }
                                             @endphp
 
@@ -210,13 +212,17 @@
                                 @csrf
                                 <input type="hidden" name="type_invoice" value="site">
                                 <input type="hidden" name="table_id" value="{{ $table->id }}">
-                                <input type="hidden" name="items[]" value="{{ json_encode($items) }}">
+                                <input type="hidden" name="items" value="{{ json_encode($items) }}">
                                 <button type="submit"
                                     class="px-4 py-2 mt-4 ml-2 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">Facturar</button>
                             </form>
                         @endif
                     </div>
                 </div>
+                @if (isset($message))
+                    <p>{{ $message }}</p>
+                @endif
+
             </div>
         </main>
     </div>

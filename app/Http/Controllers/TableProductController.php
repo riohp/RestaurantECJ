@@ -61,9 +61,10 @@ class tableProductController extends Controller
 
     public function updateStatus(Request $request)
     {
+
         $tableProduct = TableProduct::where('table_id', $request->table_id)
             ->where('product_id', $request->product_id)
-            ->where('status', 'process')
+            ->where('status', 'cooking')
             ->first();
 
         if ($tableProduct) {
@@ -77,7 +78,9 @@ class tableProductController extends Controller
     public function updateStatusItems(Request $request)
     {
 
-        $tableProducts = TableProduct::where('table_id', $request->table_id)->get();
+
+        $tableProducts = TableProduct::where('table_id', $request->table_id)
+        ->where('status', 'process')->get();
 
         foreach ($tableProducts as $tableProduct) {
             $tableProduct->status = $request->status;
