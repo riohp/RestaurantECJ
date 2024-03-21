@@ -10,7 +10,7 @@
                         Editar Producto
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('table_product.update', $product->id) }}" method="POST">
+                        <form action="{{ route('products.update', $product->id) }}" method="POST">
                             @csrf
                             @method('PUT')
 

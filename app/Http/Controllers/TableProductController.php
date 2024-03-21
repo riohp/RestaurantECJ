@@ -34,11 +34,9 @@ class tableProductController extends Controller
     }
 
 
-    public function show(Request $request)
+    public function show(TableProduct $table)
     {
-        $tableId = $request->input('product_id');
-        $table = TableProduct::find($tableId);
-        return view('table_product.show', compact('table'));
+        return view('table.show', compact('table'));        
     }
 
     public function update(Request $request, TableProduct $table)
