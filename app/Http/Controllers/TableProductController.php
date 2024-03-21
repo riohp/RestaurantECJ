@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 Use App\Models\TableProduct;
 use App\Utils\TableHelper;
 use Illuminate\Database\QueryException;
+use App\Utils\ShowDataInvoice;
 class tableProductController extends Controller
 {
      public function index(){
@@ -61,7 +62,7 @@ class tableProductController extends Controller
 
     public function updateStatus(Request $request)
     {
-
+        $cooking_id = $request->input('cooking_id');
         $tableProduct = TableProduct::where('table_id', $request->table_id)
             ->where('product_id', $request->product_id)
             ->where('status', 'cooking')
@@ -72,7 +73,7 @@ class tableProductController extends Controller
             $tableProduct->save();
         }
 
-        return TableHelper::processTableData($request->table_id, $request->status);
+        return ShowDataInvoice::showDataInvoice($cooking_id);
     }
 
     public function updateStatusItems(Request $request)

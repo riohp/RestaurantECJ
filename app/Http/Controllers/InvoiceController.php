@@ -63,8 +63,7 @@ class InvoiceController extends Controller
     
         TableProduct::where('table_id', $request->table_id)->delete();
     
-        return redirect()->route('invoice.index')->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
-
+        return redirect()->route('invoice.index');
     }
     
 
