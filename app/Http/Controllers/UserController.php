@@ -28,23 +28,31 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', 'Usuario creado correctamente');
     }
 
-    public function show(User $user)
+    public function show(Request $request)
     {
+        $userId = $request->input('user');
+        $user = User::find($userId);
         return view('users.show', compact('user'));
     }
 
-    public function edit(User $user)
-    {
 
+    
+
+    public function edit(Request $request)
+    {
+        $userId = $request->input('user');
+        $user = User::find($userId);
         return view('users.edit', compact('user'));
     }
 
     public function update(Request $request, User $user)
     {
+        $userId = $request->input('user_id');
+        $user = User::findOrfail($userId);
+        $user->update($request->all());
 
-            $user->update($request->all());
-
-            return redirect()->route('users.index')->with('success', 'Usuario actualizado correctamente');
+        
+        return redirect()->route('users.index')->with('success', 'Usuario actualizado correctamente');
     }
 
 

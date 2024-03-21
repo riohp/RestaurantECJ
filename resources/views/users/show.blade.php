@@ -16,7 +16,7 @@
                     <div class="flex items-center justify-between">
                         <img src="https://coderthemes.com/yum/assets/avatar4-8547565a2.png" alt="" class="w-24 h-24 rounded-full p-1 border border-gray-200 bg-gray-100 dark:bg-gray-700 dark:border-gray-600">
                         <button
-                            onclick="window.location='{{ route('users.edit', $user->id) }}'"
+                            onclick="window.location='{{ route('users.edit', ['user' => $user]) }}'"
                             class="flex items-center justify-center gap-2 rounded-full bg-purple-700 px-6 py-2.5 text-center text-sm transition-all duration-200 hover:bg-purple-400 text-white">
                             <i class="fa-regular fa-pen-to-square"></i>
                             Editar
