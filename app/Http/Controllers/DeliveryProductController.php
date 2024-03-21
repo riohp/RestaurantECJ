@@ -15,9 +15,9 @@ class DeliveryProductController extends Controller
     {
         try {
             DeliveryProduct::create($request->all());
-            return TableHelper::processTableDataDelivery($request->deliveries_id, -1);
+            return TableHelper::processTableDataDelivery($request->deliveries_id, null);
             } catch (QueryException $e) {
-            return TableHelper::processTableDataDelivery($request->deliveries_id, -1);
+            return TableHelper::processTableDataDelivery($request->deliveries_id, null);
         }
     }
 
@@ -33,7 +33,7 @@ class DeliveryProductController extends Controller
         $delivery->delete();
         }
 
-        return TableHelper::processTableDataDelivery($request->deliveries_id, -1);
+        return TableHelper::processTableDataDelivery($request->deliveries_id, null);
     }
 
 
@@ -62,7 +62,7 @@ class DeliveryProductController extends Controller
             $deliveryProduct->status = $request->status;
             $deliveryProduct->save();
         }
-        return TableHelper::processTableDataDelivery($request->deliveries_id, -1);
+        return TableHelper::processTableDataDelivery($request->deliveries_id, null);
     }
 
 }

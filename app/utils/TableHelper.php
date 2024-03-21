@@ -70,52 +70,62 @@ class TableHelper
     }
 
 
-    public static function processTableDataDelivery($deliveryId, $id_category)
+    public static function processTableDataDelivery($deliveryId, $id_category, $reload = null, $message = null)
     {   
         $delivery = Delivery::find($deliveryId);
-
+        $categories = null;
+        $products = null;
         if (!empty($delivery)) {
             if (!is_null($id_category) && is_numeric($id_category) && $id_category != -1) {
-                $products = Product::where('status', 1)->where('category_id', $id_category)->get();
-            } else {
-                $products = Product::where('status', 1)->get();
+                $products = Product::where('category_id', $id_category)->get();
+            }else{
+                $categories = Category::all();
             }
-            $categories = Category::where('status', 1)->get();
+           
 
             $tableitems = DeliveryProduct::where('deliveries_id', $deliveryId)->with('product')->get();
             $items = [];
             $total = 0; 
 
-            foreach ($tableitems as $deliveryProduct) {
-                $product = $deliveryProduct->product;
-
+            foreach ($tableitems as $tableProduct) {
+                $product = $tableProduct->product;
+            
                 if (!is_null($product)) {
                     $productId = $product->id;
                     $price = $product->price;
                     $quantity = 1;
-
-                    if (isset($items[$productId])) {
-                        $items[$productId]['quantity'] += 1;
-                        $items[$productId]['subtotal'] += $price * $quantity;
+            
+                    $status = $tableProduct->status;
+            
+                    if (!isset($items[$status])) {
+                        $items[$status] = [];
+                    }
+            
+                    if (isset($items[$status][$productId])) {
+                        $items[$status][$productId]['quantity'] += 1;
+                        $items[$status][$productId]['subtotal'] += $price * $quantity;
                     } else {
-                        $items[$productId] = [
+                        $items[$status][$productId] = [
                             'id' => $productId,
+                            'status' => $status,
+                            'category_id' => $product->category_id,
                             'name' => $product->name,
                             'price' => $price,
                             'quantity' => $quantity,
                             'subtotal' => $price * $quantity,
                             'image' => $product->image,
                         ];
-                    }  
+                    }
                 }
             }
-            foreach($items as $item){
-                $total += $item['subtotal'];
-            }
-
-            return view('delivery.requestDelivery', compact('delivery','products', 'categories', 'items', 'total'));
+            foreach ($items as $status => $statusItems) {
+                foreach ($statusItems as $item) {
+                    $total += $item['subtotal'];
+                }
+            }   
+            return view('delivery.requestDelivery', compact('delivery', 'id_category', 'products', 'categories', 'items', 'total', 'reload', 'message'));
         } else {
-            return response()->json(['error' => 'ID de la del delyvery inválido'], 400);
+            return response()->json(['error' => 'ID del delivery inválido'], 400);
         }
     }
 }
