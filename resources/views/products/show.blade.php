@@ -1,7 +1,7 @@
-@extends('layouts.landing')
+@extends('layouts.partials.header')
 @section('title', 'Detalle del producto')
 
-@section('content')
+@section('content-main')
 <div class="container">
     <div class="row">
         <div class="col-md-8 offset-md-2">
@@ -15,7 +15,7 @@
                     <p><strong>Costo:</strong> {{ $product->cost }}</p>
                     <p><strong>Categoría:</strong> {{ $product->categories->name }}</p>
                     <p><strong>Estado:</strong> {{ $product->status ? 'Activo' : 'Inactivo' }}</p>
-                    <a href="{{ route('table_product.index') }}" class="btn btn-primary">Volver al listado</a>
+                    <a href="{{ route('products.index') }}" class="btn btn-primary">Volver al listado</a>
                 </div>
             </div>
         </div>

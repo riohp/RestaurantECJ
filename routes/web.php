@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\PlateController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\TableProductController;
@@ -31,23 +31,24 @@ Route::get('/', function () {
 // modulo User
 Route::get('/users/index', [UserController::class, 'index'])->name('users.index');
 Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+Route::post('/users/create', [UserController::class, 'create'])->name('users.create');
 Route::post('/users', [UserController::class, 'store'])->name('users.store');
-Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
-Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
-Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+Route::post('/users/show', [UserController::class, 'show'])->name('users.show');
+Route::post('/users/edit', [UserController::class, 'edit'])->name('users.edit');
+Route::put('/users/update', [UserController::class, 'update'])->name('users.update');
 Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');    
 Route::post('/users/{user}', [UserController::class, 'activate'])->name('users.activate');
-    
 
-// modulo Plate
-Route::get('/table_product/index', [PlateController::class, 'index'])->name('table_product.index');
-Route::get('/table_product/create', [PlateController::class, 'create'])->name('table_product.create');
-Route::post('/table_product', [PlateController::class, 'store'])->name('table_product.store');
-Route::get('/table_product/{product}', [PlateController::class, 'show'])->name('table_product.show');
-Route::get('/table_product/{product}/edit', [PlateController::class, 'edit'])->name('table_product.edit');
-Route::put('/table_product/{product}', [PlateController::class, 'update'])->name('table_product.update');
-Route::delete('/table_product/{product}', [PlateController::class, 'destroy'])->name('table_product.destroy');
-Route::post('/table_product/{product}', [PlateController::class, 'activate'])->name('table_product.activate');
+
+// modulo products
+Route::get('/products/index', [ProductController::class, 'index'])->name('products.index');
+Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+Route::post('/products/show', [ProductController::class, 'show'])->name('products.show');
+Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
+Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
+Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+Route::post('/products/{product}', [ProductController::class, 'activate'])->name('products.activate');
 
 
 //modulo Category
@@ -70,17 +71,14 @@ Route::put('/table/{table}', [TableController::class, 'update'])->name('table.up
 Route::delete('/table/{table}', [TableController::class, 'destroy'])->name('table.destroy');
 Route::post('/table/{table}', [TableController::class, 'activate'])->name('table.activate');
 
-// module tablesProduct 
+// module tablesProduct
 Route::post('/tables/product/store', [TableProductController::class, 'store'])->name('tablesProduct.store');
 Route::delete('/table/product/destroy', [TableProductController::class, 'destroy'])->name('tablesProduct.destroy');
 Route::post('/table/product/updateStatus', [TableProductController::class, 'updateStatus'])->name('tablesProduct.updateStatus');
 Route::post('/table/product/updateStatusItems', [TableProductController::class, 'updateStatusItems'])->name('tablesProduct.updateStatusItems');
 
-// module Invoice 
+// module Invoice
 Route::post('/invoiceBill', [InvoiceController::class, 'invoiceBill'])->name('invoiceBill');
-
-
-
 
 
 // module delivery
@@ -111,7 +109,7 @@ Route::post('/invoice/show', [InvoiceController::class, 'show'])->name('invoice.
 
 
 
-// module invoiceProduct 
+// module invoiceProduct
 Route::post('/invoice/product/store', [DeliveryProductController::class, 'store'])->name('deliverysProduct.store');
 Route::delete('/invoice/product/destroy', [DeliveryProductController::class, 'destroy'])->name('deliverysProduct.destroy');
 Route::post('/invoice/product/updateStatus', [DeliveryProductController::class, 'updateStatus'])->name('deliverysProduct.updateStatus');
