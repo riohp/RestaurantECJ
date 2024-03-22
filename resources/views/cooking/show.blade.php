@@ -39,6 +39,7 @@
                                         @csrf
                                         <input type="hidden" name="table_id" value="{{ $product->table->id }}">
                                         <input type="hidden" name="product_id" value="{{ $product->product->id }}">
+                                        <input type="hidden" name="cooking_id" value="{{ $cooking->id }}">
                                         <input type="hidden" name="status" value="table">
                                         <button type="submit" class="btn btn-primary">Cambiar Estado</button>
                                     </form>
