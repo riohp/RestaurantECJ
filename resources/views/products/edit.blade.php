@@ -1,7 +1,7 @@
-@extends('layouts.landing')
+@extends('layouts.partials.header')
 @section('title', 'Editar producto')
 
-@section('content')
+@section('content-main')
     <div class="container">
         <div class="row">
             <div class="col-md-8 offset-md-2">
@@ -10,7 +10,7 @@
                         Editar Producto
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('table_product.update', $product->id) }}" method="POST">
+                        <form action="{{ route('products.update', $product->id) }}" method="POST">
                             @csrf
                             @method('PUT')
 

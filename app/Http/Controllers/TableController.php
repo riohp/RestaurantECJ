@@ -64,7 +64,7 @@ class TableController extends Controller
 
     public function activate(Table $table)
     {
-        $table->status = 1; //activar mesa
+        $table->status = 1;
         $table->save();
         return redirect()->route('table.index')->with('success', 'Mesa activada correctamente');
     }
