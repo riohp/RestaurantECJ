@@ -18,7 +18,7 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = Product::all();
+        $products = Product::with('category')->get();
         return view('products.index', compact('products'));
     }
 
@@ -30,8 +30,9 @@ class ProductController extends Controller
 
 
 
+
     public function store(ProductRequest $request)
-    {   
+    {
         $validateData = $request->validated();
         $imagePath = $request->file('image')->getRealPath();
         $imageData = base64_encode(file_get_contents($imagePath));
@@ -43,11 +44,14 @@ class ProductController extends Controller
 
 
 
-    public function show(Product $product)
+    public function show(Request $request)
     {
+        $productId = $request->input('product_id');
+        $product = Product::find($productId);
         return view('products.show', compact('product'));
     }
 
+    
     public function edit(Product $product)
     {
         $categories = Category::all();
@@ -87,10 +91,9 @@ class ProductController extends Controller
     }
 
     public function search(Request $request)
-{
-    $search = $request->get('search');
-    $products = Product::where('name', 'like', '%' . $search . '%')->get();
-    return view('products.index', compact('product'));
-}
-
+    {
+        $search = $request->get('search');
+        $products = Product::where('name', 'like', '%' . $search . '%')->get();
+        return view('products.index', compact('product'));
+    }
 }

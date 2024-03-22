@@ -46,7 +46,7 @@
                                             </div>
                                         </td>
                                         <td class="px-6 py-4">
-                                            <span class="inline-flex items-center gap-1 py-0.5 px-2.5 rounded-full text-xs font-medium bg-orange-500 text-white">{{$product->categories->name}}</span>
+                                            <span class="inline-flex items-center gap-1 py-0.5 px-2.5 rounded-full text-xs font-medium bg-orange-500 text-white">{{$product->category->name}}</span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-400">$ {{$product->price}}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-400">$ {{$product->cost}}</td>
