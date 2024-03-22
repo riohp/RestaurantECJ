@@ -20,11 +20,11 @@ class CategoryController extends Controller
     {
         return view('category.create');
     }
-    
+
     public function store(CategoryRequest $request)
     {
-        Category::create($request->validated());
-        return redirect()->route('category.index')->with('success', 'Categoria creada correctamente');
+        $category = Category::create($request->validated());
+        return response()->json($category);
     }
 
 
