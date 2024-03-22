@@ -7,6 +7,7 @@ use App\Models\Invoice;
 use App\Models\ItemInvoice;
 use App\Models\TableProduct;
 use App\Utils\TableHelper;
+use App\Utils\ShowDataInvoice;
 
 class InvoiceController extends Controller
 {   
@@ -20,7 +21,7 @@ class InvoiceController extends Controller
 
     public function invoiceBill(Request $request)
     {
-      
+     
         $responsible = 1;
         $itemsJson = $request->input('items');
         $items = json_decode($itemsJson, true);
@@ -32,7 +33,12 @@ class InvoiceController extends Controller
         foreach ($items as $status => $products) {
             foreach ($products as $productId => $item) {
                 if($item['status'] == 'process' or $item['status'] == 'cooking'){
-                    return TableHelper::processTableData($request->table_id, -1, null, 'No se puede facturar, hay productos en proceso o cocinando.');
+                    if($request->table_id){
+                        return TableHelper::processTableData($request->table_id, -1, null, 'No se puede facturar, hay productos en proceso o cocinando.');
+                    }else{
+                        return TableHelper::processTableDataDelivery($request->deliveries_id, -1, null, 'No se puede facturar, hay productos en proceso o cocinando.');
+                    }
+                    
                 }
             }
         }

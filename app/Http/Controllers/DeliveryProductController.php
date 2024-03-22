@@ -7,6 +7,7 @@ use App\Models\Delivery;
 use App\Utils\TableHelper;
 use App\Models\DeliveryProduct;
 use Illuminate\Database\QueryException;
+use App\Utils\ShowDataInvoice;
 class DeliveryProductController extends Controller
 {
 
@@ -15,9 +16,9 @@ class DeliveryProductController extends Controller
     {
         try {
             DeliveryProduct::create($request->all());
-            return TableHelper::processTableDataDelivery($request->deliveries_id, null);
+            return TableHelper::processTableDataDelivery($request->deliveries_id,$request->category_id, null);
             } catch (QueryException $e) {
-            return TableHelper::processTableDataDelivery($request->deliveries_id, null);
+            return TableHelper::processTableDataDelivery($request->deliveries_id,$request->category_id, null);
         }
     }
 
@@ -33,16 +34,17 @@ class DeliveryProductController extends Controller
         $delivery->delete();
         }
 
-        return TableHelper::processTableDataDelivery($request->deliveries_id, null);
+        return TableHelper::processTableDataDelivery($request->deliveries_id,$request->category_id, null);
     }
 
 
     
     public function updateStatus(Request $request)
     {
+        $cooking_id = $request->input('cooking_id');
         $deliveryProduct = DeliveryProduct::where('deliveries_id', $request->deliveries_id)
             ->where('product_id', $request->product_id)
-            ->where('status', 'process')
+            ->where('status', 'cooking')
             ->first();
 
         if ($deliveryProduct) {
@@ -50,7 +52,7 @@ class DeliveryProductController extends Controller
             $deliveryProduct->save();
         }
 
-        return TableHelper::processTableDataDelivery($request->deliveries_id, $request->status);
+        return ShowDataInvoice::showDataInvoice($cooking_id);
     }
 
     public function updateStatusItems(Request $request)
