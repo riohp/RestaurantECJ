@@ -7,6 +7,7 @@ use App\Models\Cooking;
 use App\Models\CookingCategory;
 use App\Models\TableProduct;
 use App\Models\DeliveryProduct;
+use App\Utils\ShowDataInvoice;
 class CookingController extends Controller
 {
     public function index()
@@ -36,25 +37,7 @@ class CookingController extends Controller
     public function show(Request $request)
     {
         $cookingId = $request->input('cooking');
-        $cooking = Cooking::find($cookingId);
-        $cookingCategories = CookingCategory::where('cooking_id', $cookingId)->pluck('category_id');
-    
-        $products = TableProduct::where('status', 'cooking')
-            ->whereHas('product.categories', function ($query) use ($cookingCategories) {
-                $query->whereIn('id', $cookingCategories);
-            })
-            ->with('table')
-            ->with('product') 
-            ->get();
-
-        $products_delivery = DeliveryProduct::where('status', 'cooking')
-            ->whereHas('product.categories', function ($query) use ($cookingCategories) {
-                $query->whereIn('id', $cookingCategories);
-            })
-            ->with('delivery')
-            ->with('product') 
-            ->get();
-        return view('cooking.show', compact('cooking', 'products', 'products_delivery'));
+        return ShowDataInvoice::showDataInvoice($cookingId);
     }
 
 
