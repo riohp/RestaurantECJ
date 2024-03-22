@@ -37,7 +37,7 @@ class tableProductController extends Controller
 
     public function show(TableProduct $table)
     {
-        return view('table.show', compact('table'));
+        return view('table.show', compact('table'));        
     }
 
     public function update(Request $request, TableProduct $table)

@@ -21,7 +21,7 @@
                 </li>
             </ol>
         </div>
-        <form action="{{ route('table_product.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
             <div class="grid lg:grid-cols-3 gap-6">
                 <div class="p-6 rounded-lg border border-default-200 dark:border-gray-600">

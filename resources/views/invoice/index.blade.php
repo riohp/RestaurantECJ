@@ -49,8 +49,6 @@
                                 @endif
                             </form>
                             </p>
-
-
                         </div>
                     </div>
                 @empty
