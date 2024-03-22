@@ -35,11 +35,13 @@
                                     </button>
                                 </div>
                                 <!-- Modal body -->
-                                <form id="formNuevaCategoria" class="p-4 md:p-5">
+                                <form id="formNuevaCategoria" action="{{ route('category.store') }}" method="post"  class="p-4 md:p-5">
+                                    @csrf
                                     <div class="grid gap-4 mb-4 grid-cols-2">
-                                        <div class="col-span-2">
+                                        <div class="col-span-2 input-name">
                                             <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
                                             <input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-600 focus:border-purple-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500" placeholder="Escribe el nombre de la categoria" required="">
+                                            <span id="errortxtname" class="text-xs font-semibold text-red-600 hidden">Introduce un nombre con al menos 3 caracteres</span>
                                         </div>
                                         <div class="col-span-2">
                                             <label for="status" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
@@ -51,6 +53,7 @@
                                         <div class="col-span-2">
                                             <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descripción Categoria</label>
                                             <textarea name="description" id="description" rows="4" class="block transition-all p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-blue-500" placeholder="Escribe una descripcion sobre la categoria"></textarea>
+                                            <span id="errortxtdesp" class="text-xs font-semibold text-red-600 hidden">Introduce una descripcion con al menos 3 caracteres</span>
                                         </div>
                                     </div>
                                     <button id="btnCrearCategoria" type="button" onclick="crearCategoria()" class="text-white inline-flex items-center bg-purple-600 hover:bg-purple-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-all">
@@ -138,71 +141,32 @@
             document.getElementById('loadingIcon').classList.remove('hidden');
             document.getElementById('btnText').textContent = 'Creando Categoría...';
 
-            let form = document.getElementById('formNuevaCategoria');
-            let formData = new FormData(form);
-            let url = '{{ route('category.store') }}';
-            fetch(url, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                var nuevaFila = `
-                    <tr">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">${data.name}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">${data.description}</td>
-                        <td class="px-6 py-4">
-                            ${data.status ? '<span class="inline-flex items-center gap-1 py-0.5 px-2.5 rounded-full text-xs font-semibold bg-green-500/20 text-green-500">Activo</span>' :
-                                '<span class="inline-flex items-center gap-1 py-0.5 px-2.5 rounded-full text-xs font-semibold bg-red-500/20 text-red-500">Inactivo</span>'}
-                        </td>
-                        <td class="px-6 py-4 flex gap-3">
-                            <a href="{{ route('category.edit', $category->id+1) }}" class="transition-all hover:text-purple-600">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="pencil" class="lucide lucide-pencil w-5 h-5"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path><path d="m15 5 4 4"></path></svg>
-                            </a>
-                            <a href="{{ route('category.show', $category->id+1) }}" class="transition-all hover:text-purple-600">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="eye" class="lucide lucide-eye w-5 h-5"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                            </a>
-                            @if ($category->status)
-                                <form action="{{ route('category.destroy', $category->id+1) }}" method="POST" style="display: inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="transition-all hover:text-red-600">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" class="lucide lucide-trash-2 w-5 h-5"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path><line x1="10" x2="10" y1="11" y2="17"></line><line x1="14" x2="14" y1="11" y2="17"></line></svg>
-                                    </button>
-                                </form>
-                                    @else
-                                    <form action="{{ route('category.activate', $category->id+1) }}" method="POST" style="display: inline">
-                                    @csrf
-                                    <button type="submit" class="transition-all hover:text-green-600">
-                                        <i class="fa-solid fa-play"></i>
-                                    </button>
-                                </form>
-                            @endif
-                        </td>
-                    </tr>
-                `;
-                document.getElementById('tablaCategorias').insertAdjacentHTML('beforeend', nuevaFila);
-                document.getElementById('formNuevaCategoria').reset();
+            let status = true
+            let nameid = document.getElementById('name');
+            let descriptionid = document.getElementById('description');
+
+            if(nameid.value.length < 3){
+                nameid.classList.remove('border-gray-300');
+                nameid.classList.add('border-red-500');
+                document.getElementById('errortxtname').classList.remove('hidden');
+                status = false;
+            }
+            if(descriptionid.value.length < 3){
+                descriptionid.classList.remove('border-gray-300');
+                descriptionid.classList.add('border-red-500');
+                document.getElementById('errortxtdesp').classList.remove('hidden');
+                status = false;
+            }
+
+            if(status) {
+                document.getElementById('formNuevaCategoria').submit();
+
+            } else {
                 document.getElementById('btnCrearCategoria').disabled = false;
                 document.getElementById('InitIcon').classList.remove('hidden');
                 document.getElementById('loadingIcon').classList.add('hidden');
                 document.getElementById('btnText').textContent = 'Agregar Categoria';
-                console.log('Categoría creada correctamente');
-                document.querySelector('[data-modal-target="crud-modal"]').click();
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                console.log('Hubo un error al crear la categoría.');
-                // Restaurar el boton por si no funca
-                document.getElementById('btnCrearCategoria').disabled = false;
-                document.getElementById('InitIcon').classList.remove('hidden');
-                document.getElementById('loadingIcon').classList.add('hidden');
-                document.getElementById('btnText').textContent = 'Agregar Categoria';
-            });
+            }
         }
     </script>
 @endsection
