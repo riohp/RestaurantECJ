@@ -7,33 +7,37 @@
             <div class="col-md-8 offset-md-2">
                 <div class="card">
                     <div class="card-header">
-                        Editar Producto
+                        Editar Producto {{ $product->name }} hola
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('products.update', $product->id) }}" method="POST">
+                        <form action="{{ route('products.update') }}" method="POST">
                             @csrf
                             @method('PUT')
 
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
                             <div class="form-group">
                                 <label for="name">Nombre:</label>
-                                <input type="text" name="name" id="name" class="form-control" value="{{ $product->name }}" required>
+                                <input type="text" name="name" id="name" class="form-control"
+                                    value="{{ $product->name }}" required>
                             </div>
                             <div class="form-group">
                                 <label for="price">Precio:</label>
-                                <input type="number" name="price" id="price" class="form-control" value="{{ $product->price }}" required>
+                                <input type="number" name="price" id="price" class="form-control"
+                                    value="{{ $product->price }}" required>
                             </div>
                             <div class="form-group">
                                 <label for="cost">Costo:</label>
-                                <input type="number" name="cost" id="cost" class="form-control" value="{{ $product->cost }}" required>
+                                <input type="number" name="cost" id="cost" class="form-control"
+                                    value="{{ $product->cost }}" required>
                             </div>
                             <div class="form-group">
                                 <label for="category_id">Categoría:</label>
                                 <select name="category_id" id="category_id" class="form-control" required>
                                     @isset($categories)
-                                @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                @endforeach
-                                @endisset
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                    @endisset
                                 </select>
                             </div>
                             <div class="form-group">

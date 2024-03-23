@@ -103,19 +103,22 @@
                                         <td class="px-4 py-3">
                                             <div class="flex items-center space-x-4 text-sm">
                                                 @if ($user)
-                                                    <form method="POST" action="{{ route('users.show') }}">
-                                                        @csrf
-                                                        <input type="hidden" name="user" value="{{ $user->id }}">
-                                                        <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray" aria-label="Show" type="submit">
-                                                            <i class="fa-solid fa-eye"></i>
-                                                        </button>
-                                                    </form>
-                                                @endif
+                                                <form method="POST" action="{{ route('users.show') }}">
+                                                    @csrf
+                                                    <input type="hidden" name="encrypted_id" value="{{ encrypt($user->id) }}">
+                                                    <button type="submit" class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray" aria-label="Show">
+                                                        <i class="fa-solid fa-eye"></i>
+                                                    </button>
+                                                </form>
                                                 
-                                                <form id="editForm" method="POST" action="{{ route('users.edit') }}">
+                                                @endif
+
+                                                <form id="editForm" method="GET" action="{{ route('users.edit') }}">
                                                     @csrf
                                                     <input type="hidden" name="user" value="{{ $user->id }}">
-                                                    <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray" aria-label="Edit" type="submit">
+                                                    <button
+                                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                                        aria-label="Edit" type="submit">
                                                         <i class="fa-solid fa-pencil"></i>
                                                     </button>
                                                 </form>

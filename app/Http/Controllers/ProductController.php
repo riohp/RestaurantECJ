@@ -29,8 +29,6 @@ class ProductController extends Controller
     }
 
 
-
-
     public function store(ProductRequest $request)
     {
         $validateData = $request->validated();
@@ -46,33 +44,31 @@ class ProductController extends Controller
 
     public function show(Request $request)
     {
-        $productId = $request->input('product_id');
-        $product = Product::find($productId);
+       
         return view('products.show', compact('product'));
     }
 
-    
-    public function edit(Product $product)
+
+    public function edit(Request $request)
     {
+        $productId = $request->input('product_id');
+        $product = Product::find($productId);
         $categories = Category::all();
         return view('products.edit', compact('product', 'categories'));
     }
 
 
-
-    public function update(Request $request, Product $product)
+    public function update(Request $request)
     {
-        // Validar los datos del formulario
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'price' => 'required|numeric',
-            'cost' => 'required|numeric',
-            'category_id' => 'required|integer',
-            'status' => 'required|integer|between:0,1',
-        ]);
-
-        $product->update($validatedData);
-
+        $productId = $request->input('product_id');
+        $product = Product::findOrFail($productId);
+        $validateData = $request->validated();
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->getRealPath();
+            $imageData = base64_encode(file_get_contents($imagePath));
+            $validateData['image'] = $imageData;
+        }
+        $product->update($validateData);
         return redirect()->route('products.index')->with('success', 'Producto actualizado correctamente');
     }
 

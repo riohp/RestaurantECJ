@@ -10,5 +10,11 @@ class ErrorController extends Controller
     public function databaseConnectionError(DatabaseConnectionException $exception)
     {
         return response()->view('errors.database', ['error' => $exception->getMessage()], 500);
+        
+    }
+
+    public function errorAll($exception)
+    {
+        return response()->view('errors.errorall', ['error' => $exception->getMessage()]);
     }
 }

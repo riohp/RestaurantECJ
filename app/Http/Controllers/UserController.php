@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-
+use Illuminate\Support\Facades\Crypt;
+use Exception;
 
 
 class UserController extends Controller
@@ -28,15 +28,24 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', 'Usuario creado correctamente');
     }
 
+    
     public function show(Request $request)
     {
-        $userId = $request->input('user');
-        $user = User::find($userId);
-        return view('users.show', compact('user'));
+      
+            $encryptedId = $request->input('encrypted_id');
+            $id = Crypt::decryptString($encryptedId);
+
+            // Deserializar el ID encriptado para obtener el valor numérico
+            $id = unserialize($id);
+            
+            // Buscar el usuario por su ID
+            $user = User::findOrFail($id);
+            
+            return view('users.show', compact('user'));
+        
     }
 
 
-    
 
     public function edit(Request $request)
     {
@@ -45,13 +54,13 @@ class UserController extends Controller
         return view('users.edit', compact('user'));
     }
 
-    public function update(Request $request, User $user)
-    {
+    public function update(UserRequest $request)
+    {   
+    
         $userId = $request->input('user_id');
         $user = User::findOrfail($userId);
         $user->update($request->all());
 
-        
         return redirect()->route('users.index')->with('success', 'Usuario actualizado correctamente');
     }
 

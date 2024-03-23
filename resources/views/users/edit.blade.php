@@ -6,11 +6,9 @@
     <div class="container">
         <h1>Editar Usuario</h1>
 
-        <form method="POST" action="{{ route('users.update') }}">
+        <form id="editForm" method="POST" action="{{ route('users.update', ['user' => $user->id]) }}">
             @csrf
             @method('PUT')
-
-            <input type="hidden" name="user_id" value="{{ $user->id }}">
 
             <div class="form-group row">
                 <label for="name" class="col-md-4 col-form-label text-md-right">Nombre</label>
