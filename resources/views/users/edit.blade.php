@@ -1,14 +1,16 @@
 @extends('layouts.partials.header')
-
+{{-- edit.blade.php --}}
 @section('title', 'Editar Usuario')
 
 @section('content-main')
     <div class="container">
         <h1>Editar Usuario</h1>
 
-        <form id="editForm" method="POST" action="{{ route('users.update', ['user' => $user->id]) }}">
+        <form id="editForm" method="POST" action="{{ route('users.update', ['encrypted_id' => encrypt($user->id)]) }}">
+
             @csrf
             @method('PUT')
+            <input type="hidden" name="encrypted_id" value="{{ encrypt($user->id) }}">
 
             <div class="form-group row">
                 <label for="name" class="col-md-4 col-form-label text-md-right">Nombre</label>

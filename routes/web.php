@@ -35,8 +35,8 @@ Route::post('/users/create', [UserController::class, 'create'])->name('users.cre
 Route::post('/users', [UserController::class, 'store'])->name('users.store');
 Route::post('/users/show', [UserController::class, 'show'])->name('users.show');
 Route::post('/users/edit', [UserController::class, 'edit'])->name('users.edit');
-Route::put('/users/update', [UserController::class, 'update'])->name('users.update');
-Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');    
+Route::put('/users/{encrypted_id}', [UserController::class, 'update'])->name('users.update');
+Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 Route::post('/users/{user}', [UserController::class, 'activate'])->name('users.activate');
 
 

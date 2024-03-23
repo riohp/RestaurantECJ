@@ -28,39 +28,52 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', 'Usuario creado correctamente');
     }
 
-    
     public function show(Request $request)
     {
-      
-            $encryptedId = $request->input('encrypted_id');
-            $id = Crypt::decryptString($encryptedId);
 
-            // Deserializar el ID encriptado para obtener el valor numérico
-            $id = unserialize($id);
-            
-            // Buscar el usuario por su ID
-            $user = User::findOrFail($id);
-            
-            return view('users.show', compact('user'));
-        
+        $encryptedId = $request->input('encrypted_id');
+        $id = Crypt::decryptString($encryptedId);
+
+        // Deserializar el ID encriptado para obtener el valor numérico
+        $id = unserialize($id);
+
+        // Buscar el usuario por su ID
+        $user = User::findOrFail($id);
+
+        return view('users.show', compact('user'));
     }
 
 
 
     public function edit(Request $request)
     {
-        $userId = $request->input('user');
-        $user = User::find($userId);
+        $encryptedId = $request->input('encrypted_id');
+        $id = Crypt::decryptString($encryptedId);
+
+        // Deserializar el ID encriptado para obtener el valor numérico
+        $id = unserialize($id);
+
+        $user = User::findOrFail($id);
         return view('users.edit', compact('user'));
     }
 
-    public function update(UserRequest $request)
-    {   
-    
-        $userId = $request->input('user_id');
-        $user = User::findOrfail($userId);
-        $user->update($request->all());
 
+
+    public function update(UserRequest $request, $encrypted_id)
+    {
+        // Desencriptar el ID del usuario
+        $userId = Crypt::decryptString($encrypted_id);
+
+        // Deserializar el ID encriptado para obtener el valor numérico
+        $userId = unserialize($userId);
+
+
+       
+        $user = User::findOrFail($userId);
+        $user->update($request->validated());
+
+
+        // Redirigir a la página de índice con un mensaje de éxito
         return redirect()->route('users.index')->with('success', 'Usuario actualizado correctamente');
     }
 
@@ -81,4 +94,3 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', 'Usuario activado correctamente');
     }
 }
-
