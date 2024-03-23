@@ -33,7 +33,6 @@ class UserController extends Controller
 
         $encryptedId = $request->input('encrypted_id');
         $id = Crypt::decryptString($encryptedId);
-
         // Deserializar el ID encriptado para obtener el valor numérico
         $id = unserialize($id);
 
@@ -61,19 +60,10 @@ class UserController extends Controller
 
     public function update(UserRequest $request, $encrypted_id)
     {
-        // Desencriptar el ID del usuario
         $userId = Crypt::decryptString($encrypted_id);
-
-        // Deserializar el ID encriptado para obtener el valor numérico
         $userId = unserialize($userId);
-
-
-       
         $user = User::findOrFail($userId);
         $user->update($request->validated());
-
-
-        // Redirigir a la página de índice con un mensaje de éxito
         return redirect()->route('users.index')->with('success', 'Usuario actualizado correctamente');
     }
 

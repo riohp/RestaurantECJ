@@ -9,7 +9,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Http\Requests\ProductRequest;
 use Illuminate\Support\Facades\Schema;
-
+use Illuminate\Support\Facades\Crypt;
 
 
 class ProductController extends Controller
@@ -44,24 +44,31 @@ class ProductController extends Controller
 
     public function show(Request $request)
     {
-       
+        $encryptedId = $request->input('product_encrypted_id');
+        $id = Crypt::decryptString($encryptedId);
+        $id = unserialize($id);
+        $product = Product::findOrFail($id);
         return view('products.show', compact('product'));
     }
 
 
     public function edit(Request $request)
     {
-        $productId = $request->input('product_id');
-        $product = Product::find($productId);
+        $encryptedId = $request->input('product_encrypted_id');
+        $id = Crypt::decryptString($encryptedId);
+        $id = unserialize($id);
+        $product = Product::findOrFail($id);
         $categories = Category::all();
         return view('products.edit', compact('product', 'categories'));
     }
 
 
-    public function update(Request $request)
+    public function update(ProductRequest $request, $product_encrypted_id)
     {
-        $productId = $request->input('product_id');
-        $product = Product::findOrFail($productId);
+        $encryptedId = $product_encrypted_id;
+        $id = Crypt::decryptString($encryptedId);
+        $id = unserialize($id);
+        $product = Product::findOrFail($id);
         $validateData = $request->validated();
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->getRealPath();
@@ -72,18 +79,27 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Producto actualizado correctamente');
     }
 
-    public function destroy(Product $product)
+
+    public function destroy(Request $request)
     {
+        $encryptedId = $request->input('product_encrypted_id');
+        $id = Crypt::decryptString($encryptedId);
+        $id = unserialize($id);
+        $product = Product::findOrFail($id);
         $product->status = 0;
         $product->save();
-        return redirect()->route('products.index')->with('success', 'plato desactivado correctamente');
+        return redirect()->route('products.index')->with('success', 'Producto eliminado correctamente');
     }
 
-    public function activate(Product $product)
+    public function activate(Request $request)
     {
+        $encryptedId = $request->input('product_encrypted_id');
+        $id = Crypt::decryptString($encryptedId);
+        $id = unserialize($id);
+        $product = Product::findOrFail($id);
         $product->status = 1;
         $product->save();
-        return redirect()->route('products.index')->with('success', 'plato activado correctamente');
+        return redirect()->route('products.index')->with('success', 'Producto activado correctamente');
     }
 
     public function search(Request $request)

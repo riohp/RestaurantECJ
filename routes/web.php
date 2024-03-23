@@ -36,8 +36,8 @@ Route::post('/users', [UserController::class, 'store'])->name('users.store');
 Route::post('/users/show', [UserController::class, 'show'])->name('users.show');
 Route::post('/users/edit', [UserController::class, 'edit'])->name('users.edit');
 Route::put('/users/{encrypted_id}', [UserController::class, 'update'])->name('users.update');
-Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-Route::post('/users/{user}', [UserController::class, 'activate'])->name('users.activate');
+Route::delete('/users/destroy', [UserController::class, 'destroy'])->name('users.destroy');
+Route::post('/users/activtate', [UserController::class, 'activate'])->name('users.activate');
 
 
 // modulo products
@@ -46,9 +46,9 @@ Route::get('/products/create', [ProductController::class, 'create'])->name('prod
 Route::post('/products', [ProductController::class, 'store'])->name('products.store');
 Route::post('/products/show', [ProductController::class, 'show'])->name('products.show');
 Route::post('/products/edit', [ProductController::class, 'edit'])->name('products.edit');
-Route::put('/products/update', [ProductController::class, 'update'])->name('products.update');
-Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
-Route::post('/products/{product}', [ProductController::class, 'activate'])->name('products.activate');
+Route::put('/products/{product_encrypted_id}', [ProductController::class, 'update'])->name('products.update');
+Route::delete('/products/destroy', [ProductController::class, 'destroy'])->name('products.destroy');
+Route::post('/products/activate', [ProductController::class, 'activate'])->name('products.activate');
 
 
 //modulo Category
