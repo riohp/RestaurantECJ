@@ -68,19 +68,25 @@ class UserController extends Controller
     }
 
 
-    public function destroy(User $user)
+    public function destroy(Request $request)
     {
+        $encryptedId = $request->input('encrypted_id');
+        $id = Crypt::decryptString($encryptedId);
+        $id = unserialize($id);
+        $user = User::findOrFail($id);
         $user->status = 0;
         $user->save();
-
-        return redirect()->route('users.index')->with('success', 'Usuario desactivado correctamente');
+        return redirect()->route('users.index')->with('success', 'Usuario eliminado correctamente');
     }
 
-    public function activate(User $user)
+    public function activate(Request $request)
     {
+        $encryptedId = $request->input('encrypted_id');
+        $id = Crypt::decryptString($encryptedId);
+        $id = unserialize($id);
+        $user = User::findOrFail($id);
         $user->status = 1;
         $user->save();
-
         return redirect()->route('users.index')->with('success', 'Usuario activado correctamente');
     }
 }

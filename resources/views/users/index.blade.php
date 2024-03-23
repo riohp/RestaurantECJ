@@ -127,9 +127,10 @@
 
 
                                                 @if ($user->status == 1)
-                                                    <form method="POST" action="{{ route('users.destroy', $user->id) }}">
+                                                    <form method="POST" action="{{ route('users.destroy') }}">
                                                         @csrf
                                                         @method('DELETE')
+                                                        <input type="hidden" name="encrypted_id" value="{{ encrypt($user->id) }}">
                                                         <button
                                                             onclick="window.location='{{ route('users.destroy', $user->id) }}'"
                                                             class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg dark:text-red-400 focus:outline-none focus:shadow-outline-gray"
@@ -143,9 +144,10 @@
                                                         </button>
                                                     </form>
                                                 @else
-                                                    <form method="POST" action="{{ route('users.activate', $user->id) }}">
+                                                    <form method="POST" action="{{ route('users.activate') }}">
                                                         @csrf
                                                         @method('POST')
+                                                        <input type="hidden" name="encrypted_id" value="{{ encrypt($user->id) }}">
                                                         <button type="submit" class="btn btn-link">activar</button>
                                                     </form>
                                                 @endif
