@@ -33,8 +33,8 @@
                             <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
                             <form action="{{ route('table.show') }}" method="POST">
                                 @csrf
-                                <input type="hidden" name="table" value="{{ $table->id }}">
-                                <input type="hidden" name="category_id" value="-1">
+                                <input type="hidden" name="encrypted_table_id" value="{{ encrypt($table->id) }}">
+                                <input type="hidden" name="category_id" value="{{ encrypt(-1) }}">
                                 <button type="submit" class="btn btn-info btn-sm">Ver</button>
                             </form>
                             {{--  <a href="{{ route('table.edit', $table->id) }}" class="btn btn-warning btn-sm">Editar</a> --}}
