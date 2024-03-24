@@ -103,28 +103,41 @@
                                         <td class="px-4 py-3">
                                             <div class="flex items-center space-x-4 text-sm">
                                                 @if ($user)
-                                                    <form method="POST" action="{{ route('users.show') }}">
-                                                        @csrf
-                                                        <input type="hidden" name="user" value="{{ $user->id }}">
-                                                        <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray" aria-label="Show" type="submit">
-                                                            <i class="fa-solid fa-eye"></i>
-                                                        </button>
-                                                    </form>
-                                                @endif
-                                                
-                                                <form id="editForm" method="POST" action="{{ route('users.edit') }}">
+                                                <form method="POST" action="{{ route('users.show') }}">
                                                     @csrf
-                                                    <input type="hidden" name="user" value="{{ $user->id }}">
-                                                    <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray" aria-label="Edit" type="submit">
-                                                        <i class="fa-solid fa-pencil"></i>
+                                                    <input type="hidden" name="encrypted_id" value="{{ encrypt($user->id) }}">
+                                                    <button type="submit" class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray" aria-label="Show">
+                                                        <i class="fa-solid fa-eye"></i>
                                                     </button>
                                                 </form>
+                                                
+                                                
+                                                @endif
+
+
+                                                {{-- <a href="{{ route('users.edit', ['encrypted_id' => encrypt($user->id)]) }}"
+                                                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                                    aria-label="Edit">
+                                                    <i class="fa-solid fa-pencil"></i>
+                                                </a> --}}
+
+
+                                                 <form id="editForm" method="POST" action="{{ route('users.edit') }}">
+                                                    @csrf
+                                                    <input type="hidden" name="encrypted_id" value="{{ encrypt($user->id) }}">
+                                                    <button
+                                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                                        aria-label="Edit" type="submit">
+                                                        <i class="fa-solid fa-pencil"></i>
+                                                    </button>
+                                                </form> 
 
 
                                                 @if ($user->status == 1)
-                                                    <form method="POST" action="{{ route('users.destroy', $user->id) }}">
+                                                    <form method="POST" action="{{ route('users.destroy') }}">
                                                         @csrf
                                                         @method('DELETE')
+                                                        <input type="hidden" name="encrypted_id" value="{{ encrypt($user->id) }}">
                                                         <button
                                                             onclick="window.location='{{ route('users.destroy', $user->id) }}'"
                                                             class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg dark:text-red-400 focus:outline-none focus:shadow-outline-gray"
@@ -138,9 +151,10 @@
                                                         </button>
                                                     </form>
                                                 @else
-                                                    <form method="POST" action="{{ route('users.activate', $user->id) }}">
+                                                    <form method="POST" action="{{ route('users.activate') }}">
                                                         @csrf
                                                         @method('POST')
+                                                        <input type="hidden" name="encrypted_id" value="{{ encrypt($user->id) }}">
                                                         <button type="submit" class="btn btn-link">activar</button>
                                                     </form>
                                                 @endif
