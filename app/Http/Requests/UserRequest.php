@@ -15,11 +15,12 @@ class UserRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, string|array>
+     * @return array<string, mixed>
      */
     public function rules(): array
     {
         $userId = $this->route('user') ? $this->route('user')->id : null;
+
         $rules = [
             'name' => 'required|max:255|min:3',
             'cellphone' => [
@@ -34,16 +35,13 @@ class UserRequest extends FormRequest
         // Verificar si el usuario está autenticado
         if ($this->user()) {
             // Solo si el usuario está autenticado, se aplican las siguientes reglas de validación
-            if ($this->isMethod('put') && $this->has('email')) {
-                $rules['email'] = [
-                    'required',
-                    'email',
-                    Rule::unique('users', 'email')->ignore($userId),
-                ];
-            }
-
             if ($this->isMethod('put')) {
                 $rules = array_merge($rules, [
+                    'email' => [
+                        'required',
+                        'email',
+                        Rule::unique('users', 'email')->ignore($userId),
+                    ],
                     'password' => 'nullable|min:8',
                     'role' => 'nullable|in:admin,cashier,waiter,client',
                     'status' => 'nullable|in:0,1',

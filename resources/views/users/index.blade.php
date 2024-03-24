@@ -111,11 +111,18 @@
                                                     </button>
                                                 </form>
                                                 
+                                                
                                                 @endif
 
 
+                                                {{-- <a href="{{ route('users.edit', ['encrypted_id' => encrypt($user->id)]) }}"
+                                                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                                    aria-label="Edit">
+                                                    <i class="fa-solid fa-pencil"></i>
+                                                </a> --}}
 
-                                                <form id="editForm" method="POST" action="{{ route('users.edit') }}">
+
+                                                 <form id="editForm" method="POST" action="{{ route('users.edit') }}">
                                                     @csrf
                                                     <input type="hidden" name="encrypted_id" value="{{ encrypt($user->id) }}">
                                                     <button
@@ -123,7 +130,7 @@
                                                         aria-label="Edit" type="submit">
                                                         <i class="fa-solid fa-pencil"></i>
                                                     </button>
-                                                </form>
+                                                </form> 
 
 
                                                 @if ($user->status == 1)

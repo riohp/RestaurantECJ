@@ -6,12 +6,10 @@
     <div class="container">
         <h1>Editar Usuario</h1>
 
-        <form id="editForm" method="POST" action="{{ route('users.update', ['encrypted_id' => encrypt($user->id)]) }}">
-
+        <form id="editForm" method="POST" action="{{ route('users.update') }}">
             @csrf
             @method('PUT')
-{{--             <input type="hidden" name="encrypted_id" value="{{ encrypt($user->id) }}">
- --}}
+            <input type="hidden" name="encrypted_id" value="{{ encrypt($user->id) }}">
             <div class="form-group row">
                 <label for="name" class="col-md-4 col-form-label text-md-right">Nombre</label>
                 <div class="col-md-6">
