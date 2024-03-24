@@ -35,12 +35,15 @@ class TableController extends Controller
 
     public function show(Request $request)
     {   
-        $tableId = $request->input('table');
-        $table = Table::find($tableId);
-        $id_category = $request->input('category_id');
+        $encryptedId = $request->input('encrypted_table_id');
+        $id = Crypt::decryptString($encryptedId);
+        $tableId = unserialize($id);
 
-        return TableHelper::processTableData($tableId, $id_category);
-
+    
+        $categoryIdEncrypted = $request->input('category_id');
+        $categoryIdUnserialize = Crypt::decryptString($categoryIdEncrypted);
+        $idCategory = unserialize($categoryIdUnserialize);
+        return TableHelper::processTableData($tableId, $idCategory);
     }
 
     public function edit(Request $request)
@@ -59,6 +62,7 @@ class TableController extends Controller
         $id = unserialize($id);
         $table = Table::findOrFail($id);
         $table->update($request->validated());
+
         return redirect()->route('table.index')->with('success', 'Mesa actualizada correctamente');
     }
     

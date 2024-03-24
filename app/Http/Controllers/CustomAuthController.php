@@ -23,10 +23,10 @@ class CustomAuthController extends Controller
         
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
-            return redirect("/dashboard")->withSuccess("You have successfully logged in");
+            return redirect("/dashboard")->withSuccess("Has iniciado sesión correctamente");
         }
   
-        return redirect("login")->withSuccess('Login details are not valid');
+        return redirect("login")->withSuccess('las credenciales proporcionadas son incorrectas');
     }
     public function registration()
     {

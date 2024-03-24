@@ -71,10 +71,15 @@
                         </p>
                         <p class="mt-1">
                             <a class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline"
-                                href="registration">
+                                href="{{ route('register-user') }}">
                                 no tienes una cuenta? Registrate
                             </a>
                         </p>
+                        @if ($message = Session::get('success'))
+                            <div>
+                                <p class="text-blue-600">{{ $message }}</p>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
