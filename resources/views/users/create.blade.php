@@ -26,7 +26,7 @@
         </div>
         <div class="border rounded-lg border-default-200 dark:border-gray-700">
             <div class="p-6">
-                <form method="POST" action="{{ route('users.store') }}">
+                <form method="POST" action="{{ route('register.custom') }}">
                     @csrf
                     <div class="grid lg:grid-cols-2 gap-6 mb-6">
                         <div>
