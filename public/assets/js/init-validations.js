@@ -3,7 +3,7 @@ function crearCategoria() {
     // Mostrar el indicador de carga y ocultar el svg
     document.getElementById('InitIcon').classList.add('hidden');
     document.getElementById('loadingIcon').classList.remove('hidden');
-    document.getElementById('btnText').textContent = 'Creando Categoría...';
+    document.getElementById('btnText').classList.add('hidden');
 
     let status = true
     let nameid = document.getElementById('name');
@@ -15,12 +15,21 @@ function crearCategoria() {
         document.getElementById('errortxtname').classList.remove('hidden');
         status = false;
     }
-    if(descriptionid.value.length < 3){
+    if(descriptionid.value.length > 3){
+        if (descriptionid.value.length > 255){
+            descriptionid.classList.remove('border-gray-300');
+            descriptionid.classList.add('border-red-500');
+            document.getElementById('errortxtdesp').classList.remove('hidden');
+            document.getElementById('errortxtdesp').innerText = 'La descripción no puede tener más de 255 caracteres';
+            status = false;
+        }
+    }else{
         descriptionid.classList.remove('border-gray-300');
         descriptionid.classList.add('border-red-500');
         document.getElementById('errortxtdesp').classList.remove('hidden');
         status = false;
     }
+
     if(!status){
         nameid.addEventListener('input', function(){
             if(nameid.value.length >= 3){
@@ -31,10 +40,13 @@ function crearCategoria() {
     });
 
     descriptionid.addEventListener('input', function () {
-        if(descriptionid.value.length >= 3){
+        if(descriptionid.value.length >= 3 && descriptionid.value.length <= 255){
             descriptionid.classList.remove('border-red-500');
             descriptionid.classList.add('border-gray-300');
-            document.getElementById('errortxtdesp').classList.add('hidden');
+            descriptionid.value.length <= 3 ? document.getElementById('errortxtdesp').innerText = 'Introduce un nombre con al menos 3 caracteres' : document.getElementById('errortxtdesp').classList.add('hidden');
+            descriptionid.value.length >= 255 ? document.getElementById('errortxtdesp').classList.remove('hidden')  : document.getElementById('errortxtdesp').classList.add('hidden');
+            descriptionid.value.length >= 255 ? document.getElementById('errortxtdesp').innerText = 'La descripción no puede tener más de 255 caracteres'  : document.getElementById('errortxtdesp').classList.add('hidden');
+
         }
     });
 }
@@ -45,6 +57,6 @@ function crearCategoria() {
         document.getElementById('btnCrearCategoria').disabled = false;
         document.getElementById('InitIcon').classList.remove('hidden');
         document.getElementById('loadingIcon').classList.add('hidden');
-        document.getElementById('btnText').textContent = 'Agregar Categoria';
+        document.getElementById('btnText').classList.remove('hidden');
     }
 }
