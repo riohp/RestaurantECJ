@@ -46,7 +46,7 @@
                                             </div>
                                         </td>
                                         <td class="px-6 py-4">
-                                            <span class="inline-flex items-center gap-1 py-0.5 px-2.5 rounded-full text-xs font-medium bg-orange-500 text-white">{{$product->categories->name}}</span>
+                                            <span class="inline-flex items-center gap-1 py-0.5 px-2.5 rounded-full text-xs font-medium bg-orange-500 text-white">{{$product->category->name}}</span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-400">$ {{$product->price}}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-400">$ {{$product->cost}}</td>
@@ -60,36 +60,44 @@
                                         </td>
                                         <td class="px-6 py-4">
                                             <div class="flex gap-3">
-                                                <a href="{{ route('products.edit', $product->id) }}" class="transition-all hover:text-purple-600 dark:text-gray-400">
+                            
+                                                @if($product)
+                                                    <form method="POST" id="editForm" action="{{ route('products.show') }}">
+                                                        @csrf
+                                                        <input type="hidden" name="product_encrypted_id" value="{{ encrypt($product->id)}}">
+                                                        <button type="submit" class="transition-all hover:text-purple-600 dark:text-gray-400">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="eye" class="lucide lucide-eye w-5 h-5"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+
+                                                        </button>
+                                                    </form>
+                                                    <form method="POST" action="{{ route('products.edit')}}" id="deleteForm">
+                                                        @csrf
+                                                        <input type="hidden" name="product_encrypted_id" value="{{ encrypt($product->id)}}">
+                                                        <button type="submit" class="transition-all hover:text-red-600 dark:text-gray-400">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="pencil" class="lucide lucide-pencil w-5 h-5"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path><path d="m15 5 4 4"></path></svg>
+                                                        </button>  
+                                                    </form>
+                                                @endif
+
+                                                {{-- <a href="{{ route('products.edit', $product->id) }}" class="transition-all hover:text-purple-600 dark:text-gray-400">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="pencil" class="lucide lucide-pencil w-5 h-5"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path><path d="m15 5 4 4"></path></svg>
-                                                </a>
-                                               {{--  <a href="{{ route('products.show') }}" class="transition-all hover:text-purple-600 dark:text-gray-400">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="eye" class="lucide lucide-eye w-5 h-5"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                                 </a> --}}
 
                                                
 
-                                                @if($product)
 
-                                                <form method="POST" id="editForm" action="{{ route('products.show') }}">
-                                                    @csrf
-                                                    <input type="hidden" name="product_id" value="{{$product->id}}">
-                                                    <button type="submit" class="transition-all hover:text-purple-600 dark:text-gray-400">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="eye" class="lucide lucide-eye w-5 h-5"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-
-                                                    </button>
-                                                </form>
-                                                @endif
                                                 @if($product->status == 1)
-                                                    <form method="POST" action="{{ route('products.destroy', $product->id) }}">
+                                                    <form method="POST" action="{{ route('products.destroy') }}">
                                                         @csrf
                                                         @method('DELETE')
+                                                        <input type="hidden" name="product_encrypted_id" value="{{ encrypt($product->id)}}">
                                                         <button type="submit" class="transition-all hover:text-red-600 dark:text-gray-400"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" class="lucide lucide-trash-2 w-5 h-5"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path><line x1="10" x2="10" y1="11" y2="17"></line><line x1="14" x2="14" y1="11" y2="17"></line></svg></button>
                                                     </form>
                                                 @else
-                                                    <form method="POST" action="{{ route('products.activate', $product->id) }}">
+                                                    <form method="POST" action="{{ route('products.activate') }}">
                                                         @csrf
                                                         @method('POST')
+                                                        <input type="hidden" name="product_encrypted_id" value="{{ encrypt($product->id)}}">
                                                         <button type="submit" class="transition-all hover:text-green-500 dark:text-gray-400"><i class="fa-solid fa-play"></i></button>
                                                     </form>
                                                 @endif

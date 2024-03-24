@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Delivery;
 use App\Utils\TableHelper;
+use Illuminate\Support\Facades\Auth;
 
 class DeliveryController extends Controller
 {
@@ -32,14 +33,11 @@ class DeliveryController extends Controller
      */
     public function store(Request $request)
     {
-        
-        // $validatedData = $request->validate([
-        //     'cellphone' => 'required|integer',
-        //     'address' => 'required|max:255',
-        // ]);
-        $validatedData['cellphone'] = "123456789";
-        $validatedData['address'] = "direcion de usuario logueado";
-        $validatedData['client_id'] = 1;
+        $user = Auth::user();
+
+        $validatedData['cellphone'] = $user->cellphone;
+        $validatedData['address'] = $user->address;
+        $validatedData['client_id'] = $user->id;
         $newDelivery = Delivery::create($validatedData);
         $newDeliveryId = $newDelivery->id;
 

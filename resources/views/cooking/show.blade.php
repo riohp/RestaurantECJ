@@ -77,6 +77,7 @@
                                         @csrf
                                         <input type="hidden" name="deliveries_id" value="{{ $product_delivery->delivery->id }}">
                                         <input type="hidden" name="product_id" value="{{ $product_delivery->product->id }}">
+                                        <input type="hidden" name="cooking_id" value="{{ $cooking->id }}">
                                         <input type="hidden" name="status" value="prepared">
                                         <button type="submit" class="btn btn-primary">Cambiar Estado</button>
                                     </form>

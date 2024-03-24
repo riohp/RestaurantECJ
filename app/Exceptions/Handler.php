@@ -5,8 +5,11 @@ namespace App\Exceptions;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use App\Exceptions\DatabaseConnectionException;
 use App\Http\Controllers\ErrorController;
-use Exception;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Http\Response as HttpResponse;
+use Illuminate\Validation\ValidationException;
 use Throwable;
+
 
 class Handler extends ExceptionHandler
 {
@@ -53,10 +56,14 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $exception)
     {
-        if ($exception instanceof DatabaseConnectionException) {
+        if ($this->isHttpException($exception)) {
+            return $this->renderHttpException($exception);
+        } elseif ($exception instanceof DatabaseConnectionException) {
             return app(ErrorController::class)->databaseConnectionError($exception);
+        } elseif ($exception instanceof ValidationException) { // Manejamos excepciones de validación
+            return parent::render($request, $exception);
+        } else {
+            return app(ErrorController::class)->errorAll($exception);
         }
-
-        return parent::render($request, $exception);
     }
 }

@@ -21,7 +21,9 @@
         <script src="{{ asset('assets/js/charts-lines.js') }}" defer></script>
         <script src="{{ asset('assets/js/charts-pie.js') }}" defer></script>
         <script src="{{ asset('assets/js/init-validations.js')}}" defer></script>
+        @yield('styles_css')
     </head>
+
 
     <body class="flex h-screen flex-col min-h-screen">
         @yield('content-landing')
