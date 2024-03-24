@@ -61,9 +61,11 @@
                         @if ($table->status)
                             <form action="{{ route('table.destroy') }}" method="POST" style="display: inline">
                                 @csrf
+
                                 @method('DELETE')
                                 <input type="hidden" name="encrypted_table_id" value="{{ encrypt($table->id) }}">
                                 <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+
                             </form>
                         @else
                             <form action="{{ route('table.activate') }}" method="POST" style="display: inline">
