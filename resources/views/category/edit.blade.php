@@ -1,16 +1,17 @@
-@extends('layouts.landing')
+@extends('layouts.partials.header')
 @section('title', 'Editar categoría')
 
-@section('content')
+@section('content-main')
 <div class="container">
     <div class="row">
         <div class="col-md-8 offset-md-2">
             <div class="card">
                 <div class="card-header">Editar Categoría</div>
                 <div class="card-body">
-                    <form action="{{ route('category.update', $category->id) }}" method="POST">
+                    <form action="{{ route('category.update') }}" method="POST">
                         @csrf
                         @method('PUT')
+                        <input type="hidden" name="encrypted_category_id" value="{{ encrypt($category->id) }}">
                         <div class="form-group
                             @error('name')
                                 has-error
