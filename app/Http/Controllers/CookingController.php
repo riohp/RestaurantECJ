@@ -38,8 +38,15 @@ class CookingController extends Controller
 
     public function show(Request $request)
     {
-        $cookingId = $request->input('cooking');
-        return ShowDataInvoice::showDataInvoice($cookingId);
+        $encryptedId = $request->input('encrypted_cooking_id');
+        $id = Crypt::decryptString($encryptedId);
+        $cookingId = unserialize($id);
+        
+        $categoryIdEncrypted = $request->input('category_id');
+        $categoryIdUnserialize = Crypt::decryptString($categoryIdEncrypted);
+        $idCategory = unserialize($categoryIdUnserialize);
+        return ShowDataInvoice::showDataInvoice($cookingId, $idCategory);
+
     }
 
 
