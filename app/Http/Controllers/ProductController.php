@@ -63,9 +63,9 @@ class ProductController extends Controller
     }
 
 
-    public function update(ProductRequest $request, $product_encrypted_id)
+    public function update(ProductRequest $request)
     {
-        $encryptedId = $product_encrypted_id;
+        $encryptedId = $request->input('product_encrypted_id');
         $id = Crypt::decryptString($encryptedId);
         $id = unserialize($id);
         $product = Product::findOrFail($id);

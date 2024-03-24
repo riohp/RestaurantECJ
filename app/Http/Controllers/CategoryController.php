@@ -38,15 +38,22 @@ class CategoryController extends Controller
         return view('category.show', compact('category'));
     } 
 
-    public function edit(Category $category)
+    public function edit(Request $request)
     {
+        $encryptedId = $request->input('encrypted_category_id');
+        $id = Crypt::decryptString($encryptedId);
+        $id = unserialize($id);
+        $category = Category::findOrFail($id);
         return view('category.edit', compact('category'));
     }
 
 
-    public function update(CategoryRequest $request, Category $category)
+    public function update(CategoryRequest $request)
     {
-
+        $encryptedId = $request->input('encrypted_category_id');
+        $id = Crypt::decryptString($encryptedId);
+        $id = unserialize($id);
+        $category = Category::findOrFail($id);
         $category->update($request->validated());
         return redirect()->route('category.index')->with('success', 'Categoria actualizada correctamente');
     }

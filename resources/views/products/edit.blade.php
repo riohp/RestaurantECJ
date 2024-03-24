@@ -26,10 +26,10 @@
             </ol>
         </div>
 
-        <form action="{{ route('products.update', ['product_encrypted_id' => encrypt($product->id)]) }}" method="POST"
-            enctype="multipart/form-data">
+        <form action="{{ route('products.update') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
+            <input type="hidden" name="product_encrypted_id" value="{{ encrypt($product->id) }}">
             <div class="grid lg:grid-cols-3 gap-6">
                 <div class="p-6 rounded-lg border border-default-200 dark:border-gray-600">
                     <div class="h-86 p-6 flex flex-col items-center justify-center rounded-lg mb-4">

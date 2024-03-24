@@ -7,9 +7,10 @@
             <div class="card">
                 <div class="card-header">Editar Mesa</div>
                 <div class="card-body">
-                    <form action="{{ route('table.update', $table->id) }}" method="POST">
+                    <form action="{{ route('table.update') }}" method="POST">
                         @csrf
                         @method('PUT')
+                        <input type="hidden" name="encrypted_table_id" value="{{ encrypt($table->id) }}">
                         <div class="form-group
                             @error('name')
                             has-error

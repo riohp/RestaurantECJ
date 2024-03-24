@@ -37,22 +37,28 @@
                                 <input type="hidden" name="category_id" value="-1">
                                 <button type="submit" class="btn btn-info btn-sm">Ver</button>
                             </form>
-                            <a href="{{ route('table.edit', $table->id) }}" class="btn btn-warning btn-sm">Editar</a>
+                            {{--  <a href="{{ route('table.edit', $table->id) }}" class="btn btn-warning btn-sm">Editar</a> --}}
+                            <form action="{{ route('table.edit') }}" method="POST" style="display: inline">
+                                @csrf
+                                <input type="hidden" name="encrypted_table_id" value="{{ encrypt($table->id) }}">
+                                <button type="submit" class="btn btn-warning btn-sm">Editar</button>
+                            </form>
+
                             @if ($table->status)
-                                <form action="{{ route('table.destroy', $table->id) }}" method="POST"
-                                    style="display: inline">
+                                <form action="{{ route('table.destroy') }}" method="POST" style="display: inline">
                                     @csrf
                                     @method('DELETE')
+                                    <input type="hidden" name="encrypted_table_id" value="{{ encrypt($table->id) }}">
                                     <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                                 </form>
                             @else
-                                <form action="{{ route('table.activate', $table->id) }}" method="POST"
-                                    style="display: inline">
+                                <form action="{{ route('table.activate') }}" method="POST" style="display: inline">
                                     @csrf
+                                    <input type="hidden" name="encrypted_table_id" value="{{ encrypt($table->id) }}">
                                     <button type="submit" class="btn btn-success btn-sm">Activar</button>
                                 </form>
                             @endif
-                            </p>
+                                
 
 
                         </div>
@@ -65,4 +71,3 @@
         </main>
     </div>
 @endsection
-

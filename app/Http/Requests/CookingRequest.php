@@ -4,12 +4,10 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TableRequest extends FormRequest
+class CookingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
     public function authorize(): bool
     {
@@ -19,17 +17,13 @@ class TableRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, mixed>
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-    {   
-        
-
+    {
         return [
-            'nombre' => 'required|max:255|min:3',
-            'capaciodad' => 'required|integer|min:1',
-            'location' => 'required|max:255|min:3',
-            'status' => 'required|integer|between:0,1',
+            'name' => 'required|max:255',
+            'location' => 'required|max:255',
         ];
     }
 }
