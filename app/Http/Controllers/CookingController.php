@@ -24,14 +24,9 @@ class CookingController extends Controller
         return view('cooking.create');
     }
 
-    function store(Request $request)
-    {
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'location' => 'required|max:255',
-        ]);
-        Cooking::create($validatedData);
-
+    function store(CookingRequest $request)
+    {   
+        $cooking = Cooking::create($request->validated());
         return redirect()->route('cooking.index')->with('success', 'Mesa creada correctamente');
     }
 

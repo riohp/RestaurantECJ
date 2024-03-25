@@ -202,21 +202,11 @@
                                 @csrf
                                 <input type="hidden" name="deliveries_id" value="{{ $delivery->id }}">
                                 <input type="hidden" name="status" value="cooking">
-                                <button type="submit"
-                                    class="px-4 py-2 mt-4 ml-2 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">Enviar
-                                    Comanda</button>
+                                <button type="submit" class="px-4 py-2 mt-4 ml-2 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">Confirmar Pedido</button>
                             </form>
                         @endif
-                        @if (count($items) > 0)
-                            <form action="{{ route('invoiceBill') }}" method="post">
-                                @csrf
-                                <input type="hidden" name="type_invoice" value="site">
-                                <input type="hidden" name="deliveries_id" value="{{ $delivery->id }}">
-                                <input type="hidden" name="items" value="{{ json_encode($items) }}">
-                                <button type="submit"
-                                    class="px-4 py-2 mt-4 ml-2 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">Facturar</button>
-                            </form>
-                        @endif
+                        
+                        
                     </div>
                 </div>
                 @if (isset($message))

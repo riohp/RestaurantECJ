@@ -83,17 +83,26 @@ class InvoiceController extends Controller
 
     public function show(Request $request)
     {   
-        $invoiceId = $request->input('invoice');
+        $invoiceIdEncrypted = $request->input('invoice');
+        $invoiceDecrypt = Crypt::decryptString($invoiceIdEncrypted);
+        $invoiceId = unserialize($invoiceDecrypt);
         $invoice = Invoice::with('items.product')->find($invoiceId);
-        return view('invoice.show', compact('invoice'));
+
+        $categoryEncrypted = $request->input('category_id');
+        $categoryDecrypt = Crypt::decryptString($categoryEncrypted);
+        $categoryId = unserialize($categoryDecrypt);
+        return view('invoice.show', compact('invoice', 'categoryId'));
     }
 
 
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $invoice = Invoice::findOrFail($id);
+        $invoiceIdEncrypted = $request->input('invoice');
+        $invoiceDecrypt = Crypt::decryptString($invoiceIdEncrypted);
+        $invoiceId = unserialize($invoiceDecrypt);
+        $invoice = Invoice::findOrFail($invoiceId);
         $invoice->changeStatus();
-        return redirect()->route('invoice.index')->with('success', 'Factura actualizada correctamente');
+        return redirect()->route('invoice.index')->with('success', 'Factura eliminada correctamente');
     }
     
 }
