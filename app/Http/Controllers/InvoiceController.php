@@ -8,6 +8,8 @@ use App\Models\ItemInvoice;
 use App\Models\TableProduct;
 use App\Utils\TableHelper;
 use App\Utils\ShowDataInvoice;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class InvoiceController extends Controller
 {   
@@ -72,7 +74,7 @@ class InvoiceController extends Controller
         return redirect()->route('invoice.index');
     }
     
-
+   
 
     public function show(Request $request)
     {   
@@ -81,6 +83,44 @@ class InvoiceController extends Controller
         return view('invoice.show', compact('invoice'));
     }
 
+
+    public function generateInvoice(Request $request)
+    {
+        // Opciones de Dompdf
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $dompdf = new Dompdf($options);
+        $dompdf->setPaper(array(0, 0, 310, 641), 'portrait');
+        
+        // ID de la factura
+        $invoiceId = $request->input('invoice');
+        $invoice = Invoice::with('items.product')->find($invoiceId);
+        
+        // URL de la imagen
+        $imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg';
+        
+        // Obtener el contenido de la imagen
+        $imageContent = file_get_contents($imageUrl);
+        
+        // Convertir la imagen en base64
+        $imageBase64 = 'data:image/jpeg;base64,' . base64_encode($imageContent);
+        
+        // Renderizar la vista invoice.pdfInvoice con los datos de la factura y la imagen
+        $html = view('invoice.pdfInvoice', compact('invoice', 'imageBase64'))->render();
+        
+        // Cargar el HTML en Dompdf y renderizar el PDF
+        $dompdf->loadHtml($html);
+        $dompdf->render();
+        
+        // Obtener el contenido del PDF generado
+        $output = $dompdf->output();
+        
+        // Devolver el PDF como respuesta
+        return response($output)
+            ->header('Content-Type', 'application/pdf');
+    }
+    
+    
 
     public function destroy($id)
     {

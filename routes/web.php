@@ -133,7 +133,7 @@ Route::middleware(['auth', 'role:admin,cashier'])->group(function () {
     Route::get('/invoice/index', [InvoiceController::class, 'index'])->name('invoice.index');
     Route::delete('/invoice/{table}', [InvoiceController::class, 'destroy'])->name('invoice.destroy');
     Route::post('/invoice/show', [InvoiceController::class, 'show'])->name('invoice.show');
-
+    Route::post('generate/invoice', [InvoiceController::class, 'generateInvoice'])->name('invoice.generate');
 
     // module delivery
     Route::get('/delivery/index', [DeliveryController::class, 'index'])->name('delivery.index');
