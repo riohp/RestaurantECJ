@@ -8,7 +8,10 @@ use App\Models\ItemInvoice;
 use App\Models\TableProduct;
 use App\Utils\TableHelper;
 use App\Utils\ShowDataInvoice;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Illuminate\Support\Facades\Crypt;
+
 
 class InvoiceController extends Controller
 {   
@@ -79,7 +82,7 @@ class InvoiceController extends Controller
         return redirect()->route('invoice.index');
     }
     
-
+   
 
     public function show(Request $request)
     {   
@@ -94,6 +97,27 @@ class InvoiceController extends Controller
         return view('invoice.show', compact('invoice', 'categoryId'));
     }
 
+
+
+    public function generateInvoice(Request $request)
+    {  
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $dompdf = new Dompdf($options);
+        $dompdf->setPaper(array(0, 0, 310, 641), 'portrait');
+        $invoiceId = $request->input('invoice');
+        $invoice = Invoice::with('items.product')->find($invoiceId);
+        $imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg';
+        $imageContent = file_get_contents($imageUrl);
+        $imageBase64 = 'data:image/jpeg;base64,' . base64_encode($imageContent);
+        $html = view('invoice.pdfInvoice', compact('invoice', 'imageBase64'))->render();
+        $dompdf->loadHtml($html);
+        $dompdf->render();
+        $output = $dompdf->output();
+        return response($output)
+            ->header('Content-Type', 'application/pdf');
+    }
+    
 
     public function destroy(Request $request)
     {
