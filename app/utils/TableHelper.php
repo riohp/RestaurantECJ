@@ -63,7 +63,8 @@ class TableHelper
                     $total += $item['subtotal'];
                 }
             }   
-            return view('table.show', compact('table', 'id_category', 'products', 'categories', 'items', 'total', 'reload', 'message'));
+/*             dd($table, $id_category, $products, $categories, $items, $total, $reload, $message);
+ */            return view('table.show', compact('table', 'id_category', 'products', 'categories', 'items', 'total', 'reload', 'message'));
         } else {
             return response()->json(['error' => 'ID de la mesa inválido'], 400);
         }
@@ -127,5 +128,57 @@ class TableHelper
         } else {
             return response()->json(['error' => 'ID del delivery inválido'], 400);
         }
+    }
+
+    public static function showDelivery($deliveryId)
+    {   
+        $delivery = Delivery::find($deliveryId);
+    
+        $tableitems = DeliveryProduct::where('deliveries_id', $deliveryId)->with('product')->get();
+        $items = [];
+        $total = 0; 
+
+        foreach ($tableitems as $tableProduct) {
+            $product = $tableProduct->product;
+        
+            if (!is_null($product)) {
+                $productId = $product->id;
+                $price = $product->price;
+                $quantity = 1;
+        
+                $status = $tableProduct->status;
+        
+                if (!isset($items[$status])) {
+                    $items[$status] = [];
+                }
+        
+                if (isset($items[$status][$productId])) {
+                    $items[$status][$productId]['quantity'] += 1;
+                    $items[$status][$productId]['subtotal'] += $price * $quantity;
+                } else {
+                    $items[$status][$productId] = [
+                        'id' => $productId,
+                        'status' => $status,
+                        'category_id' => $product->category_id,
+                        'name' => $product->name,
+                        'price' => $price,
+                        'quantity' => $quantity,
+                        'subtotal' => $price * $quantity,
+                        'image' => $product->image,
+                    ];
+                }
+            }
+
+        }
+
+        foreach ($items as $status => $statusItems) {
+            foreach ($statusItems as $item) {
+                $total += $item['subtotal'];
+
+            }
+            
+        } 
+
+        return view('delivery.show', compact('items', 'total', 'delivery'));
     }
 }

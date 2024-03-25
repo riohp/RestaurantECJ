@@ -7,6 +7,7 @@ Use App\Models\TableProduct;
 use App\Utils\TableHelper;
 use Illuminate\Database\QueryException;
 use App\Utils\ShowDataInvoice;
+use Illuminate\Support\Facades\Crypt;
 class tableProductController extends Controller
 {
      public function index(){
@@ -27,10 +28,28 @@ class tableProductController extends Controller
     public function store(Request $request)
     {
         try {
-            TableProduct::create($request->all());
-            return TableHelper::processTableData($request->table_id, $request->category_id, true);
+            $tableEncryptedID = $request->input('table_id');
+            $tableIdString = Crypt::decryptString($tableEncryptedID);
+            $tableId = unserialize($tableIdString);
+
+            $categoryEncryptedID = $request->input('category_id');
+            $categoryIdString = Crypt::decryptString($categoryEncryptedID);
+            $categoryId = unserialize($categoryIdString);
+
+            $productEncryptedID = $request->input('product_id');
+            $productIdString = Crypt::decryptString($productEncryptedID);
+            $productId = unserialize($productIdString);
+
+            TableProduct::create([
+                'table_id' => $tableId,
+                'product_id' => $productId,
+                'category_id' => $categoryId,
+            ]);
+
+            return TableHelper::processTableData($tableId, $categoryId, true);
+
         } catch (QueryException $e) {
-            return TableHelper::processTableData($request->table_id, $request->category_id, true);
+            return TableHelper::processTableData($tableId, $categoryId, true);
         }
     }
 
@@ -47,24 +66,49 @@ class tableProductController extends Controller
     }
 
     public function destroy(Request $request)
-    {
-        $table = TableProduct::where('table_id', $request->table_id)
-        ->where('product_id', $request->product_id)
+    {      
+        $encryptedId = $request->input('table_id');
+        $idTableString = Crypt::decryptString($encryptedId);
+        $idTable = unserialize($idTableString);
+
+        $encryptProductID = $request->input('product_id');
+        $idProductString = Crypt::decryptString($encryptProductID);
+        $idProduct = unserialize($idProductString);
+
+        $encryptedCategoryID = $request->input('category_id'); 
+        /* dd($encryptedCategoryID);  */
+        $idCategoryString = Crypt::decryptString($encryptedCategoryID);
+        $idCategory = unserialize($idCategoryString);
+
+
+        $table = TableProduct::where('table_id', $idTable)
+        ->where('product_id', $idProduct)
         ->first();
 
         if ($table) {
         $table->delete();
         }
 
-        return TableHelper::processTableData($request->table_id, $request->category_id, true);
+        return TableHelper::processTableData($idTable, $idCategory, true);
     }
 
 
     public function updateStatus(Request $request)
     {
-        $cooking_id = $request->input('cooking_id');
-        $tableProduct = TableProduct::where('table_id', $request->table_id)
-            ->where('product_id', $request->product_id)
+        $cookingEncryptId = $request->input('cooking_id');
+        $cookingIdString = Crypt::decryptString($cookingEncryptId);
+        $cooking_id = unserialize($cookingIdString);
+
+        $tableEncryptId = $request->input('table_id');
+        $tableIdString = Crypt::decryptString($tableEncryptId);
+        $table_id = unserialize($tableIdString);
+
+        $productEncryptId = $request->input('product_id');
+        $productIdString = Crypt::decryptString($productEncryptId);
+        $product_id = unserialize($productIdString);
+
+        $tableProduct = TableProduct::where('table_id', $table_id)
+            ->where('product_id', $product_id)
             ->where('status', 'cooking')
             ->first();
 
@@ -72,21 +116,24 @@ class tableProductController extends Controller
             $tableProduct->status = $request->status;
             $tableProduct->save();
         }
-
+    
         return ShowDataInvoice::showDataInvoice($cooking_id);
     }
 
     public function updateStatusItems(Request $request)
     {
-
-
-        $tableProducts = TableProduct::where('table_id', $request->table_id)
-        ->where('status', 'process')->get();
+        $encryptedId = $request->input('table_id');
+        $idTableString = Crypt::decryptString($encryptedId);
+        $idTable = unserialize($idTableString);
+        
+        $tableProducts = TableProduct::where('table_id', $idTable)
+            ->where('status', 'process')
+            ->get();
 
         foreach ($tableProducts as $tableProduct) {
             $tableProduct->status = $request->status;
             $tableProduct->save();
         }
-        return TableHelper::processTableData($request->table_id, -1);
+        return TableHelper::processTableData($idTable, -1, true);
     }
 }

@@ -1,7 +1,7 @@
 <form id="form-ver" action="{{ route('table.show') }}" method="POST">
     @csrf
-    <input type="hidden" name="table" value="{{ $table->id }}">
-    <input type="hidden" name="category_id" value="{{ $id_category }}">
+    <input type="hidden" name="encrypted_table_id" value="{{ encrypt( $table->id) }}">
+    <input type="hidden" name="category_id" value="{{ encrypt(  $id_category) }}">
     <button type="submit" class="btn btn-info btn-sm" hidden></button>
 </form>
 
@@ -80,12 +80,12 @@
                                                         <form method="POST" action="{{ route('tablesProduct.destroy') }}">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <input type="hidden" value="{{ $item['id'] }}"
+                                                            <input type="hidden" value=" {{ encrypt( $item['id']) }}"
                                                                 name="product_id">
-                                                            <input type="hidden" value="{{ $table->id }}"
+                                                            <input type="hidden" value="{{ encrypt( $table->id) }}"
                                                                 name="table_id">
                                                             <input type="hidden" name="category_id"
-                                                                value="{{ $item['category_id'] }}">
+                                                                value="{{ encrypt( $item['category_id']) }}">
                                                             <button class="dark:text-gray-300" type="submit">
                                                                 <img src="{{ asset('assets/img/ic_basura.png') }}"
                                                                     width="50px" alt="">
@@ -112,8 +112,8 @@
                         <div class="relative">
                             <form class="absolute top-0" action="{{ route('table.show') }}" method="POST">
                                 @csrf
-                                <input type="hidden" name="table" value="{{ $table->id }}">
-                                <input type="hidden" name="category_id" value="-1">
+                                <input type="hidden" name="encrypted_table_id" value=" {{ encrypt(  $table->id) }}">
+                                <input type="hidden" name="category_id" value=" {{ encrypt(-1) }}">
                                 <button type="submit">Volver</button>
                             </form>
 
@@ -144,10 +144,11 @@
                                                 class="group rounded-xl disabled:border *:select-none [&>*:not(.sr-only)]:relative *:disabled:opacity-20 disabled:text-gray-950 disabled:border-gray-200 disabled:bg-gray-100 dark:disabled:border-gray-800/50 disabled:dark:bg-gray-900 dark:*:disabled:!text-white text-gray-950 bg-gray-100 hover:bg-gray-200/75 active:bg-gray-100 dark:bg-gray-500/15 dark:bg-gray-500/10 dark:hover:bg-gray-500/15 dark:active:bg-gray-500/10 flex gap-1.5 items-center text-sm h-8 px-3.5 justify-center">
                                                 <form action="{{ route('table.show') }}" method="POST">
                                                     @csrf
-                                                    <input type="hidden" name="table" value="{{ $table->id }}">
-                                                    <input type="hidden" name="category_id" value="{{ $category->id }}">
+                                                    <input type="hidden" name="encrypted_table_id" value="{{ encrypt($table->id) }}">
+                                                    <input type="hidden" name="category_id" value="{{ encrypt($category->id) }}">
                                                     <button type="submit">Ver Productos</button>
                                                 </form>
+                                  
                                             </a>
                                         </div>
                                     </div>
@@ -163,9 +164,9 @@
                                         <form class="absolute top-0" action="{{ route('tablesProduct.store') }}"
                                             method="post">
                                             @csrf
-                                            <input value="{{ $table->id }}" type="hidden" name="table_id">
-                                            <input value="{{ $product->id }}" type="hidden" name="product_id">
-                                            <input value="{{ $product->category_id }}" type="hidden" name="category_id">
+                                            <input value="{{ encrypt($table->id) }}" type="hidden" name="table_id">
+                                            <input value="{{ encrypt($product->id) }}" type="hidden" name="product_id">
+                                            <input value="{{ encrypt($product->category_id) }}" type="hidden" name="category_id">
                                             <button type="submit"><img src="{{ asset('assets/img/ic_add.png') }}"
                                                     alt=""></button>
                                         </form>
@@ -200,7 +201,7 @@
                         @if (count($items) > 0)
                             <form action="{{ route('tablesProduct.updateStatusItems') }}" method="post">
                                 @csrf
-                                <input type="hidden" name="table_id" value="{{ $table->id }}">
+                                <input type="hidden" name="table_id" value="{{ encrypt($table->id) }}">
                                 <input type="hidden" name="status" value="cooking">
                                 <button type="submit"
                                     class="px-4 py-2 mt-4 ml-2 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">Enviar
@@ -211,8 +212,8 @@
                             <form action="{{ route('invoiceBill') }}" method="post">
                                 @csrf
                                 <input type="hidden" name="type_invoice" value="site">
-                                <input type="hidden" name="table_id" value="{{ $table->id }}">
-                                <input type="hidden" name="items" value="{{ json_encode($items) }}">
+                                <input type="hidden" name="table_id" value="{{ encrypt($table->id) }}">
+                                <input type="hidden" name="items" value="{{ encrypt(json_encode($items)) }}">
                                 <button type="submit"
                                     class="px-4 py-2 mt-4 ml-2 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">Facturar</button>
                             </form>

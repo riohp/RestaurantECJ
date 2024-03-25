@@ -34,14 +34,14 @@
                             <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
                             <form action="{{ route('invoice.show') }}" method="POST">
                                 @csrf
-                                <input type="hidden" name="invoice" value="{{ $invoice->id }}">
-                                <input type="hidden" name="category_id" value="-1">
+                                <input type="hidden" name="invoice" value="{{ encrypt($invoice->id) }}">
+                                <input type="hidden" name="category_id" value="{{ encrypt(-1) }}">
                                 <button type="submit" class="btn btn-info btn-sm">Ver</button>
                             </form>
-                            <form action="{{ route('invoice.destroy', $invoice->id) }}" method="POST"
-                                style="display: inline">
+                            <form action="{{ route('invoice.destroy') }}" method="POST" style="display: inline">
                                 @csrf
                                 @method('DELETE')
+                                <input type="hidden" name="invoice" value="{{ encrypt($invoice->id) }}">
                                 @if ($invoice->status)
                                     <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                                 @else

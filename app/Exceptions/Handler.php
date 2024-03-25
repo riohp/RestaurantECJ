@@ -54,16 +54,16 @@ class Handler extends ExceptionHandler
         });
     }
 
-    public function render($request, Throwable $exception)
+  /*   public function render($request, Throwable $exception)
     {
         if ($this->isHttpException($exception)) {
             return $this->renderHttpException($exception);
         } elseif ($exception instanceof DatabaseConnectionException) {
             return app(ErrorController::class)->databaseConnectionError($exception);
-        } elseif ($exception instanceof ValidationException) { // Manejamos excepciones de validación
+        } elseif ($exception instanceof ValidationException) { 
             return parent::render($request, $exception);
         } else {
             return app(ErrorController::class)->errorAll($exception);
         }
-    }
+    } */
 }
