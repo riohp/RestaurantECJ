@@ -63,7 +63,8 @@ class TableHelper
                     $total += $item['subtotal'];
                 }
             }   
-            return view('table.show', compact('table', 'id_category', 'products', 'categories', 'items', 'total', 'reload', 'message'));
+/*             dd($table, $id_category, $products, $categories, $items, $total, $reload, $message);
+ */            return view('table.show', compact('table', 'id_category', 'products', 'categories', 'items', 'total', 'reload', 'message'));
         } else {
             return response()->json(['error' => 'ID de la mesa inválido'], 400);
         }

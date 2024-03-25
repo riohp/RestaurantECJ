@@ -22,10 +22,10 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
-    /* public function categories(): HasMany
+   public function categories(): HasMany
     {
         return $this->hasMany(Category::class, 'id', 'category_id');
-    }  */
+    }   
 
     public function isActive()
     {

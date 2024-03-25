@@ -132,7 +132,7 @@ Route::middleware(['auth', 'role:admin,cashier'])->group(function () {
     Route::post('/invoiceBill', [InvoiceController::class, 'invoiceBill'])->name('invoiceBill');
     Route::get('/invoice/index', [InvoiceController::class, 'index'])->name('invoice.index');
     Route::delete('/invoice/{table}', [InvoiceController::class, 'destroy'])->name('invoice.destroy');
-    Route::post('/invoice/show', [InvoiceController::class, 'show'])->name('invoice.show');
+    Route::post('/invoice/show', [InvoiceController::class, 'show'])->name('invoice1.show');
 
 
     // module delivery
@@ -149,7 +149,7 @@ Route::middleware(['auth', 'role:admin,cashier'])->group(function () {
 
 
 
-Route::middleware(['auth', 'role:client'])->group(function () {
+Route::middleware(['auth', 'role:admin,client'])->group(function () {
     // module delivery
     Route::get('/delivery/create', [DeliveryController::class, 'create'])->name('delivery.create');
     Route::post('/delivery/store', [DeliveryController::class, 'store'])->name('delivery.store');
@@ -162,8 +162,6 @@ Route::middleware(['auth', 'role:client'])->group(function () {
     Route::post('/delivery/product/updateStatusItems', [DeliveryProductController::class, 'updateStatusItems'])->name('deliverysProduct.updateStatusItems');
   
   
-    
-
     //module reservation
     Route::get('/reservation/create', [ReservationController::class, 'create'])->name('reservation.create');
     Route::post('/reservation', [ReservationController::class, 'store'])->name('reservation.store');

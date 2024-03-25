@@ -8,6 +8,7 @@ use App\Models\ItemInvoice;
 use App\Models\TableProduct;
 use App\Utils\TableHelper;
 use App\Utils\ShowDataInvoice;
+use Illuminate\Support\Facades\Crypt;
 
 class InvoiceController extends Controller
 {   
@@ -22,10 +23,16 @@ class InvoiceController extends Controller
     public function invoiceBill(Request $request)
     {
      
-        $responsible = 1;
-        $itemsJson = $request->input('items');
-        $items = json_decode($itemsJson, true);
-  
+        $responsible = auth()->user()->id;
+        $itemsJsonEncrypted = $request->input('items');
+        $itemsJsonString = Crypt::decryptString($itemsJsonEncrypted);
+        $itemsDeserealize = unserialize($itemsJsonString);
+        $items = json_decode($itemsDeserealize, true);
+
+        $tableEncryptedID = $request->input('table_id');
+        $tableIdString = Crypt::decryptString($tableEncryptedID);
+        $tableId = unserialize($tableIdString);
+
         $type_invoice = $request->input('type_invoice');
         $total = 0;
     
@@ -33,8 +40,8 @@ class InvoiceController extends Controller
         foreach ($items as $status => $products) {
             foreach ($products as $productId => $item) {
                 if($item['status'] == 'process' or $item['status'] == 'cooking'){
-                    if($request->table_id){
-                        return TableHelper::processTableData($request->table_id, -1, null, 'No se puede facturar, hay productos en proceso o cocinando.');
+                    if($tableId){
+                        return TableHelper::processTableData($tableId, -1, null, 'No se puede facturar, hay productos en proceso o cocinando.');
                     }else{
                         return TableHelper::processTableDataDelivery($request->deliveries_id, -1, null, 'No se puede facturar, hay productos en proceso o cocinando.');
                     }
@@ -67,7 +74,7 @@ class InvoiceController extends Controller
             }
         }
     
-        TableProduct::where('table_id', $request->table_id)->delete();
+        TableProduct::where('table_id', $tableId)->delete();
     
         return redirect()->route('invoice.index');
     }

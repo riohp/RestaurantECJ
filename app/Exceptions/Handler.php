@@ -62,8 +62,8 @@ class Handler extends ExceptionHandler
             return app(ErrorController::class)->databaseConnectionError($exception);
         } elseif ($exception instanceof ValidationException) { // Manejamos excepciones de validación
             return parent::render($request, $exception);
-        } else {
-            return app(ErrorController::class)->errorAll($exception);
-        }
-    }
+            } else {
+                return app(ErrorController::class)->errorAll($exception);
+            }
+        } 
 }
