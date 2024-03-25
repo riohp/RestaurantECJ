@@ -131,7 +131,7 @@ Route::middleware(['auth', 'role:admin,cashier'])->group(function () {
     // module Invoice
     Route::post('/invoiceBill', [InvoiceController::class, 'invoiceBill'])->name('invoiceBill');
     Route::get('/invoice/index', [InvoiceController::class, 'index'])->name('invoice.index');
-    Route::delete('/invoice/{table}', [InvoiceController::class, 'destroy'])->name('invoice.destroy');
+    Route::delete('/invoice/destroy', [InvoiceController::class, 'destroy'])->name('invoice.destroy');
     Route::post('/invoice/show', [InvoiceController::class, 'show'])->name('invoice.show');
     Route::post('generate/invoice', [InvoiceController::class, 'generateInvoice'])->name('invoice.generate');
 
@@ -141,15 +141,13 @@ Route::middleware(['auth', 'role:admin,cashier'])->group(function () {
     Route::get('/delivery/{delivery}/edit', [DeliveryController::class, 'edit'])->name('delivery.edit');
     Route::put('/delivery/{delivery}', [DeliveryController::class, 'update'])->name('delivery.update');
     Route::delete('/delivery/{delivery}', [DeliveryController::class, 'destroy'])->name('delivery.destroy');
-    Route::post('/delivery/{delivery}', [DeliveryController::class, 'activate'])->name('delivery.activate');
-
-
+    /* Route::post('/delivery/{delivery}', [DeliveryController::class, 'activate'])->name('delivery.activate'); */
     
 });
 
 
 
-Route::middleware(['auth', 'role:client'])->group(function () {
+Route::middleware(['auth', 'role:admin,client'])->group(function () {
     // module delivery
     Route::get('/delivery/create', [DeliveryController::class, 'create'])->name('delivery.create');
     Route::post('/delivery/store', [DeliveryController::class, 'store'])->name('delivery.store');
@@ -162,8 +160,6 @@ Route::middleware(['auth', 'role:client'])->group(function () {
     Route::post('/delivery/product/updateStatusItems', [DeliveryProductController::class, 'updateStatusItems'])->name('deliverysProduct.updateStatusItems');
   
   
-    
-
     //module reservation
     Route::get('/reservation/create', [ReservationController::class, 'create'])->name('reservation.create');
     Route::post('/reservation', [ReservationController::class, 'store'])->name('reservation.store');

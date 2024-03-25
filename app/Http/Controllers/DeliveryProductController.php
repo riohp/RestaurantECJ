@@ -8,37 +8,38 @@ use App\Utils\TableHelper;
 use App\Models\DeliveryProduct;
 use Illuminate\Database\QueryException;
 use App\Utils\ShowDataInvoice;
+
 class DeliveryProductController extends Controller
 {
 
-    
+
     public function store(Request $request)
     {
         try {
             DeliveryProduct::create($request->all());
-            return TableHelper::processTableDataDelivery($request->deliveries_id,$request->category_id, null);
-            } catch (QueryException $e) {
-            return TableHelper::processTableDataDelivery($request->deliveries_id,$request->category_id, null);
+            return TableHelper::processTableDataDelivery($request->deliveries_id, $request->category_id, true);
+        } catch (QueryException $e) {
+            return TableHelper::processTableDataDelivery($request->deliveries_id, $request->category_id, true);
         }
     }
 
 
-    
+
     public function destroy(Request $request)
     {
         $delivery = DeliveryProduct::where('deliveries_id', $request->deliveries_id)
-        ->where('product_id', $request->product_id)
-        ->first();
+            ->where('product_id', $request->product_id)
+            ->first();
 
         if ($delivery) {
-        $delivery->delete();
+            $delivery->delete();
         }
 
-        return TableHelper::processTableDataDelivery($request->deliveries_id,$request->category_id, null);
+        return TableHelper::processTableDataDelivery($request->deliveries_id, $request->category_id, true);
     }
 
 
-    
+
     public function updateStatus(Request $request)
     {
         $cooking_id = $request->input('cooking_id');
@@ -64,7 +65,7 @@ class DeliveryProductController extends Controller
             $deliveryProduct->status = $request->status;
             $deliveryProduct->save();
         }
-        return TableHelper::processTableDataDelivery($request->deliveries_id, null);
+        return TableHelper::showDelivery($request->deliveries_id);
     }
 
 }
