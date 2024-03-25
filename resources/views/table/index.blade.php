@@ -13,8 +13,8 @@
                 @forelse ($tables as $table)
                     <form action="{{ route('table.show') }}" method="POST">
                         @csrf
-                        <input type="hidden" name="table" value="{{ $table->id }}">
-                        <input type="hidden" name="category_id" value="-1">
+                        <input type="hidden" name="encrypted_table_id" value="{{ encrypt($table->id) }}">
+                        <input type="hidden" name="category_id" value="{{ encrypt(-1) }}">
                         <button type="submit" class="flex max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                             <div class="flex flex-col justify-center">
                                 <div class="inline-flex w-full gap-2 mb-2 justify-center bg-purple-600/20 px-4 py-1.5 rounded-xl">

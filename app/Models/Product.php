@@ -2,17 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable;
-
     protected $fillable = [
         'name',
         'price',
@@ -22,26 +17,19 @@ class Product extends Model
         'image',
     ];
 
-
-    
-
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
+   public function categories(): HasMany
+    {
+        return $this->hasMany(Category::class, 'id', 'category_id');
+    }   
 
-
-    /**
-     * Verify if the user is active.
-     *
-     * @return bool
-     */
     public function isActive()
     {
         return $this->status == 1;
     }
-
-
-
 }
+ 

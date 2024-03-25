@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Delivery;
 use App\Utils\TableHelper;
 use Illuminate\Support\Facades\Auth;
+use App\Models\DeliveryProduct;
 
 class DeliveryController extends Controller
 {
@@ -34,13 +35,20 @@ class DeliveryController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
+        $deliveryByUser=  Delivery::where('client_id', $user->id)->where('status', 1)->first();
+        /* dd($deliveryByUser); */
+        if(!$deliveryByUser== null and $deliveryByUser->count() > 0){
+            return TableHelper::showDelivery($deliveryByUser->id);
+        }
+
 
         $validatedData['cellphone'] = $user->cellphone;
         $validatedData['address'] = $user->address;
-        $validatedData['client_id'] = $user->id;
+        $validatedData['client_id'] = $user->id; 
         $newDelivery = Delivery::create($validatedData);
         $newDeliveryId = $newDelivery->id;
 
+    
         return TableHelper::processTableDataDelivery($newDeliveryId, null);
     }
 
@@ -81,24 +89,11 @@ class DeliveryController extends Controller
         return redirect()->route('delivery.index')->with('success', 'Delivery actualizado correctamente');
     }
 
-    /**
-     * Remove the specified table from storage.
-     * 
-     * @param  \App\Models\Table  $table
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Delivery $delivery)
+    public function destroy(Request $request)
     {
-        $delivery->status = 0;
-        $delivery->save();
+        $delivery = Delivery::find($request->delivery);
+        $delivery->changeStatus();
         return redirect()->route('delivery.index')->with('success', 'Delivery deleted successfully');
     }
 
-    public function activate(Request $request)
-    {
-        $delivery = Delivery::find($request->delivery);
-        $delivery->status = 1;
-        $delivery->save();
-        return redirect()->route('delivery.index')->with('success', 'Delivery activated successfully');
-    }
 }
