@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 @extends('layouts.landing')
 
 @section('title', 'Crear Mesa')
@@ -28,21 +27,7 @@
                                     class="m-auto mt-2 h-0.5 w-6 rounded bg-yellow-900 dark:bg-white transition duration-300">
                                 </div>
                             </label>
-=======
-@extends('layouts.partials.header')
-@section('title', 'Crear domicilio')
-@section('content-main')
-    <div class="flex flex-col flex-1 w-full">
-        <main class="h-full overflow-y-auto">
-            <div class="flex items-center  p-6 bg-gray-50 dark:bg-gray-900">
-                <div class="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl dark:bg-gray-800">
-                    <div class="flex flex-col overflow-y-auto md:flex-row">
-                        <div class="h-32 md:h-auto md:w-1/2">
-                            <img aria-hidden="true" class="object-cover w-full h-full dark:hidden"
-                                src="../assets/img/table.jpg" alt="Office" />
-                            <img aria-hidden="true" class="hidden object-cover w-full h-full dark:block"
-                                src="../assets/img/table.jpg" alt="Office" />
->>>>>>> 928d4b3c9b17b3a03b2e4b220cacc92a64ef5892
+
                         </div>
                     </div>
 
