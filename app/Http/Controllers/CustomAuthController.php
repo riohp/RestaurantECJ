@@ -24,13 +24,13 @@ class CustomAuthController extends Controller
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
             if (Auth::user()->role == 'admin') {
-                return redirect("/dashboard")->withSuccess('Has iniciado sesión correctamente');
+                return redirect()->route('dashboard')->withSuccess('Has iniciado sesión correctamente');
             }elseif (Auth::user()->role == 'client') {
-                return redirect("/delivery/create")->withSuccess('Has iniciado sesión correctamente');
+                return redirect()->route('delivery.create')->withSuccess('Has iniciado sesión correctamente');
             }elseif (Auth::user()->role == 'waiter') {
-                return redirect("/table/index")->withSuccess('Has iniciado sesión correctamente');
+                return redirect()->route('table.index')->withSuccess('Has iniciado sesión correctamente');
             }elseif (Auth::user()->role == 'cashier') {
-                return redirect("/table/index")->withSuccess('Has iniciado sesión correctamente');
+                return redirect()->route('invoice.index')->withSuccess('Has iniciado sesión correctamente');
             }
         }
   

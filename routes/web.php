@@ -12,6 +12,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\DeliveryProductController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\CustomAuthController;
+use App\Http\Controllers\DashboardController;
 
 
 /*
@@ -41,9 +42,7 @@ Route::post('registration/store', [CustomAuthController::class, 'store'])->name(
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     // modulo Dashboard
-    Route::get('/dashboard', function () {
-        return view('welcome');
-    });
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // modulo User
     Route::get('/users/index', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
@@ -63,7 +62,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 
 
-Route::middleware(['auth', 'role:admin,waiter, cashier'])->group(function () {
+Route::middleware(['auth', 'role:admin,waiter,cashier'])->group(function () {
     // modulo products
   Route::get('/products/index', [ProductController::class, 'index'])->name('products.index');
   Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
