@@ -17,6 +17,16 @@ class Delivery extends Model
         'status'
     ];
 
+    public function changeStatus()
+    {
+        if ($this->status == 1) {
+            $this->status = 0;
+        } else {
+            $this->status = 1;
+        }
+        $this->save(); 
+    }
+
     public function invoice()
     {
         return $this->belongsTo(Invoice::class);
