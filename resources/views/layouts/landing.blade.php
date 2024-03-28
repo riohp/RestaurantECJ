@@ -28,5 +28,6 @@
     <body class="flex h-screen flex-col min-h-screen">
         @yield('content-landing')
         <script src="{{asset('assets/js/changeTitle.js')}}"></script>
+        <script src="{{asset('assets/js/hidden-password.js')}}"></script>
     </body>
 </html>

@@ -34,7 +34,7 @@
                 <div class="p-6 rounded-lg border border-default-200 dark:border-gray-600">
                     <div class="h-86 p-6 flex flex-col items-center justify-center rounded-lg mb-4">
                         <label id="dropzone-file-all" for="dropzone-file"
-                            class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 transition-all">
+                            class="flex flex-col items-center hidden justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 transition-all">
                             <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -72,7 +72,7 @@
                         </span>
                     @enderror
                     <div class="flex justify-end">
-                        <button id="btn-switch" type="button" onclick="document.getElementById('dropzone-file').click()"
+                        <button type="button" onclick="document.getElementById('dropzone-file').click()"
                             class="flex items-center gap-2 py-2.5 px-4 inline-flex rounded-lg text-sm font-medium bg-purple-600 text-white transition-all hover:bg-primary-500">
                             Cambiar Imagen
                             <i class="fa-solid fa-repeat"> </i>
@@ -85,7 +85,7 @@
                         <div class="grid lg:grid-cols-2 gap-6 mb-6">
                             <div class="space-y-6">
                                 <div>
-                                    <input name="name" name="name"  id="name" value="{{ $product->name }}" 
+                                    <input name="name" name="name"  id="name" value="{{ $product->name }}"
                                         class="block w-full bg-transparent dark:border-gray-600 rounded-lg py-2.5 px-4 border border-gray-200 focus:ring-transparent focus:border-gray-400 dark:bg-default-50 dark:text-gray-100"
                                         type="text" placeholder="Nombre Del Producto">
                                 </div>
@@ -110,7 +110,7 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                                
+
                                 <div class="grid lg:grid-cols-2 gap-6">
                                     <div>
                                         <input name="price" value="{{ $product->price }}" class="block w-full bg-transparent dark:border-gray-600 rounded-lg py-2.5 px-4 border border-gray-200 focus:ring-transparent focus:border-gray-400 dark:bg-default-50 dark:text-gray-100" type="text" placeholder="Precio De Venta">
@@ -120,7 +120,7 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
-                                
+
                                     <div>
                                         <input name="cost" value="{{ $product->cost }}" class="block w-full bg-transparent dark:border-gray-600 rounded-lg py-2.5 px-4 border border-gray-200 focus:ring-transparent focus:border-gray-400 dark:bg-default-50 dark:text-gray-100" type="text" placeholder="Precio De Coste">
                                     </div>
@@ -130,7 +130,7 @@
                                         </span>
                                     @enderror
                                 </div>
-                                
+
                                 <div>
                                     <select name="status" class="block w-full bg-transparent dark:border-gray-600 rounded-lg py-2.5 px-4 border border-gray-200 focus:ring-transparent focus:border-gray-400 dark:bg-gray-900 dark:text-gray-100" type="text">
                                         <option selected disabled>Estado</option>
@@ -143,7 +143,7 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                                
+
 
                                 <div class="flex justify-between">
                                     <h4 class="text-sm font-medium text-default-600 dark:text-gray-300">Descuento</h4>
@@ -200,7 +200,7 @@
                     </div>
                 </div>
 
-               
+
             <div class="lg:col-span-3">
                 <div class="flex flex-wrap justify-end items-center gap-4">
                     <div class="flex flex-wrap items-center gap-4">

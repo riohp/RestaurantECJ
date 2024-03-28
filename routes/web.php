@@ -56,10 +56,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::delete('/users/destroy', [UserController::class, 'destroy'])->name('users.destroy');
     Route::post('/users/activtate', [UserController::class, 'activate'])->name('users.activate');
 
-
-
-  
-
 });
 
 
@@ -74,7 +70,7 @@ Route::middleware(['auth', 'role:admin,waiter, cashier'])->group(function () {
   Route::delete('/products/destroy', [ProductController::class, 'destroy'])->name('products.destroy');
   Route::post('/products/activate', [ProductController::class, 'activate'])->name('products.activate');
 
-    
+
     //modulo Category
     Route::get('/category/index', [CategoryController::class, 'index'])->name('category.index');
     Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create');
@@ -85,7 +81,7 @@ Route::middleware(['auth', 'role:admin,waiter, cashier'])->group(function () {
     Route::delete('/category/destroy', [CategoryController::class, 'destroy'])->name('category.destroy');
     Route::post('/category/update', [CategoryController::class, 'activate'])->name('category.activate');
 
-    
+
     //modulo Table
     Route::get('/table/index', [TableController::class, 'index'])->name('table.index');
     Route::get('/table/create', [TableController::class, 'create'])->name('table.create');
@@ -96,7 +92,7 @@ Route::middleware(['auth', 'role:admin,waiter, cashier'])->group(function () {
     Route::delete('/table/destroy', [TableController::class, 'destroy'])->name('table.destroy');
     Route::post('/table/activate', [TableController::class, 'activate'])->name('table.activate');
 
-   
+
     // module tablesProduct
     Route::post('/tables/product/store', [TableProductController::class, 'store'])->name('tablesProduct.store');
     Route::delete('/table/product/destroy', [TableProductController::class, 'destroy'])->name('tablesProduct.destroy');
@@ -120,8 +116,8 @@ Route::middleware(['auth', 'role:admin,waiter, cashier'])->group(function () {
     Route::get('/reservation/{reservation}/edit', [ReservationController::class, 'edit'])->name('reservation.edit');
     Route::put('/reservation/{reservation}', [ReservationController::class, 'update'])->name('reservation.update');
     Route::delete('/reservation/{reservation}', [ReservationController::class, 'destroy'])->name('reservation.destroy');
-  
-  
+
+
 });
 
 
@@ -131,9 +127,9 @@ Route::middleware(['auth', 'role:admin,cashier'])->group(function () {
     // module Invoice
     Route::post('/invoiceBill', [InvoiceController::class, 'invoiceBill'])->name('invoiceBill');
     Route::get('/invoice/index', [InvoiceController::class, 'index'])->name('invoice.index');
-    Route::delete('/invoice/destroy', [InvoiceController::class, 'destroy'])->name('invoice.destroy');
+    Route::delete('/invoice/{table}', [InvoiceController::class, 'destroy'])->name('invoice.destroy');
     Route::post('/invoice/show', [InvoiceController::class, 'show'])->name('invoice.show');
-    Route::post('generate/invoice', [InvoiceController::class, 'generateInvoice'])->name('invoice.generate');
+
 
     // module delivery
     Route::get('/delivery/index', [DeliveryController::class, 'index'])->name('delivery.index');
@@ -141,13 +137,15 @@ Route::middleware(['auth', 'role:admin,cashier'])->group(function () {
     Route::get('/delivery/{delivery}/edit', [DeliveryController::class, 'edit'])->name('delivery.edit');
     Route::put('/delivery/{delivery}', [DeliveryController::class, 'update'])->name('delivery.update');
     Route::delete('/delivery/{delivery}', [DeliveryController::class, 'destroy'])->name('delivery.destroy');
-    /* Route::post('/delivery/{delivery}', [DeliveryController::class, 'activate'])->name('delivery.activate'); */
-    
+    Route::post('/delivery/{delivery}', [DeliveryController::class, 'activate'])->name('delivery.activate');
+
+
+
 });
 
 
 
-Route::middleware(['auth', 'role:admin,client'])->group(function () {
+Route::middleware(['auth', 'role:client'])->group(function () {
     // module delivery
     Route::get('/delivery/create', [DeliveryController::class, 'create'])->name('delivery.create');
     Route::post('/delivery/store', [DeliveryController::class, 'store'])->name('delivery.store');
@@ -158,12 +156,14 @@ Route::middleware(['auth', 'role:admin,client'])->group(function () {
     Route::delete('/delivery/product/destroy', [DeliveryProductController::class, 'destroy'])->name('deliverysProduct.destroy');
     Route::post('/delivery/product/updateStatus', [DeliveryProductController::class, 'updateStatus'])->name('deliverysProduct.updateStatus');
     Route::post('/delivery/product/updateStatusItems', [DeliveryProductController::class, 'updateStatusItems'])->name('deliverysProduct.updateStatusItems');
-  
-  
+
+
+
+
     //module reservation
     Route::get('/reservation/create', [ReservationController::class, 'create'])->name('reservation.create');
     Route::post('/reservation', [ReservationController::class, 'store'])->name('reservation.store');
-  
+
 });
 
 
