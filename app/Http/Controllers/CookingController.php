@@ -21,7 +21,9 @@ class CookingController extends Controller
 
     public function create()
     {
+        
         return view('cooking.create');
+
     }
 
     function store(CookingRequest $request)

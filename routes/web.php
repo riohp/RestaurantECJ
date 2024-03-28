@@ -62,7 +62,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 
 
-Route::middleware(['auth', 'role:admin,waiter,cashier'])->group(function () {
+Route::middleware(['auth', 'role:admin,waiter,cashier,client'])->group(function () {
     // modulo products
   Route::get('/products/index', [ProductController::class, 'index'])->name('products.index');
   Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
@@ -126,7 +126,7 @@ Route::middleware(['auth', 'role:admin,waiter,cashier'])->group(function () {
 
 
 
-Route::middleware(['auth', 'role:admin,cashier'])->group(function () {
+Route::middleware(['auth', 'role:admin,cashier,client'])->group(function () {
     // module Invoice
     Route::post('/invoiceBill', [InvoiceController::class, 'invoiceBill'])->name('invoiceBill');
     Route::get('/invoice/index', [InvoiceController::class, 'index'])->name('invoice.index');

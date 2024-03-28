@@ -35,15 +35,16 @@
                         class="hidden peer-checked:block fixed w-full h-full left-0 top-0 z-10 bg-yellow-200 dark:bg-black dark:bg-opacity-80 bg-opacity-30 backdrop-blur backdrop-filter"></label>
                     <div
                         class="hidden peer-checked:flex w-full flex-col lg:flex lg:flex-row justify-end z-30 items-center gap-y-6 p-6 rounded-xl bg-white dark:bg-gray-900 lg:gap-y-0 lg:p-0 md:flex-nowrap lg:bg-transparent lg:w-7/12">
-                        <button class="rounded-md focus:outline-none focus:shadow-outline-purple text-gray-700 dark:text-gray-300 text-center"
+                        <button
+                            class="rounded-md focus:outline-none focus:shadow-outline-purple text-gray-700 dark:text-gray-300 text-center"
                             @click="toggleTheme" aria-label="Toggle color mode">
-                            <template x-if="dark" >
+                            <template x-if="dark">
                                 <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z">
                                     </path>
                                 </svg>
                             </template>
-                            <template x-if="!dark" >
+                            <template x-if="!dark">
                                 <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd"
                                         d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
@@ -54,9 +55,9 @@
                         <div
                             class="w-full min-w-max space-y-2 
                     border-yellow-200 lg:space-y-0 sm:w-max ">
-              
-                        
-                   
+
+
+
                             <button type="button" title="Start buying"
                                 class="w-full py-3 px-6 text-center rounded-full transition active:bg-yellow-200 dark:active:bg-gray-700 dark:focus:bg-gray-800 focus:bg-yellow-100 sm:w-max">
                                 <span class="block text-yellow-800 dark:text-white font-semibold text-sm">
@@ -78,11 +79,12 @@
             <div class="container m-auto px-6 pt-32 md:px-12 lg:pt-[4.8rem] lg:px-7">
                 <div class="flex items-center flex-wrap px-2 md:px-0">
                     <div class="relative lg:w-6/12 lg:py-24 xl:py-32">
-                        <h1 class="font-bold text-4xl text-yellow-900 dark:text-yellow-50 md:text-5xl lg:w-10/12">Tus platos favoritos, directamente en tu puerta</h1>
+                        <h1 class="font-bold text-4xl text-yellow-900 dark:text-yellow-50 md:text-5xl lg:w-10/12">Tus platos
+                            favoritos, directamente en tu puerta</h1>
                         <p class="mt-8 text-gray-700 dark:text-gray-200 lg:w-10/12">Sit amet consectetur adipisicing elit.
-                                <a href="#" class="text-yellow-700 dark:text-yellow-300">conexión</a> tenetur nihil
-                                quaerat suscipit, sunt dignissimos.
-                            </p>
+                            <a href="#" class="text-yellow-700 dark:text-yellow-300">conexión</a> tenetur nihil
+                            quaerat suscipit, sunt dignissimos.
+                        </p>
                     </div>
                     <div class='w-full max-w-md  mx-auto bg-white rounded-3xl shadow-xl overflow-hidden'>
                         <div class='max-w-md mx-auto'>
@@ -93,19 +95,33 @@
                                 <p class='font-bold text-gray-700 text-[22px] leading-7 mb-1'>Hola
                                     {{ auth()->user()->name }}</p>
                                 <div class='flex flex-row'>
-                                    <p class='text-[#3C3C4399] text-[17px] mr-2'>Estado:</p>
+                                    <p class='text-[#3C3C4399] text-[17px] mr-2'>Estado:
+                                        {{ isset($delivery) && $delivery->status === 'cooking' ? 'En preparación' : 'Sin pedido' }}
+                                    </p>
                                     <p class='text-[17px] font-bold text-[#0FB478]'></p>
                                 </div>
                                 <p class='text-[#7C7C80] font-[15px] mt-6'>Realiza tu pedido y disfruta de la mejor
                                     comida
                                     en la comodidad de tu hogar.</p>
 
-                                <form action="{{ route('delivery.store') }}" method="POST">
-                                    @csrf
-                                    <button type="submit"
-                                        class='block mt-10 w-full px-4 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform bg-[#FFC933] rounded-[14px] hover:bg-[#FFC933DD] focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80'>Realiazar
-                                        Pedido</button>
-                                </form>
+                                    <form action="{{ route('delivery.store') }}" method="POST">
+                                        @csrf
+                                        @if (!$delivery)
+                                            <button type="submit"
+                                                class='block mt-10 w-full px-4 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform bg-[#FFC933] rounded-[14px] hover:bg-[#FFC933DD] focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80'>Realizar
+                                                Pedido</button>
+                                        @elseif($delivery->status === 'cooking')
+                                            <button type="submit"
+                                                class='block mt-10 w-full px-4 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform bg-[#FFC933] rounded-[14px] hover:bg-[#FFC933DD] focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80'>ver
+                                                Pedido</button>
+                                        @endif
+
+                                    </form>
+                                    
+                                    
+
+                             
+
                             </div>
                         </div>
                     </div>
