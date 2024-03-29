@@ -85,7 +85,7 @@ Route::middleware(['auth', 'role:admin,waiter,cashier'])->group(function () {
     Route::get('/table/index', [TableController::class, 'index'])->name('table.index');
     Route::get('/table/create', [TableController::class, 'create'])->name('table.create');
     Route::post('/table', [TableController::class, 'store'])->name('table.store');
-    Route::post('/table/show', [TableController::class, 'show'])->name('table.show');
+    Route::get('/table/show/{id_table}/{id_category}', [TableController::class, 'show'])->name('table.show');
     Route::post('/table/edit', [TableController::class, 'edit'])->name('table.edit');
     Route::put('/table/update', [TableController::class, 'update'])->name('table.update');
     Route::delete('/table/destroy', [TableController::class, 'destroy'])->name('table.destroy');
@@ -132,7 +132,7 @@ Route::middleware(['auth', 'role:admin,cashier'])->group(function () {
 
     // module delivery
     Route::get('/delivery/index', [DeliveryController::class, 'index'])->name('delivery.index');
-    Route::post('/delivery/show', [DeliveryController::class, 'show'])->name('delivery.show');
+
     Route::get('/delivery/{delivery}/edit', [DeliveryController::class, 'edit'])->name('delivery.edit');
     Route::put('/delivery/{delivery}', [DeliveryController::class, 'update'])->name('delivery.update');
     Route::delete('/delivery/{delivery}', [DeliveryController::class, 'destroy'])->name('delivery.destroy');
@@ -148,7 +148,7 @@ Route::middleware(['auth', 'role:client'])->group(function () {
     // module delivery
     Route::get('/delivery/create', [DeliveryController::class, 'create'])->name('delivery.create');
     Route::post('/delivery/store', [DeliveryController::class, 'store'])->name('delivery.store');
-
+    Route::get('/delivery/show/{id_delivery}/{id_category}', [DeliveryController::class, 'show'])->name('delivery.show');
 
     // module deliveryProduct
     Route::post('/delivery/product/store', [DeliveryProductController::class, 'store'])->name('deliverysProduct.store');

@@ -1,18 +1,3 @@
-<form id="form-ver" action="{{ route('table.show') }}" method="POST">
-    @csrf
-    <input type="hidden" name="encrypted_table_id" value="{{ encrypt( $table->id) }}">
-    <input type="hidden" name="category_id" value="{{ encrypt(  $id_category) }}">
-    <button type="submit" class="btn btn-info btn-sm" hidden></button>
-</form>
-
-@if ($reload)
-    <script>
-        window.onload = function() {
-            document.getElementById('form-ver').submit();
-        };
-    </script>
-@endif
-
 @extends('layouts.partials.header')
 @section('title', 'Mesa')
 @section('content-main')
@@ -26,16 +11,12 @@
                     </h3>
 
                     <div class="p-4 mb-4">
-                        {{-- @php
-                             dd($items);
-                        @endphp --}}
-
                         @foreach ($items as $status => $statusItems)
-                            <h3 class="text-2xl font-semibold mt-4">{{ ucfirst($status) }}</h3>
+                            <h3 class="text-2xl font-semibold mt-4 dark:text-gray-200">{{ ucfirst($status) }}</h3>
                             <ul>
                                 @foreach ($statusItems as $item)
                                     <li
-                                        class="sm:col-span-4 md:col-span-4 lg:col-span-4 xl:col-span-4  divide-y divide-gray-200 rounded-lg bg-white shadow dark:bg-gray-700">
+                                        class="sm:col-span-4 md:col-span-4 lg:col-span-4 xl:col-span-4  divide-y divide-gray-200 rounded-lg bg-white shadow dark:bg-gray-700 mb-5">
                                         <div class="flex w-full items-center justify-between space-x-6 p-6">
                                             <div class="flex-1 truncate">
                                                 <div class="flex items-center space-x-3">
@@ -110,11 +91,9 @@
                     @endisset
                     @isset($products)
                         <div class="relative">
-                            <form class="absolute top-0" action="{{ route('table.show') }}" method="POST">
+                            <form action="{{ route('table.show', ['id_table' => encrypt($table->id), 'id_category' => encrypt(-1)]) }}" method="GET">
                                 @csrf
-                                <input type="hidden" name="encrypted_table_id" value=" {{ encrypt(  $table->id) }}">
-                                <input type="hidden" name="category_id" value=" {{ encrypt(-1) }}">
-                                <button type="submit">Volver</button>
+                                <button type="submit">Ver Productos</button>
                             </form>
 
                         </div>
@@ -142,11 +121,10 @@
                                             class="flex gap-3 -mb-8 py-4 border-t border-gray-200 dark:border-gray-600 mx-auto">
                                             <a
                                                 class="group rounded-xl disabled:border *:select-none [&>*:not(.sr-only)]:relative *:disabled:opacity-20 disabled:text-gray-950 disabled:border-gray-200 disabled:bg-gray-100 dark:disabled:border-gray-800/50 disabled:dark:bg-gray-900 dark:*:disabled:!text-white text-gray-950 bg-gray-100 hover:bg-gray-200/75 active:bg-gray-100 dark:bg-gray-500/15 dark:bg-gray-500/10 dark:hover:bg-gray-500/15 dark:active:bg-gray-500/10 flex gap-1.5 items-center text-sm h-8 px-3.5 justify-center">
-                                                <form action="{{ route('table.show') }}" method="POST">
+                                                <form action="{{ route('table.show', ['id_table' => encrypt($table->id), 'id_category' => encrypt($category->id)]) }}" method="GET">
                                                     @csrf
-                                                    <input type="hidden" name="encrypted_table_id" value="{{ encrypt($table->id) }}">
-                                                    <input type="hidden" name="category_id" value="{{ encrypt($category->id) }}">
-                                                    <button type="submit">Ver Productos</button>
+                                               
+                                                    <button type="submit">Enviar</button>
                                                 </form>
                                   
                                             </a>
@@ -211,18 +189,18 @@
                         @if (count($items) > 0)
                             <form action="{{ route('invoiceBill') }}" method="post">
                                 @csrf
-                                <input type="hidden" name="type_invoice" value="site">
                                 <input type="hidden" name="table_id" value="{{ encrypt($table->id) }}">
-                                <input type="hidden" name="items" value="{{ encrypt(json_encode($items)) }}">
                                 <button type="submit"
                                     class="px-4 py-2 mt-4 ml-2 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">Facturar</button>
                             </form>
                         @endif
                     </div>
                 </div>
-                @if (isset($message))
-                    <p>{{ $message }}</p>
-                @endif
+                @if ($message = Session::get('error'))
+                <div>
+                    <p class="text-blue-600">{{ $message }}</p>
+                </div>
+            @endif
 
             </div>
         </main>

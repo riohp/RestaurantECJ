@@ -46,10 +46,10 @@ class tableProductController extends Controller
                 'category_id' => $categoryId,
             ]);
 
-            return TableHelper::processTableData($tableId, $categoryId, true);
-
+            
+            return redirect()->route('table.show', ['id_table' => encrypt($tableId), 'id_category' => encrypt($categoryId)]);
         } catch (QueryException $e) {
-            return TableHelper::processTableData($tableId, $categoryId, true);
+            return redirect()->route('table.show', ['id_table' => encrypt($tableId), 'id_category' => encrypt($categoryId)]);
         }
     }
 
@@ -76,10 +76,8 @@ class tableProductController extends Controller
         $idProduct = unserialize($idProductString);
 
         $encryptedCategoryID = $request->input('category_id'); 
-        /* dd($encryptedCategoryID);  */
         $idCategoryString = Crypt::decryptString($encryptedCategoryID);
         $idCategory = unserialize($idCategoryString);
-
 
         $table = TableProduct::where('table_id', $idTable)
         ->where('product_id', $idProduct)
@@ -88,8 +86,7 @@ class tableProductController extends Controller
         if ($table) {
         $table->delete();
         }
-
-        return TableHelper::processTableData($idTable, $idCategory, true);
+        return redirect()->route('table.show', ['id_table' => $encryptedId, 'id_category' => $encryptedCategoryID]);
     }
 
 
@@ -134,6 +131,7 @@ class tableProductController extends Controller
             $tableProduct->status = $request->status;
             $tableProduct->save();
         }
-        return TableHelper::processTableData($idTable, -1, true);
+
+        return redirect()->route('table.show', ['id_table' => $encryptedId, 'id_category' => encrypt(-1)]);
     }
 }
