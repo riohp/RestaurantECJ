@@ -9,8 +9,7 @@
                     <div class="shrink">
                         <div>
                             <a href="#" class="flex items-center">
-                                <img src="https://coderthemes.com/yum/assets/logo-dark-6dbab3e1.png" class="h-12 flex dark:hidden">
-                                <img src="https://coderthemes.com/yum/assets/logo-light-35c89c2c.png" class="h-12 hidden dark:flex">
+{{--                                aca van las imagenes--}}
                             </a>
                         </div>
                         <div class="py-5">
