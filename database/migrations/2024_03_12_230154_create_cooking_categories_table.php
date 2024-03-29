@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cooking_categories', function (Blueprint $table) {
+        Schema::create('cooking_category', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('cooking_id');
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cooking_categories');
+        Schema::dropIfExists('cooking_category');
     }
 };

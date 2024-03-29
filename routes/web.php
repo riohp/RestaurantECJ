@@ -106,12 +106,13 @@ Route::middleware(['auth', 'role:admin,waiter,cashier'])->group(function () {
     Route::get('/cooking/index', [CookingController::class, 'index'])->name('cooking.index');
     Route::get('/cooking/create', [CookingController::class, 'create'])->name('cooking.create');
     Route::post('/cooking/store', [CookingController::class, 'store'])->name('cooking.store');
+    Route::get('/cooking/listcooking', [CookingController::class, 'list'])->name('cooking.listcooking');
     Route::post('/cooking/show', [CookingController::class, 'show'])->name('cooking.show');
     Route::post('/cooking/edit', [CookingController::class, 'edit'])->name('cooking.edit');
     Route::put('/cooking/update', [CookingController::class, 'update'])->name('cooking.update');
     Route::delete('/cooking/destroy', [CookingController::class, 'destroy'])->name('cooking.destroy');
     Route::post('/cooking/activate', [CookingController::class, 'activate'])->name('cooking.activate');
-
+    
 
     //module reservation
     Route::get('/reservation/index', [ReservationController::class, 'index'])->name('reservation.index');
