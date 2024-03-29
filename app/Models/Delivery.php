@@ -19,11 +19,7 @@ class Delivery extends Model
 
     public function changeStatus()
     {
-        if ($this->status == 1) {
-            $this->status = 0;
-        } else {
-            $this->status = 1;
-        }
+        $this->status = !$this->status; // Alternar entre 0 y 1
         $this->save(); 
     }
 

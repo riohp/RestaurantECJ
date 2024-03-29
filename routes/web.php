@@ -62,7 +62,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 
 
-Route::middleware(['auth', 'role:admin,waiter,cashier,client'])->group(function () {
+Route::middleware(['auth', 'role:admin,waiter,cashier'])->group(function () {
     // modulo products
   Route::get('/products/index', [ProductController::class, 'index'])->name('products.index');
   Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
@@ -137,10 +137,10 @@ Route::middleware(['auth', 'role:admin,cashier,client'])->group(function () {
     // module delivery
     Route::get('/delivery/index', [DeliveryController::class, 'index'])->name('delivery.index');
     Route::post('/delivery/show', [DeliveryController::class, 'show'])->name('delivery.show');
-    Route::get('/delivery/{delivery}/edit', [DeliveryController::class, 'edit'])->name('delivery.edit');
-    Route::put('/delivery/{delivery}', [DeliveryController::class, 'update'])->name('delivery.update');
-    Route::delete('/delivery/{delivery}', [DeliveryController::class, 'destroy'])->name('delivery.destroy');
-    /* Route::post('/delivery/{delivery}', [DeliveryController::class, 'activate'])->name('delivery.activate'); */
+    Route::post('/delivery/edit', [DeliveryController::class, 'edit'])->name('delivery.edit');
+    Route::put('/delivery/update', [DeliveryController::class, 'update'])->name('delivery.update');
+    Route::delete('/delivery/destoy', [DeliveryController::class, 'destroy'])->name('delivery.destroy');
+    
     
 });
 

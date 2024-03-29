@@ -32,7 +32,7 @@ class UserRequest extends FormRequest
             'status' => 'required|in:0,1',
         ];
 
-        // Verificar si el usuario está autenticado
+       
         if ($this->user()) {
             // Solo si el usuario está autenticado, se aplican las siguientes reglas de validación
             if ($this->isMethod('put')) {
