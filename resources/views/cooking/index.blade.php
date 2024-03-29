@@ -33,30 +33,7 @@
                                 <input type="hidden" name="category_id" value="{{ encrypt(-1) }}">
                                 <button type="submit" class="btn btn-info btn-sm">Ver</button>
                             </form>
-                           <form action="{{ route('cooking.edit') }}" method="POST"
-                                style="display: inline">
-                                @csrf
-                                <input type="hidden" name="encrypted_cooking_id" value="{{ encrypt($cooking->id) }}">
-                                <button type="submit" class="btn btn-warning btn-sm">Editar</button>
-                            </form>
-
-                            @if ($cooking->status)
-                                <form action="{{ route('cooking.destroy') }}" method="POST"
-                                    style="display: inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <input type="hidden" name="encrypted_cooking_id" value="{{ encrypt($cooking->id) }}">
-
-                                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                                </form>
-                            @else
-                                <form action="{{ route('cooking.activate') }}" method="POST"
-                                    style="display: inline">
-                                    @csrf
-                                    <input type="hidden" name="encrypted_cooking_id" value="{{ encrypt($cooking->id) }}">
-                                    <button type="submit" class="btn btn-success btn-sm">Activar</button>
-                                </form>
-                            @endif
+                           
                             </p>
 
 

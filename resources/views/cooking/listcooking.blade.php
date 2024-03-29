@@ -107,13 +107,44 @@
                                         </td>
 
                                         <td>
-                                            @foreach ($cooking->categories as $category)
-                                                <span>{{ $category->name }}</span>
-                                            @endforeach
-
+                                            @if ($cooking->categories->count() > 0)
+                                                @foreach ($cooking->categories as $category)
+                                                    <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">{{ $category->name }}</span>
+                                                @endforeach
+                                            @else
+                                                <span
+                                                    class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:bg-red-700 dark:text-red-100">
+                                                    Sin categoria
+                                                </span>
+                                            @endif
                                         </td>
 
+                                        <td>
+                                            <form action="{{ route('cooking.edit') }}" method="POST"
+                                style="display: inline">
+                                @csrf
+                                <input type="hidden" name="encrypted_cooking_id" value="{{ encrypt($cooking->id) }}">
+                                <button type="submit" class="btn btn-warning btn-sm">Editar</button>
+                            </form>
 
+                            @if ($cooking->status)
+                                <form action="{{ route('cooking.destroy') }}" method="POST"
+                                    style="display: inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="hidden" name="encrypted_cooking_id" value="{{ encrypt($cooking->id) }}">
+
+                                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                </form>
+                            @else
+                                <form action="{{ route('cooking.activate') }}" method="POST"
+                                    style="display: inline">
+                                    @csrf
+                                    <input type="hidden" name="encrypted_cooking_id" value="{{ encrypt($cooking->id) }}">
+                                    <button type="submit" class="btn btn-success btn-sm">Activar</button>
+                                </form>
+                            @endif
+                                        </td>
 
                                     </tr>
                                 @empty
