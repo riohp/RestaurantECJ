@@ -68,12 +68,12 @@ function validateLogin() {
     let status = true
 
     //validacion del email si esta vacio o no cumple con el formato
-    if(loginEmail.value.length === 0) {
+    if(loginEmail.value.trim() === "") {
         loginEmail.classList.remove('border-gray-200', 'dark:border-gray-700')
         loginEmail.classList.add('border-red-500')
         document.getElementById('errorInputEmail').innerText = 'El email es obligatorio'
         status = false
-    }else if (!loginEmail.value.includes('@') || !loginEmail.value.includes('.')) {
+    }else if (!validateEmail(loginEmail.value)) {
         loginEmail.classList.remove('border-gray-200', 'dark:border-gray-700')
         loginEmail.classList.add('border-red-500')
         document.getElementById('errorInputEmail').innerText = 'Ingresa un email válido. Ejemplo: fefi@email.com'
@@ -81,7 +81,7 @@ function validateLogin() {
     }
 
     //validacion de la contraseña si esta vacia
-    if(loginPass.value.length === 0) {
+    if(loginPass.value.trim() === "") {
         loginPass.classList.remove('border-gray-200', 'dark:border-gray-700')
         loginPass.classList.add('border-red-500')
         document.getElementById('errorInputPassword').innerText = 'La contraseña es obligatorio'
@@ -112,3 +112,130 @@ function validateLogin() {
     }
 }
 
+const validationModule = (function() {
+    function validateOne(){
+        console.log('Validando')
+        let name = document.getElementById('registerName')
+        let email = document.getElementById('registerEmail')
+        let password = document.getElementById('registerPassword')
+        let status = true
+
+        //validacion del nombre si esta vacio o no cumple con el formato
+        if (name.value.trim() === "") {
+            name.classList.remove('border-gray-200', 'dark:border-gray-700')
+            name.classList.add('border-red-500')
+            document.getElementById('errorRegisterName').innerText = 'El nombre es obligatorio'
+            status = false
+        }
+
+        if (email.value.trim() === "") {
+            email.classList.remove('border-gray-200', 'dark:border-gray-700')
+            email.classList.add('border-red-500')
+            document.getElementById('errorRegisterEmail').innerText = 'El email es obligatorio'
+            status = false
+        } else if (!validateEmail(email.value)) {
+            email.classList.remove('border-gray-200', 'dark:border-gray-700')
+            email.classList.add('border-red-500')
+            document.getElementById('errorRegisterEmail').innerText = 'Ingresa un email válido. Ejemplo: fefi@ejemplo.com'
+            status = false
+        }
+
+        if (password.value.trim() === "") {
+            password.classList.remove('border-gray-200', 'dark:border-gray-700')
+            password.classList.add('border-red-500')
+            document.getElementById('errorRegisterPassword').innerText = 'La contraseña es obligatoria'
+            status = false
+        }else if(password.value.length < 8){
+            password.classList.remove('border-gray-200', 'dark:border-gray-700')
+            password.classList.add('border-red-500')
+            document.getElementById('errorRegisterPassword').innerText = 'La contraseña debe tener al menos 8 caracteres'
+            status = false
+        }
+
+        if (!status) {
+            name.addEventListener('input', function(){
+                if(name.value.length > 0){
+                    name.classList.remove('border-red-500')
+                    name.classList.add('border-gray-200')
+                    document.getElementById('errorRegisterName').innerText = ''
+                    status = true
+                }
+            })
+
+            email.addEventListener('input', function(){
+                if(email.value.length > 0){
+                    email.classList.remove('border-red-500')
+                    email.classList.add('border-gray-200')
+                    document.getElementById('errorRegisterEmail').innerText = ''
+                    status = true
+                }
+            })
+
+            password.addEventListener('input', function(){
+                if(password.value.length >= 8){
+                    password.classList.remove('border-red-500')
+                    password.classList.add('border-gray-200')
+                    document.getElementById('errorRegisterPassword').innerText = ''
+                    status = true
+                }
+            })
+        }
+        return status
+    }
+
+    function validateTow() {
+        let direccion = document.getElementById('registerDireccion');
+        let telefono = document.getElementById('registerTelefono');
+        let status = true
+
+        if (direccion.value.trim() === ""){
+            direccion.classList.remove('border-gray-200', 'dark:border-gray-700')
+            direccion.classList.add('border-red-500')
+            document.getElementById('errorRegisterDireccion').innerText = 'La dirección es obligatoria'
+            status = false
+        }
+
+        if (telefono.value.trim() === ""){
+            telefono.classList.remove('border-gray-200', 'dark:border-gray-700')
+            telefono.classList.add('border-red-500')
+            document.getElementById('errorRegisterTelefono').innerText = 'El teléfono es obligatorio'
+            status = false
+        }else if(telefono.value.length < 10 || telefono.value.length > 10){
+            telefono.classList.remove('border-gray-200', 'dark:border-gray-700')
+            telefono.classList.add('border-red-500')
+            document.getElementById('errorRegisterTelefono').innerText = 'El teléfono debe tener 10 dígitos'
+            status = false
+        }
+
+        if(!status){
+            direccion.addEventListener('input', function(){
+                if(direccion.value.length === 10){
+                    direccion.classList.remove('border-red-500')
+                    direccion.classList.add('border-gray-200')
+                    document.getElementById('errorRegisterDireccion').innerText = ''
+                    status = true
+                }
+            });
+
+            telefono.addEventListener('input', function(){
+                if(telefono.value.length >= 8){
+                    telefono.classList.remove('border-red-500')
+                    telefono.classList.add('border-gray-200')
+                    document.getElementById('errorRegisterTelefono').innerText = ''
+                    status = true
+                }
+            });
+        }
+
+        return status
+    }
+    return {
+        validateOne: validateOne,
+        validateTow1: validateTow
+    };
+})();
+
+function validateEmail(email) {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+}

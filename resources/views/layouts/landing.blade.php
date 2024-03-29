@@ -29,5 +29,6 @@
         @yield('content-landing')
         <script src="{{asset('assets/js/changeTitle.js')}}"></script>
         <script src="{{asset('assets/js/hidden-password.js')}}"></script>
+        <script src="{{asset('assets/js/registerFormScript.js')}}"></script>
     </body>
 </html>
