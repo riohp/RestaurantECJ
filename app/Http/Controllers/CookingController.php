@@ -70,7 +70,7 @@ class CookingController extends Controller
         $cooking = Cooking::findOrFail($id);
         $cooking->update($request->validated());
 
-        return redirect()->route('cooking.index')->with('success', 'Mesa actualizada correctamente');
+        return redirect()->route('cooking.listcooking')->with('success', 'Mesa actualizada correctamente');
     }
 
 
@@ -82,7 +82,7 @@ class CookingController extends Controller
         $cooking = Cooking::findOrFail($id);
         $cooking->status = 0;
         $cooking->save();
-        return redirect()->route('cooking.index')->with('success', 'Mesa eliminada correctamente');
+        return redirect()->route('cooking.listcooking')->with('success', 'Mesa eliminada correctamente');
     }
 
     public function activate(Request $request)
@@ -93,6 +93,6 @@ class CookingController extends Controller
         $cooking = Cooking::findOrFail($id);
         $cooking->status = 1; //activar mesa
         $cooking->save();
-        return redirect()->route('cooking.index')->with('success', 'Mesa activada correctamente');
+        return redirect()->route('cooking.listcooking')->with('success', 'Mesa activada correctamente');
     }
 }
