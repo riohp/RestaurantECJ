@@ -1,7 +1,4 @@
 
-
-
-
 @extends('layouts.partials.header')
 @section('title', 'Mesa')
 @section('content-main')

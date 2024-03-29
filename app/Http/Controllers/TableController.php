@@ -33,14 +33,11 @@ class TableController extends Controller
         return redirect()->route('table.index')->with('success', 'Mesa creada correctamente');
     }
 
-    public function show(Request $request)
+    public function show($encryptedId, $categoryIdEncrypted)
     {   
-        $encryptedId = $request->input('encrypted_table_id');
         $id = Crypt::decryptString($encryptedId);
         $tableId = unserialize($id);
 
-    
-        $categoryIdEncrypted = $request->input('category_id');
         $categoryIdUnserialize = Crypt::decryptString($categoryIdEncrypted);
         $idCategory = unserialize($categoryIdUnserialize);
         return TableHelper::processTableData($tableId, $idCategory);

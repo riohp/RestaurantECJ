@@ -8,6 +8,7 @@ use App\Utils\TableHelper;
 use App\Models\DeliveryProduct;
 use Illuminate\Database\QueryException;
 use App\Utils\ShowDataInvoice;
+use App\Utils\InvoceUtils;
 
 class DeliveryProductController extends Controller
 {
@@ -17,9 +18,9 @@ class DeliveryProductController extends Controller
     {
         try {
             DeliveryProduct::create($request->all());
-            return TableHelper::processTableDataDelivery($request->deliveries_id, $request->category_id, true);
+            return redirect()->route('delivery.show', ['id_delivery' => encrypt($request->deliveries_id), 'id_category' => encrypt($request->category_id)]);
         } catch (QueryException $e) {
-            return TableHelper::processTableDataDelivery($request->deliveries_id, $request->category_id, true);
+            return redirect()->route('delivery.show', ['id_delivery' => encrypt($request->deliveries_id), 'id_category' => encrypt($request->category_id)]);
         }
     }
 
@@ -35,7 +36,7 @@ class DeliveryProductController extends Controller
             $delivery->delete();
         }
 
-        return TableHelper::processTableDataDelivery($request->deliveries_id, $request->category_id, true);
+        return redirect()->route('delivery.show', ['id_delivery' => encrypt($request->deliveries_id), 'id_category' => encrypt($request->category_id)]);
     }
 
 
@@ -47,12 +48,24 @@ class DeliveryProductController extends Controller
             ->where('product_id', $request->product_id)
             ->where('status', 'cooking')
             ->first();
-
+        
         if ($deliveryProduct) {
             $deliveryProduct->status = $request->status;
             $deliveryProduct->save();
         }
-
+        $deliveryCooking  = DeliveryProduct::where('deliveries_id', $request->deliveries_id)
+        ->where('status', 'cooking')
+        ->first();
+        if(empty($deliveryCooking ) ) {
+            $tableitems = DeliveryProduct::where('deliveries_id', $request->deliveries_id)->with('product')->get();
+            $result = TableHelper::generateItemsAndTotal($tableitems);
+            $items = $result['items'];
+            $total = $result['total'];
+            InvoceUtils::createInvoce($total, 'delivery', auth()->user()->id, $items);
+            $delivery = Delivery::find($request->deliveries_id);
+            $delivery->status = '0';
+            $delivery->save();
+        }	
         return ShowDataInvoice::showDataInvoice($cooking_id);
     }
 
