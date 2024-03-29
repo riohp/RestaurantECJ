@@ -5,11 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Cooking;
 use App\Models\CookingCategory;
-use App\Models\TableProduct;
-use App\Models\DeliveryProduct;
 use App\Utils\ShowDataInvoice;
 use App\Http\Requests\CookingRequest;
 use Illuminate\Support\Facades\Crypt;
+
 class CookingController extends Controller
 {
     public function index()
@@ -21,11 +20,21 @@ class CookingController extends Controller
 
     public function create()
     {
+
         return view('cooking.create');
     }
 
+    
+
+    public function list()
+    {
+        $cookings = Cooking::with('categories')->get();
+        return view('cooking.listcooking', compact('cookings'));
+    }
+
+
     function store(CookingRequest $request)
-    {   
+    {
         $cooking = Cooking::create($request->validated());
         return redirect()->route('cooking.index')->with('success', 'Mesa creada correctamente');
     }
@@ -36,12 +45,11 @@ class CookingController extends Controller
         $encryptedId = $request->input('encrypted_cooking_id');
         $id = Crypt::decryptString($encryptedId);
         $cookingId = unserialize($id);
-        
+
         $categoryIdEncrypted = $request->input('category_id');
         $categoryIdUnserialize = Crypt::decryptString($categoryIdEncrypted);
         $idCategory = unserialize($categoryIdUnserialize);
         return ShowDataInvoice::showDataInvoice($cookingId, $idCategory);
-
     }
 
 
@@ -64,10 +72,10 @@ class CookingController extends Controller
 
         return redirect()->route('cooking.index')->with('success', 'Mesa actualizada correctamente');
     }
-    
+
 
     public function destroy(Request $request)
-    {   
+    {
         $encryptedId = $request->input('encrypted_cooking_id');
         $id = Crypt::decryptString($encryptedId);
         $id = unserialize($id);
@@ -78,7 +86,7 @@ class CookingController extends Controller
     }
 
     public function activate(Request $request)
-    {   
+    {
         $encryptedId = $request->input('encrypted_cooking_id');
         $id = Crypt::decryptString($encryptedId);
         $id = unserialize($id);

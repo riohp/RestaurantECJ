@@ -102,12 +102,13 @@ Route::middleware(['auth', 'role:admin,waiter,cashier'])->group(function () {
     Route::get('/cooking/index', [CookingController::class, 'index'])->name('cooking.index');
     Route::get('/cooking/create', [CookingController::class, 'create'])->name('cooking.create');
     Route::post('/cooking/store', [CookingController::class, 'store'])->name('cooking.store');
+    Route::get('/cooking/listcooking', [CookingController::class, 'list'])->name('cooking.listcooking');
     Route::post('/cooking/show', [CookingController::class, 'show'])->name('cooking.show');
     Route::post('/cooking/edit', [CookingController::class, 'edit'])->name('cooking.edit');
     Route::put('/cooking/update', [CookingController::class, 'update'])->name('cooking.update');
     Route::delete('/cooking/destroy', [CookingController::class, 'destroy'])->name('cooking.destroy');
     Route::post('/cooking/activate', [CookingController::class, 'activate'])->name('cooking.activate');
-
+    
 
     //module reservation
     Route::get('/reservation/index', [ReservationController::class, 'index'])->name('reservation.index');
@@ -122,7 +123,7 @@ Route::middleware(['auth', 'role:admin,waiter,cashier'])->group(function () {
 
 
 
-Route::middleware(['auth', 'role:admin,cashier'])->group(function () {
+Route::middleware(['auth', 'role:admin,cashier,client'])->group(function () {
     // module Invoice
     Route::post('/invoiceBill', [InvoiceController::class, 'invoiceBill'])->name('invoiceBill');
     Route::get('/invoice/index', [InvoiceController::class, 'index'])->name('invoice.index');
@@ -133,13 +134,11 @@ Route::middleware(['auth', 'role:admin,cashier'])->group(function () {
     // module delivery
     Route::get('/delivery/index', [DeliveryController::class, 'index'])->name('delivery.index');
 
-    Route::get('/delivery/{delivery}/edit', [DeliveryController::class, 'edit'])->name('delivery.edit');
-    Route::put('/delivery/{delivery}', [DeliveryController::class, 'update'])->name('delivery.update');
-    Route::delete('/delivery/{delivery}', [DeliveryController::class, 'destroy'])->name('delivery.destroy');
-    Route::post('/delivery/{delivery}', [DeliveryController::class, 'activate'])->name('delivery.activate');
-
-
-
+    Route::get('/delivery/show/{id_delivery}/{id_category}', [DeliveryController::class, 'show'])->name('delivery.show');
+    Route::post('/delivery/edit', [DeliveryController::class, 'edit'])->name('delivery.edit');
+    Route::put('/delivery/update', [DeliveryController::class, 'update'])->name('delivery.update');
+    Route::delete('/delivery/destoy', [DeliveryController::class, 'destroy'])->name('delivery.destroy');
+    
 });
 
 
