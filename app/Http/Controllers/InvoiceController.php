@@ -11,6 +11,7 @@ use App\Utils\ShowDataInvoice;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Illuminate\Support\Facades\Crypt;
+use App\Utils\InvoceUtils;
 
 
 class InvoiceController extends Controller
@@ -27,55 +28,30 @@ class InvoiceController extends Controller
     {
      
         $responsible = auth()->user()->id;
-        $itemsJsonEncrypted = $request->input('items');
-        $itemsJsonString = Crypt::decryptString($itemsJsonEncrypted);
-        $itemsDeserealize = unserialize($itemsJsonString);
-        $items = json_decode($itemsDeserealize, true);
-
         $tableEncryptedID = $request->input('table_id');
         $tableIdString = Crypt::decryptString($tableEncryptedID);
         $tableId = unserialize($tableIdString);
-
-        $type_invoice = $request->input('type_invoice');
-        $total = 0;
-    
-
+        $tableItems = TableProduct::where('table_id', $tableId)->with('product')->get();
+        $result = TableHelper::generateItemsAndTotal($tableItems);
+        $items = $result['items'];
+        $total = $result['total'];
+        
+        
         foreach ($items as $status => $products) {
             foreach ($products as $productId => $item) {
                 if($item['status'] == 'process' or $item['status'] == 'cooking'){
                     if($tableId){
-                        return TableHelper::processTableData($tableId, -1, null, 'No se puede facturar, hay productos en proceso o cocinando.');
+                        return redirect()->route('table.show', ['id_table' => $tableEncryptedID, 'id_category' => encrypt(-1)])->with('error', 'No se puede facturar, hay productos en proceso o cocinando.');
                     }else{
-                        return TableHelper::processTableDataDelivery($request->deliveries_id, -1, null, 'No se puede facturar, hay productos en proceso o cocinando.');
+                        return redirect()->route('table.show', ['id_table' => $tableEncryptedID, 'id_category' => encrypt(-1)])->with('error', 'No se puede facturar, hay productos en proceso o cocinando.');
                     }
                     
                 }
             }
         }
 
-  
-        foreach ($items as $status => $products) {
-            foreach ($products as $productId => $item) {
-                $total += $item['subtotal'];
-            }
-        }
-    
-        $invoice = Invoice::create([
-            'total' => $total,
-            'type_invoice' => $type_invoice,
-            'responsible_id' => $responsible,
-        ]);
-    
-        foreach ($items as $status => $products) {
-            foreach ($products as $productId => $item) {
-                ItemInvoice::create([
-                    'cant' => $item['quantity'],
-                    'product_id' => $item['id'],
-                    'invoice_id' => $invoice->id,
-                    'subTotal' => $item['subtotal'],
-                ]);
-            }
-        }
+        InvoceUtils::createInvoce($total, 'site', $responsible, $items);
+      
     
         TableProduct::where('table_id', $tableId)->delete();
     

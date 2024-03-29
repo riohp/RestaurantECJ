@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\DeliveryProduct;
 use Illuminate\Support\Facades\Crypt;
 use App\Http\Requests\DeliveryRequest;
+
 class DeliveryController extends Controller
 {
     public function index()
@@ -56,7 +57,9 @@ class DeliveryController extends Controller
         $newDelivery = Delivery::create($validatedData);
         $newDeliveryId = $newDelivery->id;
 
-        return TableHelper::processTableDataDelivery($newDeliveryId, null);
+
+        return redirect()->route('delivery.show', ['id_delivery' => encrypt($newDeliveryId), 'id_category' => encrypt(-1)]);
+
     }
 
 
@@ -78,11 +81,14 @@ class DeliveryController extends Controller
      * @param  \App\Models\Table  $table
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
-    {
-        $deliveryId = $request->input('delivery');
-        $id_category = $request->input('category_id');
 
+    public function show($id_delivery_encrypted, $id_category_encrypted)
+    {
+        $id = Crypt::decryptString($id_delivery_encrypted);
+        $deliveryId = unserialize($id);
+
+        $categoryIdUnserialize = Crypt::decryptString($id_category_encrypted);
+        $id_category = unserialize($categoryIdUnserialize);
 
         return TableHelper::processTableDataDelivery($deliveryId, $id_category);
     }
