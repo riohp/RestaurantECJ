@@ -1,18 +1,3 @@
-<form id="form-ver" action="{{ route('delivery.show') }}" method="POST">
-    @csrf
-    <input type="hidden" name="delivery" value="{{ $delivery->id }}">
-    <input type="hidden" name="category_id" value="{{ $id_category }}">
-    <button type="submit" class="btn btn-info btn-sm" hidden></button>
-</form>
-
-@if ($reload)
-    <script>
-        window.onload = function() {
-            document.getElementById('form-ver').submit();
-        };
-    </script>
-@endif
-
 @extends('layouts.partials.header')
 @section('title', 'Mesa')
 @section('content-main')
@@ -24,18 +9,13 @@
                     style="scrollbar-width: none; -ms-overflow-style: none; scrollbar-height: none;">
                     <h3 class="text-3xl font-bold tracking-tight dark:text-gray-200 sm:text-4xl m-5 text-center">Comanda
                     </h3>
-
                     <div class="p-4 mb-4">
-                        {{-- @php
-                             dd($items);
-                        @endphp --}}
-
                         @foreach ($items as $status => $statusItems)
-                            <h3 class="text-2xl font-semibold mt-4">{{ ucfirst($status) }}</h3>
+                            <h3 class="text-2xl font-semibold mt-4 dark:text-gray-200">{{ ucfirst($status) }}</h3> 
                             <ul>
                                 @foreach ($statusItems as $item)
                                     <li
-                                        class="sm:col-span-4 md:col-span-4 lg:col-span-4 xl:col-span-4  divide-y divide-gray-200 rounded-lg bg-white shadow dark:bg-gray-700">
+                                        class="sm:col-span-4 md:col-span-4 lg:col-span-4 xl:col-span-4  divide-y divide-gray-200 rounded-lg bg-white shadow dark:bg-gray-700 mb-5">
                                         <div class="flex w-full items-center justify-between space-x-6 p-6">
                                             <div class="flex-1 truncate">
                                                 <div class="flex items-center space-x-3">
@@ -110,11 +90,10 @@
                     @endisset
                     @isset($products)
                         <div class="relative">
-                            <form class="absolute top-0" action="{{ route('delivery.show') }}" method="POST">
+                            <form action="{{ route('delivery.show', ['id_delivery' => encrypt($delivery->id), 'id_category' => encrypt(-1)]) }}" method="GET">
                                 @csrf
-                                <input type="hidden" name="delivery" value="{{ $delivery->id }}">
-                                <input type="hidden" name="category_id" value="-1">
-                                <button type="submit">Volver</button>
+                           
+                                <button type="submit">Enviar</button>
                             </form>
 
                         </div>
@@ -142,11 +121,10 @@
                                             class="flex gap-3 -mb-8 py-4 border-t border-gray-200 dark:border-gray-600 mx-auto">
                                             <a
                                                 class="group rounded-xl disabled:border *:select-none [&>*:not(.sr-only)]:relative *:disabled:opacity-20 disabled:text-gray-950 disabled:border-gray-200 disabled:bg-gray-100 dark:disabled:border-gray-800/50 disabled:dark:bg-gray-900 dark:*:disabled:!text-white text-gray-950 bg-gray-100 hover:bg-gray-200/75 active:bg-gray-100 dark:bg-gray-500/15 dark:bg-gray-500/10 dark:hover:bg-gray-500/15 dark:active:bg-gray-500/10 flex gap-1.5 items-center text-sm h-8 px-3.5 justify-center">
-                                                <form action="{{ route('delivery.show') }}" method="POST">
+                                                <form action="{{ route('delivery.show', ['id_delivery' => encrypt($delivery->id), 'id_category' => encrypt($category->id)]) }}" method="GET">
                                                     @csrf
-                                                    <input type="hidden" name="delivery" value="{{ $delivery->id }}">
-                                                    <input type="hidden" name="category_id" value="{{ $category->id }}">
-                                                    <button type="submit">Ver Productos</button>
+                                               
+                                                    <button type="submit">Enviar</button>
                                                 </form>
                                             </a>
                                         </div>
@@ -158,7 +136,7 @@
                     @isset($products)
                         <div class="flex flex-wrap -mx-4 p-4 ">
                             @foreach ($products as $product)
-                                <div class="w-full  sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-full px-4 ">
+                                <div class="w-full  sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-full px-4">
                                     <div class="relative">
                                         <form class="absolute top-0" action="{{ route('deliverysProduct.store') }}"
                                             method="post">

@@ -11,16 +11,16 @@ class CustomAuthController extends Controller
     public function index()
     {
         return view('auth.login');
-    }  
-      
+    }
+
     public function customLogin(Request $request)
     {
-       
+
         $request->validate([
             'email' => 'required',
             'password' => 'required',
         ]);
-        
+
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
             if (Auth::user()->role == 'admin') {
@@ -33,14 +33,13 @@ class CustomAuthController extends Controller
                 return redirect()->route('invoice.index')->withSuccess('Has iniciado sesión correctamente');
             }
         }
-  
-        return redirect("login")->withSuccess('las credenciales proporcionadas son incorrectas');
+        return redirect("login")->withInput($request->only('email'))->withErrors(['validOff' => 'Email o contraseña no son correctas. Intentalo de nuevo.',]);
     }
     public function registration()
     {
         return view('auth.registration');
     }
-      
+
     public function store(RegisterRequest $request)
     {
         $userValidated = $request->validated();
@@ -51,11 +50,11 @@ class CustomAuthController extends Controller
         return redirect()->route('login')->with('success', 'Usuario creado correctamente');
     }
 
-    
+
     public function signOut() {
         Session::flush();
         Auth::logout();
-  
+
         return Redirect('login');
     }
 }
