@@ -60,3 +60,55 @@ function crearCategoria() {
         document.getElementById('btnText').classList.remove('hidden');
     }
 }
+
+function validateLogin() {
+    console.log('Validando')
+    let loginPass = document.getElementById('loginPassword')
+    let loginEmail = document.getElementById('loginEmail')
+    let status = true
+
+    //validacion del email si esta vacio o no cumple con el formato
+    if(loginEmail.value.length === 0) {
+        loginEmail.classList.remove('border-gray-200', 'dark:border-gray-700')
+        loginEmail.classList.add('border-red-500')
+        document.getElementById('errorInputEmail').innerText = 'El email es obligatorio'
+        status = false
+    }else if (!loginEmail.value.includes('@') || !loginEmail.value.includes('.')) {
+        loginEmail.classList.remove('border-gray-200', 'dark:border-gray-700')
+        loginEmail.classList.add('border-red-500')
+        document.getElementById('errorInputEmail').innerText = 'Ingresa un email válido. Ejemplo: fefi@email.com'
+        status = false
+    }
+
+    //validacion de la contraseña si esta vacia
+    if(loginPass.value.length === 0) {
+        loginPass.classList.remove('border-gray-200', 'dark:border-gray-700')
+        loginPass.classList.add('border-red-500')
+        document.getElementById('errorInputPassword').innerText = 'La contraseña es obligatorio'
+        status = false
+    }
+
+    //si empieza a escribir en los inputs se quita el mensaje de error, y se valida nuevamente para poder el envio del formulario
+    if (!status) {
+        loginEmail.addEventListener('input', function(){
+            if(loginEmail.value.length > 0){
+                loginEmail.classList.remove('border-red-500')
+                loginEmail.classList.add('border-gray-200')
+                document.getElementById('errorInputEmail').innerText = ''
+                status = true
+            }
+        })
+
+        loginPass.addEventListener('input', function(){
+            if(loginPass.value.length > 0){
+                loginPass.classList.remove('border-red-500')
+                loginPass.classList.add('border-gray-200')
+                document.getElementById('errorInputPassword').innerText = ''
+                status = true
+            }
+        })
+    }else if(status){
+        document.getElementById('formLogin').submit()
+    }
+}
+
