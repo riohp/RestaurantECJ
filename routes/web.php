@@ -72,7 +72,7 @@ Route::middleware(['auth', 'role:admin,waiter,cashier'])->group(function () {
 
     //modulo Category
     Route::get('/category/index', [CategoryController::class, 'index'])->name('category.index');
-    Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create');
+    
     Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
     Route::post('/category/show', [CategoryController::class, 'show'])->name('category.show');
     Route::post('/category/edit', [CategoryController::class, 'edit'])->name('category.edit');
@@ -86,6 +86,7 @@ Route::middleware(['auth', 'role:admin,waiter,cashier'])->group(function () {
     Route::get('/table/create', [TableController::class, 'create'])->name('table.create');
     Route::post('/table', [TableController::class, 'store'])->name('table.store');
     Route::get('/table/show/{id_table}/{id_category}', [TableController::class, 'show'])->name('table.show');
+    Route::get('/table/listtable', [TableController::class, 'list'])->name('table.listTable');
     Route::post('/table/edit', [TableController::class, 'edit'])->name('table.edit');
     Route::put('/table/update', [TableController::class, 'update'])->name('table.update');
     Route::delete('/table/destroy', [TableController::class, 'destroy'])->name('table.destroy');
@@ -102,6 +103,8 @@ Route::middleware(['auth', 'role:admin,waiter,cashier'])->group(function () {
     Route::get('/cooking/index', [CookingController::class, 'index'])->name('cooking.index');
     Route::get('/cooking/create', [CookingController::class, 'create'])->name('cooking.create');
     Route::post('/cooking/store', [CookingController::class, 'store'])->name('cooking.store');
+    Route::post('/cooking/assignments', [CookingController::class, 'assign'])->name('cooking.assignments');
+    Route::post('/cooking/assign/category', [CookingController::class, 'assignCategory'])->name('cooking.assign.category');
     Route::get('/cooking/listcooking', [CookingController::class, 'list'])->name('cooking.listcooking');
     Route::post('/cooking/show', [CookingController::class, 'show'])->name('cooking.show');
     Route::post('/cooking/edit', [CookingController::class, 'edit'])->name('cooking.edit');

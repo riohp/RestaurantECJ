@@ -25,12 +25,17 @@ class TableController extends Controller
         return view('table.create');
     }
 
+    public function list()
+    {
+        $tables = Table::all();
+        return view('table.listTable', compact('tables'));
+    }
 
     public function store(TableRequest $request)
     {
         Table::create($request->validated());
 
-        return redirect()->route('table.index')->with('success', 'Mesa creada correctamente');
+        return redirect()->route('table.listTable')->with('success', 'Mesa creada correctamente');
     }
 
     public function show($encryptedId, $categoryIdEncrypted)
@@ -60,7 +65,7 @@ class TableController extends Controller
         $table = Table::findOrFail($id);
         $table->update($request->validated());
 
-        return redirect()->route('table.index')->with('success', 'Mesa actualizada correctamente');
+        return redirect()->route('table.listTable')->with('success', 'Mesa actualizada correctamente');
     }
     
 
@@ -72,7 +77,7 @@ class TableController extends Controller
         $table = Table::findOrFail($id);
         $table->status = 0;
         $table->save();
-        return redirect()->route('table.index')->with('success', 'Mesa desactivada correctamente');
+        return redirect()->route('table.listTable')->with('success', 'Mesa desactivada correctamente');
     }
 
     public function activate(Request $request)
@@ -83,6 +88,6 @@ class TableController extends Controller
         $table = Table::findOrFail($id);
         $table->status = 1;
         $table->save();
-        return redirect()->route('table.index')->with('success', 'Mesa activada correctamente');
+        return redirect()->route('table.listTable')->with('success', 'Mesa activada correctamente');
     }
 }
