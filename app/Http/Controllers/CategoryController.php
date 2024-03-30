@@ -17,10 +17,7 @@ class CategoryController extends Controller
         return view('category.index', compact('categories'));
     }
 
-    public function create()
-    {
-        return view('category.create');
-    }
+    
 
     public function store(CategoryRequest $request)
     {
@@ -46,6 +43,7 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         return view('category.edit', compact('category'));
     }
+
 
 
     public function update(CategoryRequest $request)
