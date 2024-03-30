@@ -92,21 +92,19 @@ class CookingController extends Controller
 
     public function assignCategory(Request $request)
     {
-        // Obtener el ID de la cocina y el ID de la categoría desde la solicitud
+        
         $cookingId = $request->input('cooking_id');
         $categoryId = $request->input('category_id');
 
-        // Verificar si ya existe una relación entre la cocina y la categoría
         $existingAssignment = CookingCategory::where('cooking_id', $cookingId)
             ->where('category_id', $categoryId)
             ->exists();
 
-        // Si ya existe la asignación, redireccionar con un mensaje de error
         if ($existingAssignment) {
             return redirect()->route('cooking.listcooking')->with('error', 'Esta categoría ya está asignada a la cocina.');
         }
 
-        // Crear una nueva entrada en la tabla de pivote para la asignación
+     
         CookingCategory::create([
             'cooking_id' => $cookingId,
             'category_id' => $categoryId,
