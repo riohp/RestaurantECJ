@@ -10,7 +10,14 @@ class ReservationController extends Controller
 {
     public function index()
     {
-        $reservations = Reservation::all();
+        $search = request()->get('search');
+        if ($search && !empty($search)) {
+            $reservations = Reservation::where('full_name', 'like', '%' . $search . '%')
+                ->paginate(20)
+                ->appends(['search' => $search]);
+        } else {
+            $reservations = Reservation::paginate(20);
+        }
         return view('reservations.index', compact('reservations'));
     }
 

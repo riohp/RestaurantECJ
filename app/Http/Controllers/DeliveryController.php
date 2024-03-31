@@ -14,7 +14,14 @@ class DeliveryController extends Controller
 {
     public function index()
     {
-        $deliveries = Delivery::all();
+        $search = request()->get('search');
+        if ($search && !empty($search)) {
+            $deliveries = Delivery::where('cellphone', 'like', '%' . $search . '%')
+                ->paginate(20)
+                ->appends(['search' => $search]);
+        } else {
+            $deliveries = Delivery::paginate(20);
+        }
         return view('delivery.index', compact('deliveries'));
     }
 

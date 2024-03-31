@@ -17,10 +17,12 @@ class DeliveryFactory extends Factory
     public function definition()
     {
         return [
-            'full_name' => fake()->name(),
-            'cellphone' => fake()->phoneNumber(),
-            'address' => fake()->address(), 
-            'invoice_id' => fake()->numberBetween(1, 25)
+            'client_id' => $this->faker->numberBetween(1, 30),
+            'cellphone' => $this->faker->phoneNumber,
+            'address' => $this->faker->address,
+            'invoice_id' => $this->faker->numberBetween(1, 30),
+            'status' => $this->faker->randomElement([0, 1]),
+
         ];
     }
 }

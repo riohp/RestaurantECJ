@@ -13,7 +13,16 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $categories = Category::all();
+        $search = request()->input('search');
+        if ($search && !empty($search)) {
+            $categories = Category::where('name', 'like', '%' . $search . '%')
+                ->orWhere('description', 'like', '%' . $search . '%')
+                ->paginate(20)
+                ->appends(['search' => $search]);
+        } else {
+            $categories = Category::paginate(20);
+        }
+        
         return view('category.index', compact('categories'));
     }
 

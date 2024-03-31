@@ -11,9 +11,20 @@ use Exception;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::paginate(25);
+        $search = $request->input('search');
+
+        if ($search && !empty($search)) {
+            $users = User::where('name', 'like', '%' . $search . '%')
+                ->orWhere('email', 'like', '%' . $search . '%')
+                ->orWhere('cellphone', 'like', '%' . $search . '%')
+                ->paginate(20)
+                ->appends(['search' => $search]);
+        } else {
+            $users = User::paginate(20);
+        }
+
         return view('users.index', compact('users'));
     }
 
@@ -54,23 +65,23 @@ class UserController extends Controller
     }
 
     public function update(UserRequest $request)
-{
-    $encryptedId = $request->input('encrypted_id');
-    $id = Crypt::decryptString($encryptedId);
-    $id = unserialize($id);
-    $user = User::findOrFail($id);
+    {
+        $encryptedId = $request->input('encrypted_id');
+        $id = Crypt::decryptString($encryptedId);
+        $id = unserialize($id);
+        $user = User::findOrFail($id);
 
 
-    // Actualiza esto se corrije cuando este login
-    $user->name = $request->input('name');
-    $user->email = $request->input('email');
-    $user->cellphone = $request->input('cellphone');
-    $user->address = $request->input('address');
-    $user->role = $request->input('role');
-    $user->status = $request->input('status');
-    $user->save();
-    return redirect()->route('users.index')->with('success', 'Usuario actualizado correctamente');
-}
+        // Actualiza esto se corrije cuando este login
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->cellphone = $request->input('cellphone');
+        $user->address = $request->input('address');
+        $user->role = $request->input('role');
+        $user->status = $request->input('status');
+        $user->save();
+        return redirect()->route('users.index')->with('success', 'Usuario actualizado correctamente');
+    }
 
 
     public function destroy(Request $request)

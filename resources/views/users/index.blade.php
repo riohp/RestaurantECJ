@@ -35,9 +35,11 @@
                                     clip-rule="evenodd"></path>
                             </svg>
                         </div>
-                        <input type="search"
-                            class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-dark focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
-                            placeholder="Search..." aria-label="Search">
+                        <form method="GET" action="{{ route('users.index') }}">
+                            <input type="text" name="search" id="searchInput"
+                                class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-dark focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
+                                placeholder="Buscar usuarios..." aria-label="Search">
+                        </form>
                     </div>
                 </div>
             </div>
@@ -57,7 +59,7 @@
                             <th class="px-4 py-3">Acciones</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                    <tbody id="usersTableBody" class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                         @isset($users)
                             @foreach ($users as $user)
                                 @php
@@ -149,7 +151,10 @@
                                                         @method('POST')
                                                         <input type="hidden" name="encrypted_id"
                                                             value="{{ encrypt($user->id) }}">
-                                                        <button type="submit" class="btn btn-link">activar</button>
+                                                        <button
+                                                            type="submit"class="flex items-center px-2 py-2 text-sm font-medium leading-5 text-green-600 rounded-lg dark:text-red-400 focus:outline-none focus:shadow-outline-gray"
+                                                            aria-label="Delete"><i class="fa-solid fa-play"></i>
+                                                        </button>
                                                     </form>
                                                 @endif
                                             </div>
@@ -168,7 +173,7 @@
             <div
                 class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
                 <span class="flex items-center col-span-3">
-                    Showing 21-30 of 100
+                    Mostando {{ $users->firstItem() }} a {{ $users->lastItem() }} de {{ $users->total() }} Resultados
                 </span>
                 <span class="col-span-2"></span>
                 <!-- Pagination -->
@@ -189,7 +194,8 @@
 
                             @for ($i = 1; $i <= $users->lastPage(); $i++)
                                 <li>
-                                    <button onclick="window.location='{{ $users->url($i) }}'"
+                                    <button
+                                        onclick="window.location='{{ $users->url($i, ['search' => request('search')]) }}'"
                                         class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple @if ($i === $users->currentPage()) bg-purple-600 text-white @else bg-white text-purple-600 @endif">
                                         {{ $i }}
                                     </button>
