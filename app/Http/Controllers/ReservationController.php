@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Reservation;
 use App\Models\Table;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 class ReservationController extends Controller
 {
@@ -14,65 +15,58 @@ class ReservationController extends Controller
         return view('reservations.index', compact('reservations'));
     }
 
-
-    public function create()
-    {
-        
-        $tables = Table::all();
-
-        
-        $availableTables = $tables->filter(function ($table) {
-            
-            return $table->isAvailableForReservation(request('start_time'), request('end_time'));
-        });
-
-        return view('reservations.create', compact('tables', 'availableTables'));
-    }
-
-
-
-    public function store(Request $request)
+public function store(Request $request)
 {
     $validatedData = $request->validate([
         'full_name' => 'required|max:255',
         'cellphone' => 'required|max:255',
-        'id_table' => 'required|exists:tables,id',
-        'start_time' => 'required|date_format:Y-m-d\TH:i',
-        'end_time' => 'required|date_format:H:i',
+        'id_table' => 'required',
+        'location' => 'required',
+        'date_reservation' => 'required',
+        'time_reservation' => 'required',
     ]);
+    
+    $validatedData['id_table'] = decrypt($validatedData['id_table']);
 
-    // Obtener la mesa
-    $table = Table::findOrFail($validatedData['id_table']);
+    $start_time = Carbon::createFromFormat('Y-m-d H:i', $validatedData['date_reservation'] . ' ' . $validatedData['time_reservation']);
+    
+    $minimum_time = $start_time->copy()->addHours(2);
 
-    // Formatear la fecha y hora de inicio
-    $startTime = now()->format('Y-m-d H:i:s');
+    $overlappingReservations = DB::table('reservations')
+        ->where('id_table', $validatedData['id_table']) 
+        ->whereDate('start_time', $start_time->toDateString())
+        ->where(function($query) use ($start_time, $minimum_time) {
+            $query->whereBetween('start_time', [$start_time, $minimum_time])
+                  ->orWhereBetween(DB::raw('DATE_ADD(start_time, INTERVAL 2 HOUR)'), [$start_time, $minimum_time]);
+        })
+        ->exists();
 
-    // Obtener la duración de la reserva
-    $duration = Carbon::parse($validatedData['end_time'])->diffInMinutes(Carbon::parse($validatedData['start_time']));
-
-    // Calcular la fecha y hora de fin sumando la duración a la hora de inicio
-    $endTime = Carbon::parse($startTime)->addMinutes($duration);
-
-    // Verificar la disponibilidad de la mesa
-    if (!$table->isTableAvailable($startTime, $endTime)) {
-        return redirect()->back()->withErrors(['error' => 'La mesa no está disponible para la reserva en este rango de tiempo.']);
+    if ($overlappingReservations) {
+        return redirect()->route('reservation.reserve')->with('error', 'La mesa no está disponible para la reserva en este rango de tiempo.');
     }
-
-    // Crear la reserva
+    
     Reservation::create([
         'full_name' => $validatedData['full_name'],
         'cellphone' => $validatedData['cellphone'],
         'id_table' => $validatedData['id_table'],
-        'start_time' => $startTime,
-        'end_time' => $endTime,
+        'location' => $validatedData['location'],
+        'start_time' => $start_time,
     ]);
-
-    return redirect()->route('reservation.index')->with('success', 'Reservación creada correctamente');
+    return redirect()->route('reservation.reserve')->with('success', 'Reservación creada correctamente');
 }
 
     
+    
+    
 
 
+    
+
+    public function reserve()
+    {
+        $tables = Table::all();
+        return view('reservations.reserve', compact('tables'));
+    }
 
 
     public function show(Request $request)

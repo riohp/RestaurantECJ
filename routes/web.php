@@ -37,7 +37,8 @@ Route::post('custom-login', [CustomAuthController::class, 'customLogin'])->name(
 Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout');
 Route::get('registration', [CustomAuthController::class, 'registration'])->name('register-user');
 Route::post('registration/store', [CustomAuthController::class, 'store'])->name('register.store');
-
+Route::get('/reserve', [ReservationController::class, 'reserve'])->name('reservation.reserve');
+Route::post('/reservation', [ReservationController::class, 'store'])->name('reservation.store');
 
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
@@ -155,12 +156,9 @@ Route::middleware(['auth', 'role:client'])->group(function () {
     Route::post('/delivery/product/updateStatus', [DeliveryProductController::class, 'updateStatus'])->name('deliverysProduct.updateStatus');
     Route::post('/delivery/product/updateStatusItems', [DeliveryProductController::class, 'updateStatusItems'])->name('deliverysProduct.updateStatusItems');
 
-
-
-
     //module reservation
     Route::get('/reservation/create', [ReservationController::class, 'create'])->name('reservation.create');
-    Route::post('/reservation', [ReservationController::class, 'store'])->name('reservation.store');
+ 
 
 });
 

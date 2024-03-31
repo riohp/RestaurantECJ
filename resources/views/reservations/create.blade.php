@@ -1,5 +1,5 @@
 @extends('layouts.partials.header')
-@section('title', 'Crear Reservación')
+@section('title', 'Mesa')
 @section('content-main')
 <div class="container grid p-6 mx-auto">
     <div class="flex items-center justify-between w-full mb-6">

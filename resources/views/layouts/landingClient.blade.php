@@ -25,8 +25,13 @@
     </head>
 
 
-    <body class="flex h-screen flex-col min-h-screen">
-        @yield('content-landing')
+    <body class="flex h-screen flex-col min-h-screen bg-yellow-50 dark:bg-gray-900">
+        <div class="bg-yellow-50 dark:bg-darker h-full">
+
+            <div class="h-full relative bg-yellow-50 dark:bg-gray-900">
+                @yield('content-landing-client')
+            </div>
+        </div>
         <script src="{{asset('assets/js/changeTitle.js')}}"></script>
         <script src="{{asset('assets/js/hidden-password.js')}}"></script>
         <script src="{{asset('assets/js/registerFormScript.js')}}"></script>
