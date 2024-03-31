@@ -17,8 +17,20 @@ class ProductController extends Controller
 
 
     public function index()
-    {
-        $products = Product::with('category')->get();
+    {   
+        $search = request()->input('search');
+        if ($search && !empty($search)) {
+            $products = Product::where('name', 'like', '%' . $search . '%')
+                ->orWhere('price', 'like', '%' . $search . '%')
+                ->orWhere('cost', 'like', '%' . $search . '%')
+                ->orWhere('category_id', 'like', '%' . $search . '%')
+                ->orWhere('status', 'like', '%' . $search . '%')
+                ->paginate(20)
+                ->appends(['search' => $search]);
+        } else {
+            $products = Product::paginate(20);
+        }
+        //$products = Product::with('category')->get();
         return view('products.index', compact('products'));
     }
 

@@ -9,7 +9,7 @@
                         <p class="text-blue-600">{{ $message }}</p>
                     </div>
                 @endif
-                <!-- Card -->
+         
                 @forelse ($tables as $table)
                     <form
                         action="{{ route('table.show', ['id_table' => encrypt($table->id), 'id_category' => encrypt(-1)]) }}" method="GET">

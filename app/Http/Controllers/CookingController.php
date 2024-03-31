@@ -29,7 +29,15 @@ class CookingController extends Controller
 
     public function list()
     {
-        $cookings = Cooking::with('categories')->get();
+       $search = request()->get('search');
+        if($search && !empty($search)){
+            $cookings = Cooking::where('name', 'like', '%'.$search.'%')
+            ->paginate(20)
+            ->appends(['search' => $search]);
+        }else{
+            $cookings = Cooking::paginate(20);
+        }
+
         return view('cooking.listcooking', compact('cookings'));
     }
 

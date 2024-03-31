@@ -2,19 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-
-class UserSeeder extends Seeder
+use App\Models\Reservation;
+class ReservationSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
-        User::factory()->count(85)->create();
+        Reservation::factory()->count(77)->create();
     }
 }

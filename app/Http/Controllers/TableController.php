@@ -8,7 +8,7 @@ use App\Models\Table;
 use App\Models\Products;
 use App\Models\Category;
 use App\Utils\TableHelper;
-Use App\Models\TableProduct;
+use App\Models\TableProduct;
 use App\Http\Requests\TableRequest;
 use Illuminate\Support\Facades\Crypt;
 
@@ -27,7 +27,15 @@ class TableController extends Controller
 
     public function list()
     {
-        $tables = Table::all();
+        $search = request()->input('search');
+        if ($search && !empty($search)) {
+            $tables = Table::where('nombre', 'like', '%' . $search . '%')
+                ->orWhere('capaciodad', 'like', '%' . $search . '%')
+                ->paginate(20)
+                ->appends(['search' => $search]);
+        } else {
+            $tables = Table::paginate(20);
+        }
         return view('table.listTable', compact('tables'));
     }
 
@@ -39,7 +47,7 @@ class TableController extends Controller
     }
 
     public function show($encryptedId, $categoryIdEncrypted)
-    {   
+    {
         $id = Crypt::decryptString($encryptedId);
         $tableId = unserialize($id);
 
@@ -67,7 +75,7 @@ class TableController extends Controller
 
         return redirect()->route('table.listTable')->with('success', 'Mesa actualizada correctamente');
     }
-    
+
 
     public function destroy(Request $request)
     {
@@ -81,7 +89,7 @@ class TableController extends Controller
     }
 
     public function activate(Request $request)
-    {   
+    {
         $encryptedId = $request->input('encrypted_table_id');
         $id = Crypt::decryptString($encryptedId);
         $id = unserialize($id);
