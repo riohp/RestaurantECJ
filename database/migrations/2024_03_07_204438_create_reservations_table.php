@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('full_name');
             $table->string('cellphone');
             $table->unsignedBigInteger('id_table');
+            $table->string('location');
             $table->foreign('id_table')->references('id')->on('tables')->onDelete('cascade');
             $table->dateTime('start_time');
-            $table->dateTime('end_time');
             $table->timestamps();
         });
     }
