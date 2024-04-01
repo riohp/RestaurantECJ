@@ -116,7 +116,7 @@
                                                         </button>
                                                     </form>
                                                 @endif
-                                                <form id="editForm" method="POST" action="{{ route('users.edit') }}">
+                                                <form  method="POST" action="{{ route('users.edit') }}">
                                                     @csrf
                                                     <input type="hidden" name="encrypted_id" value="{{ encrypt($user->id) }}">
                                                     <button
