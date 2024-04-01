@@ -1,5 +1,4 @@
 @extends('layouts.partials.header')
-{{-- edit.blade.php --}}
 @section('title', 'Editar Usuario')
 
 @section('content-main')
