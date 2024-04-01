@@ -38,6 +38,14 @@ Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout')
 Route::get('registration', [CustomAuthController::class, 'registration'])->name('register-user');
 Route::post('registration/store', [CustomAuthController::class, 'store'])->name('register.store');
 
+Route::get('/forgot-password', function () {
+    return view('auth.password.forgot-password');
+})->name('forgot.password');
+
+Route::get('password', function () {
+    return view('auth.password.pasword-change');
+})->name('password');
+
 
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
@@ -72,7 +80,7 @@ Route::middleware(['auth', 'role:admin,waiter,cashier'])->group(function () {
 
     //modulo Category
     Route::get('/category/index', [CategoryController::class, 'index'])->name('category.index');
-    
+
     Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
     Route::post('/category/show', [CategoryController::class, 'show'])->name('category.show');
     Route::post('/category/edit', [CategoryController::class, 'edit'])->name('category.edit');
@@ -111,7 +119,7 @@ Route::middleware(['auth', 'role:admin,waiter,cashier'])->group(function () {
     Route::put('/cooking/update', [CookingController::class, 'update'])->name('cooking.update');
     Route::delete('/cooking/destroy', [CookingController::class, 'destroy'])->name('cooking.destroy');
     Route::post('/cooking/activate', [CookingController::class, 'activate'])->name('cooking.activate');
-    
+
 
     //module reservation
     Route::get('/reservation/index', [ReservationController::class, 'index'])->name('reservation.index');
@@ -141,7 +149,7 @@ Route::middleware(['auth', 'role:admin,cashier,client'])->group(function () {
     Route::post('/delivery/edit', [DeliveryController::class, 'edit'])->name('delivery.edit');
     Route::put('/delivery/update', [DeliveryController::class, 'update'])->name('delivery.update');
     Route::delete('/delivery/destoy', [DeliveryController::class, 'destroy'])->name('delivery.destroy');
-    
+
 });
 
 

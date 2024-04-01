@@ -2,7 +2,7 @@
 @section('title', 'Registro')
 
 @section('content-landing')
-    <div class="h-screen sm:py-5 lg:py-36 py-5 flex items-center bg-gradient-to-b from-purple-600/5 via-purple-600/5 to-purple-600/10 dark:bg-gray-900">
+    <div class="h-screen sm:py-5 lg:py-36 py-5 flex items-center justify-center bg-gradient-to-b from-purple-600/5 via-purple-600/5 to-purple-600/10 dark:bg-gray-900">
         <div class="container">
             <div class="flex justify-center items-center lg:max-w-lg">
                 <div class="flex px-5 flex-col h-full">
@@ -75,6 +75,9 @@
                                 <button type="button" onclick="nextForm()" class="relative inline-flex items-center justify-center px-6 py-3 rounded-full text-base bg-purple-600 text-white capitalize transition-all hover:bg-purple-700 w-full">
                                     Continuar
                                 </button>
+                            </div>
+                            <div class="grow flex items-end justify-center">
+                                <p class="text-gray-950 text-center mt-auto dark:text-gray-100">Regresar a <a href="{{ route('login') }}" class="text-purple-600 ms-1"><span class="font-medium">inicio de sesión</span></a></p>
                             </div>
                         </form>
                     </div>

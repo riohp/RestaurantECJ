@@ -15,3 +15,21 @@ passwordSwitch.addEventListener('click', function() {
         eyeOff.classList.add('hidden');
     }
 });
+
+let passwordSwitch2 = document.getElementById('password-switch2');
+let passwordInput2 = document.querySelector('.passTypeSwitch2');
+let eyeOn2 = document.querySelector('.password-eye-on2');
+let eyeOff2 = document.querySelector('.password-eye-off2');
+
+passwordSwitch2.addEventListener('click', function() {
+    console.log("cambio 2")
+    if (passwordInput2.type === 'password') {
+        eyeOn2.classList.add('hidden');
+        eyeOff2.classList.remove('hidden');
+        passwordInput2.type = 'text';
+    } else {
+        passwordInput2.type = 'password';
+        eyeOn2.classList.remove('hidden');
+        eyeOff2.classList.add('hidden');
+    }
+});
