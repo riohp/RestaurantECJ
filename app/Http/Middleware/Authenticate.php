@@ -2,7 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use Closure; // Importa Closure desde Illuminate\Support
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use App\Models\User;
 
 class Authenticate extends Middleware
 {
@@ -18,4 +20,5 @@ class Authenticate extends Middleware
             return route('login');
         }
     }
+    
 }

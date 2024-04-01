@@ -17,9 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('cellphone');
+            $table->string('address');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role', ['admin', 'cashier', 'waiter']);
+            $table->enum('role', ['admin', 'cashier', 'waiter', 'client']);
             $table->tinyInteger('status')->default(1);
             $table->rememberToken();
             $table->timestamps();

@@ -13,16 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('cookings', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('category_id');
-            $table->float('price',10,2);
-            $table->float('cost',10,2);
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->string('name');
+            $table->string('location');
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
     }
+
     /**
      * Reverse the migrations.
      *
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('cookings');
     }
 };

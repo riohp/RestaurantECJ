@@ -7,5 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class ItemInvoice extends Model
 {
-    use HasFactory;
+    protected $fillable = [
+        'cant',
+        'product_id',
+        'invoice_id',
+        'subTotal'
+    ];
+
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
+    public function invoice()
+    {
+        return $this->belongsTo(Invoice::class);
+    }
 }

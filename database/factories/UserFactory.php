@@ -20,8 +20,12 @@ class UserFactory extends Factory
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
+            'cellphone' => fake()->phoneNumber(10),
+            'address' => fake()->address(),
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'role' => fake()->randomElement(['admin', 'cashier', 'waiter', 'client']),
+            'status' => fake()->randomElement([0, 1]),
+            'password' =>  bcrypt('123456789'), // password
             'remember_token' => Str::random(10),
         ];
     }
