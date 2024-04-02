@@ -6,7 +6,7 @@
         <div class="container flex justify-center">
             <div class="flex justify-center items-center lg:max-w-lg sm:bg-white py-10 sm:py-20 sm:px-10 rounded-xl sm:shadow-md dark:bg-gray-900">
                 <div class="flex px-5 flex-col">
-                    <div class="shrink">
+                    <div class="shrink @if(session()->has('status')) hidden @endif">
                         <div>
                             <a href="#" class="flex items-center">
                                 {{--                                aca van las imagenes--}}
@@ -21,13 +21,14 @@
                                 <p class="text-red-600">{{ $errors->first() }}</p>
                             </div>
                         @endif
-                        <form method="POST" id="formLogin" action="{{ route('login.custom') }}">
+                        <form method="POST" action="{{ route('password.update') }}">
                             @csrf
                             <div class="mb-6">
                                 <label class="block text-sm font-medium text-gray-900 mb-2 dark:text-gray-100" id="loginEmailLabel">
                                     Email Actual
                                 </label>
-                                <input name="email" id="loginEmail" disabled class="dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700 block w-full rounded-full py-2.5 px-4 bg-white border border-gray-200 focus:ring-transparent focus:border-purple-400" type="email" value="fefi@email.com" placeholder="Introduce tu email" autocomplete="username">
+                                <input type="hidden" name="token" value="{{request()->token}}">
+                                <input name="email" id="emailField" class="dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700 block w-full rounded-full py-2.5 px-4 bg-white border border-gray-200 focus:ring-transparent focus:border-purple-400" type="email" value="{{request()->email}}" placeholder="Introduce tu email" autocomplete="username">
                                 <span id="errorInputEmail" class="text-red-600 text-xs"></span>
                                 @if ($errors->has('email'))
                                     <span class="text-red-600 text-xs">{{ $errors->first('email') }}</span>
@@ -38,7 +39,7 @@
                                     Contraseña Nueva
                                 </label>
                                 <div class="flex">
-                                    <input id="loginPassword" type="password" name="password" class="dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700 passTypeSwitch w-full rounded-s-full py-2.5 px-4 bg-white border border-gray-200 focus:ring-transparent focus:border-purple-400" placeholder="Intruduce tu contraseña">
+                                    <input id="password_firts" type="password" name="password" class="dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700 passTypeSwitch w-full rounded-s-full py-2.5 px-4 bg-white border border-gray-200 focus:ring-transparent focus:border-purple-400" placeholder="Intruduce tu contraseña">
                                     <button type="button" id="password-switch" class="dark:bg-gray-900 dark:border-gray-700 dark:text-white inline-flex items-center justify-center py-2.5 px-4 border rounded-e-full bg-white -ms-px border-gray-200 ">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="eye" class="lucide lucide-eye password-eye-on h-5 w-5 text-default-600"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="eye-off" class="lucide lucide-eye-off password-eye-off h-5 w-5 text-default-600 hidden"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path><line x1="2" x2="22" y1="2" y2="22"></line></svg>
@@ -54,7 +55,7 @@
                                     Confirma la contraseña nueva
                                 </label>
                                 <div class="flex">
-                                    <input id="loginPassword" type="password" name="password" class="dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700 passTypeSwitch2 w-full rounded-s-full py-2.5 px-4 bg-white border border-gray-200 focus:ring-transparent focus:border-purple-400" placeholder="Intruduce tu contraseña">
+                                    <input id="password_confirmation" type="password" name="password_confirmation" class="dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700 passTypeSwitch2 w-full rounded-s-full py-2.5 px-4 bg-white border border-gray-200 focus:ring-transparent focus:border-purple-400" placeholder="Intruduce tu contraseña">
                                     <button type="button" id="password-switch2" class="dark:bg-gray-900 dark:border-gray-700 dark:text-white inline-flex items-center justify-center py-2.5 px-4 border rounded-e-full bg-white -ms-px border-gray-200 ">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="eye" class="lucide lucide-eye password-eye-on2 h-5 w-5 text-default-600"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="eye-off" class="lucide lucide-eye-off password-eye-off2 h-5 w-5 text-default-600 hidden"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path><line x1="2" x2="22" y1="2" y2="22"></line></svg>
@@ -66,7 +67,7 @@
                                 @endif
                             </div>
                             <div class="flex justify-center mb-16 gap-3">
-                                <button type="button" onclick="" class="relative inline-flex items-center justify-center px-6 py-3 rounded-full text-base bg-purple-600 text-white capitalize transition-all hover:bg-purple-700 w-full">
+                                <button type="submit" class="relative inline-flex items-center justify-center px-6 py-3 rounded-full text-base bg-purple-600 text-white capitalize transition-all hover:bg-purple-700 w-full">
                                     Guardar
                                 </button>
                                 <a href="{{route('login')}}" class="relative inline-flex items-center justify-center px-6 py-3 rounded-full text-purple-600 border border-purple-600 hover:text-black capitalize transition-all hover:bg-purple-100 w-full">
@@ -74,6 +75,25 @@
                                 </a>
                             </div>
                         </form>
+                    </div>
+                    <div class="shrink @if(!session()->has('status')) hidden @endif">
+                        <div>
+                            <h1 class="text-3xl font-semibold text-gray-800 mb-2 dark:text-gray-100">Contraseña actualizada</h1>
+                            <p class="text-sm text-gray-500 max-w-md">Use su nueva contraseña para iniciar sesion</p>
+                        </div>
+                        @if ($errors->any())
+                            <div class="py-3 px-2.5 mb-5 bg-red-600/20 text-center rounded-lg">
+                                <p class="text-red-600">{{ $errors->first() }}</p>
+                            </div>
+                        @endif
+                        <div class="flex justify-center">
+                            <dotlottie-player src="https://lottie.host/87445b6b-5ae9-43c6-aa1d-6411878cd38d/dOnFS9hGzO.json" background="transparent" speed="2" style="width: 300px; height: 300px" direction="1" playMode="normal" autoplay></dotlottie-player>
+                        </div>
+                        <div class="flex justify-center">
+                            <a href="{{route('login')}}" class="relative inline-flex items-center justify-center px-6 py-3 rounded-full text-base bg-purple-600 text-white capitalize transition-all hover:bg-purple-700 w-full">
+                                Volver a Iniciar sesion
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -98,4 +118,17 @@
             </template>
         </button>
     </div>
+    <script>
+            // Obtener la URL actual
+            let currentUrl = window.location.href;
+
+            // Extraer el correo electrónico de la URL
+            let email = currentUrl.match(/email=([^&]*)/)[1];
+
+            // Decodificar el correo electrónico (si es necesario)
+            email = decodeURIComponent(email.replace(/\+/g, ' '));
+
+            // Establecer el valor del campo de entrada deshabilitado
+            document.getElementById('emailField').value = email;
+    </script>
 @endsection

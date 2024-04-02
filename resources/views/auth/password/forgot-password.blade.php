@@ -6,36 +6,42 @@
         <div class="container flex justify-center">
             <div class="flex justify-center items-center lg:max-w-lg sm:bg-white py-10 sm:py-20 sm:px-10 rounded-xl sm:shadow-md dark:bg-gray-900">
                 <div class="flex px-5 flex-col">
-                    <div id="formRecoveryPass" class="shrink">
-                        <div>
-                            <a href="#" class="flex items-center">
-                                {{--                                aca van las imagenes--}}
-                            </a>
-                        </div>
+                    <div id="formRecoveryPass" class="shrink @if(session()->has('status')) hidden @endif">
                         <div class="py-5">
                             <h1 class="text-3xl font-semibold text-gray-800 mb-2 dark:text-gray-100">Olvidaste tu contraseña</h1>
                             <p class="text-sm text-gray-500 max-w-md">Te enviaremos un email con instrucciones sobre cómo restablecer tu contraseña.</p>
                         </div>
-                        @if ($errors->any())a
+                        @if ($errors -> any())
                             <div class="py-3 px-2.5 mb-5 bg-red-600/20 text-center rounded-lg">
-                                <p class="text-red-600">{{ $errors->first() }}</p>
+                                @foreach($errors->all() as $error)
+                                    <p class="text-red-600 text-xs">{{ $error }}</p>
+                                @endforeach
                             </div>
                         @endif
-                        <form method="POST" action="">
+                        @if(session()->has('status'))
+                            <div class="py-3 px-2.5 mb-5 bg-green-600/20 text-center rounded-lg">
+                                <p class="text-white-600 text-xs">{{session()->get('status')}}</p>
+                            </div>
+                        @endif
+                        <form method="POST" id="formRecoveryPasswoord" action="{{route('forgot.password')}}">
                             @csrf
                             <div class="mb-6">
                                 <label class="block text-sm font-medium text-gray-900 mb-2 dark:text-gray-100" id="loginEmailLabel">
                                     Email
                                 </label>
-                                <input name="email" id="resquestEmail" class="dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700 block w-full rounded-full py-2.5 px-4 bg-white border border-gray-200 focus:ring-transparent focus:border-purple-400" type="email" value="{{ old('email') }}" placeholder="Introduce tu email" autocomplete="username">
+                                <input name="email" id="resquestEmail" class="dark:bg-gray-900 @if($errors->has('email')) border-red-500 @endif  dark:text-gray-100 dark:border-gray-700 block w-full rounded-full py-2.5 px-4 bg-white border border-gray-200 focus:ring-transparent focus:border-purple-400" type="email" value="{{ old('email') }}" placeholder="Introduce tu email" autocomplete="username">
                                 <span id="errorResquestEmail" class="text-red-600 text-xs"></span>
                                 @if ($errors->has('email'))
                                     <span class="text-red-600 text-xs">{{ $errors->first('email') }}</span>
                                 @endif
                             </div>
                             <div class="flex flex-col justify-center gap-4 mb-6">
-                                <button type="button" onclick="sendEmail()" class="relative inline-flex items-center justify-center px-6 py-3 rounded-full text-base bg-purple-600 text-white capitalize transition-all hover:bg-purple-700 w-full">
-                                    Restablecer contraseña
+                                <button type="button" onclick="sendEmails()" id="btn-submit-reset" class="relative inline-flex items-center justify-center px-6 py-3 rounded-full text-base bg-purple-600 text-white capitalize transition-all hover:bg-purple-700 w-full">
+                                    <svg id="svg-loader" aria-hidden="true" role="status" class="hidden inline w-4 h-4 me-3 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>
+                                        <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>
+                                    </svg>
+                                    <span id="hidden-text" class="">Restablecer contraseña</span>
                                 </button>
                                 <a href="{{route('login')}}" class="relative inline-flex items-center justify-center px-6 py-3 rounded-full text-purple-600 border border-purple-600 capitalize transition-all hover:bg-purple-100 w-full">
                                     ir a iniciar sesión
@@ -43,14 +49,14 @@
                             </div>
                         </form>
                     </div>
-                    <div id="sendEmailPass" class="shrink hidden">
+                    <div id="sendEmailPass" class="shrink @if(!session()->has('status')) hidden @endif">
                         <div class="py-5">
                             <h1 class="text-3xl font-semibold text-gray-800 mb-2 dark:text-gray-100 mb-5">Email enviado</h1>
-                            <p class="text-sm text-gray-700 max-w-md">Te enviamos un email con instrucciones para restablecer la contraseña a <strong>[emailenviado@test.com]</strong>. Si no lo ves en tu bandeja de entrada, revisa la carpeta de correo no deseado.</p>
+                            <p class="text-sm text-gray-700 max-w-md">Te enviamos un email con instrucciones para restablecer la contraseña a <strong>{{old('email')}}</strong>. Si no lo ves en tu bandeja de entrada, revisa la carpeta de correo no deseado.</p>
                             <p class="mt-6 text-sm text-gray-950 dark:text-gray-100">Si ya no tienes acceso a esta cuenta de email,<a href="{{ route('login') }}" class="text-purple-600 ms-1"><span class="font-medium">contáctanos.</span></a></p>
                         </div>
                     </div>
-                    <div id="backToLoginA" class="grow flex items-end justify-center">
+                    <div id="backToLoginA" class="grow flex items-end justify-center @if(session()->has('status')) hidden @endif">
                         <p class="text-gray-950 text-center mt-auto dark:text-gray-100">Regresar al <a href="{{ route('login') }}" class="text-purple-600 ms-1"><span class="font-medium">Login</span></a></p>
                     </div>
                 </div>
@@ -77,14 +83,12 @@
         </button>
     </div>
     <script>
-        function sendEmail(){
-            let formRecoveryPass = document.getElementById('formRecoveryPass');
-            let sendEmailPass = document.getElementById('sendEmailPass');
-            let backToLogin = document.getElementById('backToLoginA');
-
-            formRecoveryPass.classList.add('hidden');
-            backToLogin.classList.add('hidden');
-            sendEmailPass.classList.remove('hidden');
+        function sendEmails(){
+            console.log('Enviando email')
+            document.getElementById('formRecoveryPasswoord').submit();
+            document.getElementById('svg-loader').classList.remove('hidden');
+            document.getElementById('hidden-text').classList.add('hidden');
+            document.getElementById('btn-submit-reset').disabled = true;
         }
     </script>
 @endsection

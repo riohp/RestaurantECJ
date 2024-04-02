@@ -38,13 +38,13 @@ Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout')
 Route::get('registration', [CustomAuthController::class, 'registration'])->name('register-user');
 Route::post('registration/store', [CustomAuthController::class, 'store'])->name('register.store');
 
-Route::get('/forgot-password', function () {
-    return view('auth.password.forgot-password');
-})->name('forgot.password');
+Route::get('/forgot-password', [CustomAuthController::class, 'forgot'])->name('forgot.pass');
+Route::post('forgot-password', [CustomAuthController::class, 'forgotPassword'])->middleware('guest')->name('forgot.password');
 
-Route::get('password', function () {
-    return view('auth.password.pasword-change');
-})->name('password');
+Route::get('/reset-password/{token}', [CustomAuthController::class, 'resetPassword'])->middleware('guest')->name('password.reset');
+Route::post('/reset-password', [CustomAuthController::class, 'updatePassword'])->middleware('guest')->name('password.update');
+Route::get('/password', [CustomAuthController::class, 'passwordChange'])->name('password');
+
 
 
 

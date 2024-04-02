@@ -38,7 +38,7 @@
                                     <label class="block text-sm font-medium text-gray-900 mb-2 dark:text-gray-100" id="loginPasswordLabel">
                                         Contraseña
                                     </label>
-                                    <a href="{{route('forgot.password')}}" class="text-xs text-gray-700 hover:text-black dark:hover:text-gray-200 transition-all dark:text-gray-400">Contraseña olvidada?</a>
+                                    <a href="{{route('forgot.pass')}}" class="text-xs text-gray-700 hover:text-black dark:hover:text-gray-200 transition-all dark:text-gray-400">Contraseña olvidada?</a>
                                 </div>
                                 <div class="flex">
                                     <input id="loginPassword" type="password" name="password" class="dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700 passTypeSwitch w-full rounded-s-full py-2.5 px-4 bg-white border border-gray-200 focus:ring-transparent focus:border-purple-400" placeholder="Intruduce tu contraseña">
