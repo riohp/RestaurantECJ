@@ -7,7 +7,6 @@
         <title>@yield('title')</title>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
         <script src="https://kit.fontawesome.com/eb2aad7728.js" crossorigin="anonymous"></script>
-        <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
 
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
@@ -26,11 +25,16 @@
     </head>
 
 
-    <body class="flex h-screen flex-col min-h-screen">
-        @yield('content-landing')
+    <body class="flex h-screen flex-col min-h-screen bg-yellow-50 dark:bg-gray-900">
+        <div class="bg-yellow-50 dark:bg-darker h-full">
+
+            <div class="h-full relative bg-yellow-50 dark:bg-gray-900">
+                @yield('content-landing-client')
+            </div>
+        </div>
         <script src="{{asset('assets/js/changeTitle.js')}}"></script>
         <script src="{{asset('assets/js/hidden-password.js')}}"></script>
         <script src="{{asset('assets/js/registerFormScript.js')}}"></script>
-        @yield('scripts_js')
+        @yield('client_scripts_js')
     </body>
 </html>

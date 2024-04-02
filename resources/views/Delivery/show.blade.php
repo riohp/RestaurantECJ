@@ -1,7 +1,8 @@
-@extends('layouts.partials.header')
-@section('title', 'Mesa')
-@section('content-main')
-    <div class="flex flex-col flex-1 w-full">
+@extends('layouts.landingClient')
+@section('title', 'Inicio')
+@section('content-landing-client')
+@extends('layouts.partials.headerClient')
+    <div class="flex flex-col flex-1 w-full pt-20">
         <main class="h-full overflow-y-auto p-4">
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
                 <h1 class="text-3xl font-semibold mb-4 text-center">Información de entrega</h1>

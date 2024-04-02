@@ -37,14 +37,13 @@ Route::post('custom-login', [CustomAuthController::class, 'customLogin'])->name(
 Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout');
 Route::get('registration', [CustomAuthController::class, 'registration'])->name('register-user');
 Route::post('registration/store', [CustomAuthController::class, 'store'])->name('register.store');
-
 Route::get('/forgot-password', [CustomAuthController::class, 'forgot'])->name('forgot.pass');
 Route::post('forgot-password', [CustomAuthController::class, 'forgotPassword'])->middleware('guest')->name('forgot.password');
-
 Route::get('/reset-password/{token}', [CustomAuthController::class, 'resetPassword'])->middleware('guest')->name('password.reset');
 Route::post('/reset-password', [CustomAuthController::class, 'updatePassword'])->middleware('guest')->name('password.update');
 Route::get('/password', [CustomAuthController::class, 'passwordChange'])->name('password');
-
+Route::get('/reserve', [ReservationController::class, 'reserve'])->name('reservation.reserve');
+Route::post('/reservation', [ReservationController::class, 'store'])->name('reservation.store');
 
 
 
@@ -140,6 +139,7 @@ Route::middleware(['auth', 'role:admin,cashier,client'])->group(function () {
     Route::get('/invoice/index', [InvoiceController::class, 'index'])->name('invoice.index');
     Route::delete('/invoice/{table}', [InvoiceController::class, 'destroy'])->name('invoice.destroy');
     Route::post('/invoice/show', [InvoiceController::class, 'show'])->name('invoice.show');
+    Route::post('/invoice/generate', [InvoiceController::class, 'generateInvoice'])->name('invoice.generate');
 
 
     // module delivery
@@ -154,7 +154,7 @@ Route::middleware(['auth', 'role:admin,cashier,client'])->group(function () {
 
 
 
-Route::middleware(['auth', 'role:client'])->group(function () {
+Route::middleware(['auth', 'role:client,admin'])->group(function () {
     // module delivery
     Route::get('/delivery/create', [DeliveryController::class, 'create'])->name('delivery.create');
     Route::post('/delivery/store', [DeliveryController::class, 'store'])->name('delivery.store');
@@ -166,12 +166,9 @@ Route::middleware(['auth', 'role:client'])->group(function () {
     Route::post('/delivery/product/updateStatus', [DeliveryProductController::class, 'updateStatus'])->name('deliverysProduct.updateStatus');
     Route::post('/delivery/product/updateStatusItems', [DeliveryProductController::class, 'updateStatusItems'])->name('deliverysProduct.updateStatusItems');
 
-
-
-
     //module reservation
     Route::get('/reservation/create', [ReservationController::class, 'create'])->name('reservation.create');
-    Route::post('/reservation', [ReservationController::class, 'store'])->name('reservation.store');
+ 
 
 });
 

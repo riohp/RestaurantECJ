@@ -28,8 +28,7 @@ class TableHelper
             $total = $result['total'];
             
        
-/*             dd($table, $id_category, $products, $categories, $items, $total, $reload, $message);
- */            return view('table.show', compact('table', 'id_category', 'products', 'categories', 'items', 'total'));
+            return view('table.show', compact('table', 'id_category', 'products', 'categories', 'items', 'total'));
         } else {
             return response()->json(['error' => 'ID de la mesa inválido'], 400);
         }

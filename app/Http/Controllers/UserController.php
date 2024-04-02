@@ -65,7 +65,8 @@ class UserController extends Controller
     }
 
     public function update(UserRequest $request)
-    {
+    {   
+        dd($request);        
         $encryptedId = $request->input('encrypted_id');
         $id = Crypt::decryptString($encryptedId);
         $id = unserialize($id);

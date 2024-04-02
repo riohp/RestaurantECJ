@@ -12,9 +12,9 @@ class Reservation extends Model
     protected $fillable = [
         'full_name',
         'cellphone',
+        'location', 
         'id_table',
-        'start_time',
-        'end_time'
+        'start_time'
     ];
 
     public function table()

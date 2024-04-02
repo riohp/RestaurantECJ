@@ -38,7 +38,7 @@
                                 <input type="hidden" name="category_id" value="{{ encrypt(-1) }}">
                                 <button type="submit" class="btn btn-info btn-sm">Ver</button>
                             </form>
-                            <form action="{{ route('invoice.destroy') }}" method="POST" style="display: inline">
+                            {{-- <form action="{{ route('invoice.destroy') }}" method="POST" style="display: inline">
                                 @csrf
                                 @method('DELETE')
                                 <input type="hidden" name="invoice" value="{{ encrypt($invoice->id) }}">
@@ -47,7 +47,7 @@
                                 @else
                                     <button type="submit" class="btn btn-danger btn-sm">Activar</button>
                                 @endif
-                            </form>
+                            </form> --}}
                             </p>
                         </div>
                     </div>
