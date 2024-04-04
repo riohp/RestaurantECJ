@@ -8,9 +8,7 @@
         <div class="w-full overflow-hidden rounded-lg shadow-xs">
             <div class="px-6 py-4 border-b border-b-default-200 dark:border-gray-600 dark:bg-gray-800">
                 <div class="flex flex-wrap justify-between items-center gap-6">
-                    <h4 class="text-xl font-medium fon text-default-900 dark:text-gray-200">
-                        <h4 class="text-xl font-medium dark:text-gray-200">Mesas</h4>
-                    </h4>
+                    <h4 class="text-xl font-medium dark:text-gray-200">Mesas</h4>
                     <a href="{{ route('table.create') }}"
                         class="px-6 py-3 inline-flex text-white text-sm rounded-md bg-purple-600">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -185,7 +183,7 @@
                                     </svg>
                                 </button>
                             </li>
-            
+
                             @for ($i = 1; $i <= $tables->lastPage(); $i++)
                                 <li>
                                     <button onclick="window.location='{{ $tables->url($i, ['search' => request('search')]) }}'" class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple @if ($i === $tables->currentPage()) bg-purple-600 text-white @else bg-white text-purple-600 @endif">
@@ -193,7 +191,7 @@
                                     </button>
                                 </li>
                             @endfor
-            
+
                             <li>
                                 <button onclick="window.location='{{ $tables->nextPageUrl() }}'" class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple" aria-label="Next" {{ $tables->hasMorePages() ? '' : 'disabled' }}>
                                     <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
