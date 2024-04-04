@@ -15,9 +15,11 @@ class TableHelper
         $table = Table::find($tableId);
         $categories = null;
         $products = null;
+        $categoryName = null;
         if (!empty($table)) {
             if (!is_null($id_category) && is_numeric($id_category) && $id_category != -1) {
                 $products = Product::where('category_id', $id_category)->get();
+                $categoryName = Category::find($id_category)->name;
             }else{
                 $categories = Category::all();
             }
@@ -26,9 +28,9 @@ class TableHelper
             $result = self::generateItemsAndTotal($tableItems);
             $items = $result['items'];
             $total = $result['total'];
-            
-       
-            return view('table.show', compact('table', 'id_category', 'products', 'categories', 'items', 'total'));
+
+
+            return view('table.show', compact('table', 'id_category', 'products', 'categories', 'items', 'total','categoryName' ));
         } else {
             return response()->json(['error' => 'ID de la mesa inválido'], 400);
         }
@@ -36,7 +38,7 @@ class TableHelper
 
 
     public static function processTableDataDelivery($deliveryId, $id_category)
-    {   
+    {
         $delivery = Delivery::find($deliveryId);
         $categories = null;
         $products = null;
@@ -46,8 +48,8 @@ class TableHelper
             }else{
                 $categories = Category::all();
             }
-           
-      
+
+
             $tableitems = DeliveryProduct::where('deliveries_id', $deliveryId)->with('product')->get();
             $result = self::generateItemsAndTotal($tableitems);
             $items = $result['items'];
@@ -59,9 +61,9 @@ class TableHelper
     }
 
     public static function showDelivery($deliveryId)
-    {   
+    {
         $delivery = Delivery::find($deliveryId);
-    
+
         $tableitems = DeliveryProduct::where('deliveries_id', $deliveryId)->with('product')->get();
         $result = self::generateItemsAndTotal($tableitems);
         $items = $result['items'];
@@ -70,26 +72,26 @@ class TableHelper
         return view('delivery.show', compact('items', 'total', 'delivery'));
     }
 
-    public static function generateItemsAndTotal($tableItems) 
+    public static function generateItemsAndTotal($tableItems)
     {
-        
+
         $items = [];
-        $total = 0; 
+        $total = 0;
 
         foreach ($tableItems as $tableProduct) {
             $product = $tableProduct->product;
-        
+
             if (!is_null($product)) {
                 $productId = $product->id;
                 $price = $product->price;
                 $quantity = 1;
-        
+
                 $status = $tableProduct->status;
-        
+
                 if (!isset($items[$status])) {
                     $items[$status] = [];
                 }
-        
+
                 if (isset($items[$status][$productId])) {
                     $items[$status][$productId]['quantity'] += 1;
                     $items[$status][$productId]['subtotal'] += $price * $quantity;

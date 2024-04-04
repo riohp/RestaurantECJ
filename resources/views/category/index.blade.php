@@ -56,7 +56,7 @@
                                             un nombre
                                             con al menos 3 caracteres</span>
                                     </div>
-                                    <div class="col-span-2">
+                                    <div class="col-span-2" style="display: none">
                                         <label for="status"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
                                         <select name="status" id="status"
