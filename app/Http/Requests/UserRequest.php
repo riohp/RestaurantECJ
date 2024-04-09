@@ -20,7 +20,7 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
         $userId = $this->route('user') ? $this->route('user')->id : null;
-
+        /* dd($userId); */
         $rules = [
             'name' => 'required|max:255|min:3',
             'cellphone' => [
@@ -40,7 +40,7 @@ class UserRequest extends FormRequest
                     'email' => [
                         'required',
                         'email',
-                        Rule::unique('users', 'email')->ignore($userId),
+                        Rule::unique('users', 'email')->ignore($this->email, 'email'),
                     ],
                     'password' => 'nullable|min:8',
                     'role' => 'nullable|in:admin,cashier,waiter,client',
