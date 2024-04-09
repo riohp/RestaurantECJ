@@ -2,19 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-
-class UserSeeder extends Seeder
+use App\Models\Cooking;
+class CookingSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
-        User::factory()->count(85)->create();
+        Cooking::factory()->count(93)->create();
     }
 }

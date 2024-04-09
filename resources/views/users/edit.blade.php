@@ -1,12 +1,11 @@
 @extends('layouts.partials.header')
-{{-- edit.blade.php --}}
 @section('title', 'Editar Usuario')
 
 @section('content-main')
     <div class="container">
         <h1>Editar Usuario</h1>
 
-        <form id="editForm" method="POST" action="{{ route('users.update') }}">
+        <form  method="POST" action="{{ route('users.update') }}">
             @csrf
             @method('PUT')
             <input type="hidden" name="encrypted_id" value="{{ encrypt($user->id) }}">
@@ -92,11 +91,7 @@
                     </div>
                 </div>
 
-                <div class="form-group row mb-0">
-                    <div class="col-md-6 offset-md-4">
-                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                    </div>
-                </div>
+                <button type="submit"> alo</button>
         </form>
     </div>
 @endsection

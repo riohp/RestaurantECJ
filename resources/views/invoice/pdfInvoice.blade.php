@@ -15,11 +15,11 @@
             <div style="display: flex; flex-direction: column; gap: 0.75rem; border-bottom: 1px solid #CBD2D9; padding-bottom: 1.5rem; font-size: 0.875rem;">
                 <p style="display: flex; justify-content: space-between;  font-weight: 600; font-size: 1.125rem;">
                     <span style="color: #6B7280;">ID factura:</span>
-                    <span style="margin-left: 12rem;">{{ $invoice->id }}</span>
+                    <span style="margin-left: 11rem;">{{ $invoice->id }}</span>
                 </p>
                 <p style="display: flex; justify-content: space-between;  font-weight: 600; font-size: 1.125rem;">
                     <span style="color: #6B7280;">Tipo Pedido:</span>
-                    <span style="margin-left: 10rem;">{{ $invoice->tipo }}</span>
+                    <span style="margin-left: 8rem;">{{ $invoice->tipo }}</span>
                 </p>
                 <p style="display: flex; justify-content: space-between;  font-weight: 600; font-size: 1.125rem;">
                     <span style="color: #6B7280;">Facturo:</span>

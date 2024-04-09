@@ -15,20 +15,15 @@
                 <div class="p-6 rounded-lg border dark:border-gray-700">
                     <div class="flex items-center justify-between">
                         <img src="https://coderthemes.com/yum/assets/avatar4-8547565a2.png" alt="" class="w-24 h-24 rounded-full p-1 border border-gray-200 bg-gray-100 dark:bg-gray-700 dark:border-gray-600">
-                       {{--  <button
-                            onclick="window.location='{{ route('users.edit', ['encrypted_id' => encrypt($user->id)]) }}'"
-                            class="flex items-center justify-center gap-2 rounded-full bg-purple-700 px-6 py-2.5 text-center text-sm transition-all duration-200 hover:bg-purple-400 text-white">
-                            <i class="fa-regular fa-pen-to-square"></i>
-                            Editar
-                        </button> --}}
-                       <form action="{{ route('users.edit') }}" method="POST">
+                       
+                       {{-- <form action="{{ route('users.edit') }}" method="POST">
                            @csrf
                             <input type="hidden" name="encrypted_id" value="{{ encrypt($user->id) }}">
                             <button type="submit" class="flex items-center justify-center gap-2 rounded-full bg-purple-700 px-6 py-2.5 text-center text-sm transition-all duration-200 hover:bg-purple-400 text-white">
                                 <i class="fa-regular fa-pen-to-square"></i>
                                 Editar
                             </button>
-                        </form>
+                        </form> --}}
 
                     </div>
                     <h4 class="mb-1 mt-3 text-lg dark:text-white">{{$user->name}}</h4>

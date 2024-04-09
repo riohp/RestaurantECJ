@@ -7,13 +7,25 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Exception;
+use Illuminate\Support\Facades\Hash;
 
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::paginate(25);
+        $search = $request->input('search');
+
+        if ($search && !empty($search)) {
+            $users = User::where('name', 'like', '%' . $search . '%')
+                ->orWhere('email', 'like', '%' . $search . '%')
+                ->orWhere('cellphone', 'like', '%' . $search . '%')
+                ->paginate(20)
+                ->appends(['search' => $search]);
+        } else {
+            $users = User::paginate(20);
+        }
+
         return view('users.index', compact('users'));
     }
 
@@ -47,30 +59,37 @@ class UserController extends Controller
     public function edit(Request $request)
     {
         $encryptedId = $request->input('encrypted_id');
-        $id = Crypt::decryptString($encryptedId);
-        $id = unserialize($id);
+        $idString = Crypt::decryptString($encryptedId);
+        $id = unserialize($idString);
         $user = User::findOrFail($id);
         return view('users.edit', compact('user'));
     }
 
     public function update(UserRequest $request)
-{
-    $encryptedId = $request->input('encrypted_id');
-    $id = Crypt::decryptString($encryptedId);
-    $id = unserialize($id);
-    $user = User::findOrFail($id);
+    {
+        $encryptedId = $request->input('encrypted_id');
+        $idString = Crypt::decryptString($encryptedId);
+        $id = unserialize($idString);
+        $user = User::findOrFail($id);
+    
+        $validatedData = $request->validated();
+    
+        $user->name = $validatedData['name'];
+        $user->email = $validatedData['email'];
+        $user->cellphone = $validatedData['cellphone'];
+        $user->address = $validatedData['address'];
+        $user->role = $validatedData['role'];
+        $user->status = $validatedData['status'];
+    
+        if ($request->filled('password')) {
+            $user->password = Hash::make($validatedData['password']);
+        }
+    
+        $user->save();
+    
+        return redirect()->route('users.index')->with('success', 'Usuario actualizado correctamente');
+    }
 
-
-    // Actualiza esto se corrije cuando este login
-    $user->name = $request->input('name');
-    $user->email = $request->input('email');
-    $user->cellphone = $request->input('cellphone');
-    $user->address = $request->input('address');
-    $user->role = $request->input('role');
-    $user->status = $request->input('status');
-    $user->save();
-    return redirect()->route('users.index')->with('success', 'Usuario actualizado correctamente');
-}
 
 
     public function destroy(Request $request)

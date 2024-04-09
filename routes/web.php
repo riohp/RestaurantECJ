@@ -37,8 +37,14 @@ Route::post('custom-login', [CustomAuthController::class, 'customLogin'])->name(
 Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout');
 Route::get('registration', [CustomAuthController::class, 'registration'])->name('register-user');
 Route::post('registration/store', [CustomAuthController::class, 'store'])->name('register.store');
+Route::get('/forgot-password', [CustomAuthController::class, 'forgot'])->name('forgot.pass');
+Route::post('forgot-password', [CustomAuthController::class, 'forgotPassword'])->middleware('guest')->name('forgot.password');
+Route::get('/reset-password/{token}', [CustomAuthController::class, 'resetPassword'])->middleware('guest')->name('password.reset');
+Route::post('/reset-password', [CustomAuthController::class, 'updatePassword'])->middleware('guest')->name('password.update');
+Route::get('/password', [CustomAuthController::class, 'passwordChange'])->name('password');
 Route::get('/reserve', [ReservationController::class, 'reserve'])->name('reservation.reserve');
 Route::post('/reservation', [ReservationController::class, 'store'])->name('reservation.store');
+
 
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
@@ -50,9 +56,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/users/create', [UserController::class, 'create'])->name('users.create');
     Route::post('/users', [UserController::class, 'store'])->name('users.store');
     Route::post('/users/show', [UserController::class, 'show'])->name('users.show');
-    Route::post('/users/edit', [UserController::class, 'edit'])->name('users.edit');
-    /* Route::put('/users/update', [UserController::class, 'update'])->name('users.update')->middleware('auth')->middleware('UserRequest'); */
+    Route::get('/users/{encrypted_id}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::put('/users/update', [UserController::class, 'update'])->name('users.update');
+    /* Route::put('/users/update', [UserController::class, 'update'])->name('users.update')->middleware('auth')->middleware('UserRequest'); */
     Route::delete('/users/destroy', [UserController::class, 'destroy'])->name('users.destroy');
     Route::post('/users/activtate', [UserController::class, 'activate'])->name('users.activate');
 
@@ -73,7 +79,7 @@ Route::middleware(['auth', 'role:admin,waiter,cashier'])->group(function () {
 
     //modulo Category
     Route::get('/category/index', [CategoryController::class, 'index'])->name('category.index');
-    Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create');
+
     Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
     Route::post('/category/show', [CategoryController::class, 'show'])->name('category.show');
     Route::post('/category/edit', [CategoryController::class, 'edit'])->name('category.edit');
@@ -87,6 +93,7 @@ Route::middleware(['auth', 'role:admin,waiter,cashier'])->group(function () {
     Route::get('/table/create', [TableController::class, 'create'])->name('table.create');
     Route::post('/table', [TableController::class, 'store'])->name('table.store');
     Route::get('/table/show/{id_table}/{id_category}', [TableController::class, 'show'])->name('table.show');
+    Route::get('/table/listtable', [TableController::class, 'list'])->name('table.listTable');
     Route::post('/table/edit', [TableController::class, 'edit'])->name('table.edit');
     Route::put('/table/update', [TableController::class, 'update'])->name('table.update');
     Route::delete('/table/destroy', [TableController::class, 'destroy'])->name('table.destroy');
@@ -103,13 +110,15 @@ Route::middleware(['auth', 'role:admin,waiter,cashier'])->group(function () {
     Route::get('/cooking/index', [CookingController::class, 'index'])->name('cooking.index');
     Route::get('/cooking/create', [CookingController::class, 'create'])->name('cooking.create');
     Route::post('/cooking/store', [CookingController::class, 'store'])->name('cooking.store');
+    Route::post('/cooking/assignments', [CookingController::class, 'assign'])->name('cooking.assignments');
+    Route::post('/cooking/assign/category', [CookingController::class, 'assignCategory'])->name('cooking.assign.category');
     Route::get('/cooking/listcooking', [CookingController::class, 'list'])->name('cooking.listcooking');
     Route::post('/cooking/show', [CookingController::class, 'show'])->name('cooking.show');
     Route::post('/cooking/edit', [CookingController::class, 'edit'])->name('cooking.edit');
     Route::put('/cooking/update', [CookingController::class, 'update'])->name('cooking.update');
     Route::delete('/cooking/destroy', [CookingController::class, 'destroy'])->name('cooking.destroy');
     Route::post('/cooking/activate', [CookingController::class, 'activate'])->name('cooking.activate');
-    
+
 
     //module reservation
     Route::get('/reservation/index', [ReservationController::class, 'index'])->name('reservation.index');
@@ -130,6 +139,7 @@ Route::middleware(['auth', 'role:admin,cashier,client'])->group(function () {
     Route::get('/invoice/index', [InvoiceController::class, 'index'])->name('invoice.index');
     Route::delete('/invoice/{table}', [InvoiceController::class, 'destroy'])->name('invoice.destroy');
     Route::post('/invoice/show', [InvoiceController::class, 'show'])->name('invoice.show');
+    Route::post('/invoice/generate', [InvoiceController::class, 'generateInvoice'])->name('invoice.generate');
 
 
     // module delivery
@@ -139,12 +149,12 @@ Route::middleware(['auth', 'role:admin,cashier,client'])->group(function () {
     Route::post('/delivery/edit', [DeliveryController::class, 'edit'])->name('delivery.edit');
     Route::put('/delivery/update', [DeliveryController::class, 'update'])->name('delivery.update');
     Route::delete('/delivery/destoy', [DeliveryController::class, 'destroy'])->name('delivery.destroy');
-    
+
 });
 
 
 
-Route::middleware(['auth', 'role:client'])->group(function () {
+Route::middleware(['auth', 'role:client,admin'])->group(function () {
     // module delivery
     Route::get('/delivery/create', [DeliveryController::class, 'create'])->name('delivery.create');
     Route::post('/delivery/store', [DeliveryController::class, 'store'])->name('delivery.store');
