@@ -56,9 +56,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/users/create', [UserController::class, 'create'])->name('users.create');
     Route::post('/users', [UserController::class, 'store'])->name('users.store');
     Route::post('/users/show', [UserController::class, 'show'])->name('users.show');
-    Route::post('/users/edit', [UserController::class, 'edit'])->name('users.edit');
-    /* Route::put('/users/update', [UserController::class, 'update'])->name('users.update')->middleware('auth')->middleware('UserRequest'); */
+    Route::get('/users/{encrypted_id}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::put('/users/update', [UserController::class, 'update'])->name('users.update');
+    /* Route::put('/users/update', [UserController::class, 'update'])->name('users.update')->middleware('auth')->middleware('UserRequest'); */
     Route::delete('/users/destroy', [UserController::class, 'destroy'])->name('users.destroy');
     Route::post('/users/activtate', [UserController::class, 'activate'])->name('users.activate');
 
