@@ -13,7 +13,7 @@
                     Restaurante ECJ
                 </a>
                 @if (auth()->check())
-                  
+
                         <ul class="mt-6">
                             @if (auth()->user()->role == 'admin')
                             <li class="relative px-6 py-3">
@@ -47,7 +47,7 @@
                                 </a>
                             </li>
                             @endif
-                  
+
                             @if (auth()->user()->role == 'admin' or auth()->user()->role == 'waiter' or auth()->user()->role == 'cashier')
                             <li class="relative px-6 py-3">
                                 <span
@@ -75,7 +75,7 @@
                                         stroke="currentColor">
                                         <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
                                     </svg>
-                                    <span class="ml-4">Lista de cocinas</span>
+                                    <span class="ml-4">Lista de mesas</span>
                                 </a>
                             </li>
                             <li class="relative px-6 py-3">
@@ -166,7 +166,7 @@
                                 </a>
                             </li>
                             @endif
-                      
+
                             @if (auth()->user()->role == 'admin' or auth()->user()->role == 'cashier')
                             <li class="relative px-6 py-3">
                                 <span
@@ -185,7 +185,7 @@
                             </li>
                             @endif
                         </ul>
-                   
+
                 @endif
                 <div class="px-6 my-6">
                     <button

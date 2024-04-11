@@ -62,17 +62,6 @@
                 <div class="min-w-0 p-4">
                     <div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
                         <canvas id="line" width="700" height="250" style="display: block; width: 700px; height: 350px;" class="chartjs-render-monitor"></canvas>
-                    <div class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400">
-                        <!-- Chart legend -->
-                        <div class="flex items-center">
-                            <span class="inline-block w-3 h-3 mr-1 bg-teal-600 rounded-full"></span>
-                            <span>Organic</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="inline-block w-3 h-3 mr-1 bg-purple-600 rounded-full"></span>
-                            <span>Paid</span>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="grid grid-cols-2 gap-9">

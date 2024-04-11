@@ -18,7 +18,7 @@
                         </div>
                         @if ($errors->any())
                             <div class="py-3 px-2.5 mb-5 bg-red-600/20 text-center rounded-lg">
-                                <p class="text-red-600">{{ $errors->first() }}</p>
+                                <p class="text-red-600aa text-sm">{{ $errors->first() }}</p>
                             </div>
                         @endif
                         <form method="POST" id="formLogin" action="{{ route('login.custom') }}">

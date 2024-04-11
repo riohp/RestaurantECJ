@@ -7,36 +7,26 @@
 
                 <!-- Card -->
                 @forelse ($cookings as $cooking)
-                    <div class="flex items-center p-3 bg-white rounded-lg shadow-xs dark:bg-gray-800">
-                        <div
-                            class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                <path
-                                    d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z">
-                                </path>
-                            </svg>
-                        </div>
-                        <div>
-                            <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                                {{ $cooking->name }}
-                            </p>
-                            <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                                {{ $cooking->location }}
-                            </p>
-                            <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                                {{ $cooking->status ? 'Activo' : 'Inactivo' }}
-                            </p>
+                    <div class="p-6 bg-orange-600/10 bg-[url(http://www.transparenttextures.com/patterns/food.png)] rounded-lg shadow-xs dark:bg-gray-800">
+                        <div class="">
+                            <div class="flex items-center justify-between">
+                                <div class="w-1/2 mb-2">
+                                    <h4 class="text-xl text-orange-400 font-bold">{{$cooking->name}}</h4>
+                                </div>
+                                <p class="text-sm {{ $cooking->status ? 'bg-green-200' : 'bg-red-200' }} inline-block px-4 py-0.5 rounded-full items-center font-medium text-gray-800 dark:text-gray-400">
+                                    {{ $cooking->status ? 'Operativo' : 'Fuera de servicio' }}
+                                </p>
+                            </div>
+                            <div class="w-full">
+                                <h4 class="text-md text-gray-800 font-semibold">{{$cooking->location}}</h4>
+                            </div>
                             <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
                             <form action="{{ route('cooking.show') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="encrypted_cooking_id" value="{{ encrypt($cooking->id) }}">
                                 <input type="hidden" name="category_id" value="{{ encrypt(-1) }}">
-                                <button type="submit" class="btn btn-info btn-sm">Ver</button>
+                                <button type="submit" class="w-full items-center justify-center gap-2 rounded-full border border-bg-orange-400 bg-orange-400 px-10 py-3 text-center text-base font-semibold text-white shadow-sm transition-all duration-200 hover:border-primary-700 hover:bg-orange-500">Detalles de {{$cooking->name}}</button>
                             </form>
-                           
-                            </p>
-
-
                         </div>
                     </div>
                 @empty

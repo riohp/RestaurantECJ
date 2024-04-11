@@ -108,9 +108,8 @@
     {{--                                <input class="block w-full bg-transparent rounded-lg py-2.5 px-4 border border-gray-200 focus:ring-transparent focus:border-gray-400 dark:bg-default-50" type="number" placeholder="Quantity in Stock">--}}
     {{--                            </div>--}}
 
-                                <div>
+                                <div style="display: none">
                                     <select name="status" class="block w-full bg-transparent dark:border-gray-600 rounded-lg py-2.5 px-4 border border-gray-200 focus:ring-transparent focus:border-gray-400 dark:bg-gray-900 dark:text-gray-100" type="text" >
-                                        <option selected="">Estado</option>
                                         <option value="1">Activo</option>
                                         <option value="0">Inactivo</option>
                                     </select>
